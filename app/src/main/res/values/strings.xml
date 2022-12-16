@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Kotlin_MovieApp</string>
+    <string name="tv_movieName">Название фильма</string>
+</resources>
