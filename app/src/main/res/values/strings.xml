@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Kotlin_MovieApp</string>
     <string name="tv_movieName">Название фильма</string>
+    <string name="tv_Top100movies">Топ 100 лучших фильмов</string>
+    <string name="tv_NewMovies">Новинки кино</string>
+    <string name="tv_TopSerials">Лучшие сериалы</string>
 </resources>
