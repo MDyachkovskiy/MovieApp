@@ -48,6 +48,7 @@ class MainFragment : Fragment() {
         }
 
         viewModel.getData().observe(viewLifecycleOwner,observer)
+        viewModel.getMovie()
 
     }
 
@@ -64,13 +65,14 @@ class MainFragment : Fragment() {
 
             is AppState.Success -> {
                 binding.loadingLayout.visibility = View.GONE
-                this.data = MovieSourceImpl(resources).init()
             }
         }
     }
 
 
     private fun initRV() {
+
+        this.data = MovieSourceImpl(resources).init()
 
         movieAdapter = MovieAdapter(data)
 
