@@ -17,7 +17,9 @@ import com.google.android.material.snackbar.Snackbar
 class MainFragment : Fragment() {
 
     private lateinit var movieAdapter: MovieAdapter
-    private lateinit var binding: FragmentMainBinding
+    private var _binding: FragmentMainBinding? = null
+    private val binding
+    get() = _binding!!
     private lateinit var data: MovieSource
 
     companion object {
@@ -29,7 +31,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentMainBinding.inflate(layoutInflater) //утечка памяти
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         initRV()
 
@@ -50,6 +52,12 @@ class MainFragment : Fragment() {
         viewModel.getData().observe(viewLifecycleOwner,observer)
         viewModel.getMovie()
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
     private fun renderData(appState: AppState) {
