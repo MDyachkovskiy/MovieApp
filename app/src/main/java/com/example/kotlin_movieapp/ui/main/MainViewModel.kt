@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 import com.example.kotlin_movieapp.repository.RepositoryImpl
 import java.lang.Thread.sleep
 
-class MainViewModel(private val liveData: MutableLiveData<AppState> = MutableLiveData(),
-                    private val repository: RepositoryImpl = RepositoryImpl()
+class MainViewModel(private val liveData : MutableLiveData<AppState> = MutableLiveData(),
+                    private val repository : RepositoryImpl = RepositoryImpl()
                     ) :
     ViewModel() {
 
-    fun getData(): LiveData<AppState> {
+    fun getData() : LiveData<AppState> {
         return liveData
     }
 
