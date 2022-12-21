@@ -5,17 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.kotlin_movieapp.databinding.MovieDetailFragmentBinding
 import com.example.kotlin_movieapp.models.MovieSource
 
 class MovieDetailsFragment : Fragment() {
 
-    private var _binding : MovieDetailFragmentBinding? = null
+    private var _binding: MovieDetailFragmentBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var data : MovieSource
+    private lateinit var data: MovieSource
 
     companion object {
         fun newInstance() = MovieDetailsFragment()
@@ -23,15 +21,15 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) : View {
+        savedInstanceState: Bundle?,
+    ): View {
 
         _binding = MovieDetailFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
     }
 
-    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
@@ -43,7 +41,7 @@ class MovieDetailsFragment : Fragment() {
         _binding = null
     }
 
-    private fun renderData(appState : AppState) {
+    private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Error -> {
                 binding.loadingLayout.visibility = View.GONE

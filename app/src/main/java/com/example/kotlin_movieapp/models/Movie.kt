@@ -6,7 +6,7 @@ import androidx.core.content.ContentProviderCompat.requireContext
 
 data class Movie(
     val id : Int = 0,
-    val image : Int = 0,
+    var image : Int = 0,
     val name : String = "Название фильма",
     val description : String = ""
 )
