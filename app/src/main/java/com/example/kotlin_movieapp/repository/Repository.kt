@@ -5,5 +5,5 @@ import com.example.kotlin_movieapp.models.MovieSource
 
 interface Repository {
     fun getMovieFromServer() : Movie
-    fun getMovieFromLocalStorage() : Movie
+    fun getMovieFromLocalStorage() : List<Movie>
 }

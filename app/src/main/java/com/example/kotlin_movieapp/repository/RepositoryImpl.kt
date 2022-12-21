@@ -1,7 +1,7 @@
 package com.example.kotlin_movieapp.repository
 
-
 import com.example.kotlin_movieapp.models.Movie
+import com.example.kotlin_movieapp.models.getTopMovies
 
 
 class RepositoryImpl() : Repository {
@@ -10,8 +10,8 @@ class RepositoryImpl() : Repository {
         return Movie();
     }
 
-    override fun getMovieFromLocalStorage() : Movie {
-        //return MovieSourceImpl(context.resources).init()
-        return Movie();
+    override fun getMovieFromLocalStorage() : List<Movie> {
+        Thread.sleep(2000L)
+        return getTopMovies()
     }
 }

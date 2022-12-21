@@ -4,6 +4,6 @@ import com.example.kotlin_movieapp.models.Movie
 
 sealed class AppState {
     object Loading : AppState()
-    data class Success(val movieData : Movie) : AppState()
+    data class Success(val movieData : List<Movie>) : AppState()
     data class Error(val error : Throwable) : AppState()
 }

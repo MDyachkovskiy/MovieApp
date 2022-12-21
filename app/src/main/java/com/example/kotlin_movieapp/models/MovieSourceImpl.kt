@@ -6,19 +6,21 @@ import com.example.kotlin_movieapp.R
 class MovieSourceImpl (private val resources: Resources) : MovieSource {
 
     companion object {
+
         private var movieSource: MutableList<Movie> = ArrayList(7)
+
     }
 
-    fun init() : MovieSourceImpl{
+    fun init() : MovieSourceImpl {
         val movieNames = resources.getStringArray(R.array.MovieNames)
-        val pictures = imageArray
+        val pictures = topMovieImages
         for (i in 0..6) {
-            movieSource.add(Movie(i, pictures[i], movieNames[i]))
+            movieSource.add(Movie(i, pictures[i], movieNames[i], ""))
         }
         return this
     }
 
-    private val imageArray: IntArray
+    private val topMovieImages: IntArray
     private get() {
         val pictures = resources.obtainTypedArray(R.array.MoviePosters)
         val length = pictures.length()
@@ -27,6 +29,10 @@ class MovieSourceImpl (private val resources: Resources) : MovieSource {
             answer[i] = pictures.getResourceId(i,0)
         }
         return answer
+    }
+
+   fun getImages() : IntArray {
+        return topMovieImages;
     }
 
     override fun getMovie(position: Int): Movie {
@@ -40,5 +46,6 @@ class MovieSourceImpl (private val resources: Resources) : MovieSource {
     override fun indexOf(movie: Movie): Int {
         return movieSource.indexOf(movie)
     }
+
 }
 

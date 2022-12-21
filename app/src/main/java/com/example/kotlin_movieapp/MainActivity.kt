@@ -3,7 +3,7 @@ package com.example.kotlin_movieapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.kotlin_movieapp.databinding.ActivityMainBinding
-import com.example.kotlin_movieapp.ui.main.MainFragment
+import com.example.kotlin_movieapp.ui.main.MovieListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, MovieListFragment.newInstance())
                 .commitNow()
         }
     }
