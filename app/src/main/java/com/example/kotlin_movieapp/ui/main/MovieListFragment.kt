@@ -86,7 +86,7 @@ class MovieListFragment : Fragment() {
     fun fillArrayWithPictures(movieData: List<Movie>): List<Movie> {
         var array = movieData
         val pictures = MovieSourceImpl(resources).getImages()
-        val length = array.size
+        val length = array.size-1
         for (i in 0..length) {
             array.elementAt(i).image = pictures[i]
         }

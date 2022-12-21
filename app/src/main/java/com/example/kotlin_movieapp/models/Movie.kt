@@ -1,15 +1,15 @@
 package com.example.kotlin_movieapp.models
 
-import android.content.res.Resources
-import androidx.core.content.ContentProviderCompat.requireContext
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class Movie(
     val id : Int = 0,
     var image : Int = 0,
     val name : String = "Название фильма",
     val description : String = ""
-)
+) : Parcelable
 
 fun getTopMovies() : List<Movie> {
     return listOf(

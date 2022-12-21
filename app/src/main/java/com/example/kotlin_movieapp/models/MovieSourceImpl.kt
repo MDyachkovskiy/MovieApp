@@ -25,7 +25,7 @@ class MovieSourceImpl (private val resources: Resources) : MovieSource {
         val pictures = resources.obtainTypedArray(R.array.MoviePosters)
         val length = pictures.length()
         val answer = IntArray(length)
-        for (i in 0..length) {
+        for (i in 0..length-1) {
             answer[i] = pictures.getResourceId(i,0)
         }
         return answer

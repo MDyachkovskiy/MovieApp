@@ -18,10 +18,7 @@ class MainViewModel(private val liveData : MutableLiveData<AppState> = MutableLi
     fun getMovie() {
         Thread {
             liveData.postValue(AppState.Loading)
-            if ((0..10).random() > 5)
-                liveData.postValue(AppState.Success(repository.getMovieFromLocalStorage()))
-            else
-                liveData.postValue(AppState.Error(IllegalAccessException()))
+            liveData.postValue(AppState.Success(repository.getMovieFromLocalStorage()))
         }.start()
     }
 

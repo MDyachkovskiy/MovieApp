@@ -6,17 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.kotlin_movieapp.databinding.MovieDetailFragmentBinding
-import com.example.kotlin_movieapp.models.MovieSource
+import com.example.kotlin_movieapp.models.Movie
+import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
+import kotlinx.android.synthetic.main.movie_item.*
 
 class MovieDetailsFragment : Fragment() {
 
     private var _binding: MovieDetailFragmentBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var data: MovieSource
 
     companion object {
-        fun newInstance() = MovieDetailsFragment()
+        fun newInstance(bundle: Bundle) : MovieDetailsFragment {
+            val fragment = MovieDetailsFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun onCreateView(
@@ -31,8 +36,8 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        val movie : Movie = requireArguments().getParcelable<Movie>(KEY_BUNDLE_MOVIE)!!
+        renderData(movie)
     }
 
     override fun onDestroyView() {
@@ -41,21 +46,10 @@ class MovieDetailsFragment : Fragment() {
         _binding = null
     }
 
-    private fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
-
-            }
-
-            is AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-
-            is AppState.Success -> {
-                binding.loadingLayout.visibility = View.GONE
-            }
-        }
+    private fun renderData(movie : Movie){
+        binding.movieDescription.text = movie.description
+        binding.movieTitle.text = movie.name
+        binding.moviePoster.setImageResource(movie.image)
     }
 
 }
