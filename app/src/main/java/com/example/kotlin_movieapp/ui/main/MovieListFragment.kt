@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.MovieListFragmentBinding
 import com.example.kotlin_movieapp.models.Movie
-import com.example.kotlin_movieapp.models.MovieSource
 import com.example.kotlin_movieapp.models.MovieSourceImpl
 import com.google.android.material.snackbar.Snackbar
 
@@ -21,7 +20,6 @@ class MovieListFragment : Fragment() {
     private var _binding: MovieListFragmentBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var data: MovieSource
 
     companion object {
         fun newInstance() = MovieListFragment()
@@ -34,21 +32,19 @@ class MovieListFragment : Fragment() {
 
         _binding = MovieListFragmentBinding.inflate(inflater, container, false)
 
-        //initRV()
-
         return binding.root
+    }
+
+    private val viewModel : MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        val observer = object : Observer<AppState> {
-            override fun onChanged(appState: AppState) {
-                renderData(appState)
-            }
-        }
+
+        val observer = Observer<AppState> { appState -> renderData(appState) }
 
         viewModel.getData().observe(viewLifecycleOwner, observer)
         viewModel.getMovie()
@@ -77,23 +73,22 @@ class MovieListFragment : Fragment() {
 
             is AppState.Success -> {
                 binding.loadingLayout.visibility = View.GONE
-                val fullMovieData = fillArrayWithPictures(appState.movieData)
-                initRV(fullMovieData)
+                fillArrayWithPictures(appState.movieData).also {
+                    initRV(it)
+                }
             }
         }
     }
 
-    fun fillArrayWithPictures(movieData: List<Movie>): List<Movie> {
-        var array = movieData
+    private fun fillArrayWithPictures(movieData: List<Movie>): List<Movie> {
         val pictures = MovieSourceImpl(resources).getImages()
-        val length = array.size-1
-        for (i in 0..length) {
-            array.elementAt(i).image = pictures[i]
+        for (i in movieData.indices) {
+            movieData.elementAt(i).image = pictures[i]
         }
-        return array
+        return movieData
     }
 
-    fun initRV(data: List<Movie>) {
+    private fun initRV(data: List<Movie>) {
 
         movieAdapter = MovieAdapter(data)
 

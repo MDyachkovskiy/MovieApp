@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.example.kotlin_movieapp.databinding.MovieDetailFragmentBinding
 import com.example.kotlin_movieapp.models.Movie
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
-import kotlinx.android.synthetic.main.movie_item.*
 
 class MovieDetailsFragment : Fragment() {
 
@@ -36,8 +35,10 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movie : Movie = requireArguments().getParcelable<Movie>(KEY_BUNDLE_MOVIE)!!
-        renderData(movie)
+
+        arguments?.getParcelable<Movie>(KEY_BUNDLE_MOVIE)?.let {
+            renderData(it)
+        }
     }
 
     override fun onDestroyView() {
@@ -47,9 +48,11 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun renderData(movie : Movie){
-        binding.movieDescription.text = movie.description
-        binding.movieTitle.text = movie.name
-        binding.moviePoster.setImageResource(movie.image)
+        with (binding) {
+            movieDescription.text = movie.description
+            movieTitle.text = movie.name
+            moviePoster.setImageResource(movie.image)
+        }
     }
 
 }

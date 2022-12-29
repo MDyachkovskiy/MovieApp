@@ -12,46 +12,43 @@ import com.example.kotlin_movieapp.models.Movie
 import com.example.kotlin_movieapp.ui.main.MovieDetailsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 
-class MovieAdapter(private var movieData: List<Movie>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class MovieAdapter(private var movieData: List<Movie>) :
+    RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    fun setData (dataNew: List<Movie>){
-        this.movieData = dataNew
-        notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = MovieItemBinding.inflate(LayoutInflater.from(parent.context),
-                                                                    parent,
-                                                                  false)
+            parent,
+            false)
 
         return ViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(movieData[position])
     }
 
-    override fun getItemCount(): Int {
-        return movieData.size
-    }
+    override fun getItemCount(): Int = movieData.size
+
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movie: Movie) {
             val binding = MovieItemBinding.bind(itemView)
-            binding.moviePoster.setImageResource(movie.image)
-            binding.movieName.text = movie.name
-            binding.root.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putParcelable(KEY_BUNDLE_MOVIE, movie)
-                (itemView.context as MainActivity).supportFragmentManager
-                    .beginTransaction()
-                    .addToBackStack("tag")
-                    .add(R.id.container, MovieDetailsFragment.newInstance(bundle))
-                    .commit()
+            with(binding) {
+                moviePoster.setImageResource(movie.image)
+                movieName.text = movie.name
 
-            }        }
-
+                root.setOnClickListener {
+                    (itemView.context as MainActivity).supportFragmentManager
+                        .beginTransaction()
+                        .addToBackStack("tag")
+                        .add(R.id.container,
+                            MovieDetailsFragment.newInstance(Bundle().apply {
+                                putParcelable(KEY_BUNDLE_MOVIE, movie)
+                            }))
+                        .commit()
+                }
+            }
+        }
     }
-
 }
