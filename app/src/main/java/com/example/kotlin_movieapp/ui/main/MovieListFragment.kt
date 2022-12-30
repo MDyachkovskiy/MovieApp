@@ -52,7 +52,7 @@ class MovieListFragment : Fragment() {
         viewModel.getMovie()
 
         with(binding) {
-            searchBarText.showKewboard()
+            searchBarText.showKeyboard()
             searchButton.hideKeyboard()
         }
 
@@ -68,7 +68,7 @@ class MovieListFragment : Fragment() {
         when (appState) {
             is AppState.Error -> {
                 binding.loadingLayout.visibility = View.GONE
-                binding.main.showSnackbar(
+                binding.main.showSnackBar(
                     getString(R.string.data_loading_error),
                     0)
             }
@@ -82,7 +82,7 @@ class MovieListFragment : Fragment() {
                 fillArrayWithPictures(appState.movieData).also {
                     initRV(it)
                 }
-                binding.main.showSnackbar(
+                binding.main.showSnackBar(
                     getString(R.string.data_loading_success),
                     0)
             }
@@ -129,13 +129,13 @@ class MovieListFragment : Fragment() {
         }
     }
 
-    fun View.showKewboard() {
+    private fun View.showKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         this.requestFocus()
         imm.showSoftInput(this, 0)
     }
 
-    fun View.hideKeyboard(): Boolean {
+    private fun View.hideKeyboard(): Boolean {
         try {
             val inputMethodManager =
                 context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -145,7 +145,7 @@ class MovieListFragment : Fragment() {
         return false
     }
 
-    private fun View.showSnackbar(
+    private fun View.showSnackBar(
         text: String,
         length: Int = Snackbar.LENGTH_INDEFINITE,
     ) {
