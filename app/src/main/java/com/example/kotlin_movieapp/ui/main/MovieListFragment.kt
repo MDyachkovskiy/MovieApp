@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.MovieListFragmentBinding
 import com.example.kotlin_movieapp.models.Movie
@@ -37,13 +38,12 @@ class MovieListFragment : Fragment() {
         return binding.root
     }
 
-    private val viewModel : MainViewModel by lazy {
+    private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 
         val observer = Observer<AppState> { appState -> renderData(appState) }
@@ -68,10 +68,9 @@ class MovieListFragment : Fragment() {
         when (appState) {
             is AppState.Error -> {
                 binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.main,
-                    "Возникла ошибка загрузки данных",
-                    Snackbar.LENGTH_LONG)
-                    .show()
+                binding.main.showSnackbar(
+                    getString(R.string.data_loading_error),
+                    0)
             }
 
             is AppState.Loading -> {
@@ -83,6 +82,9 @@ class MovieListFragment : Fragment() {
                 fillArrayWithPictures(appState.movieData).also {
                     initRV(it)
                 }
+                binding.main.showSnackbar(
+                    getString(R.string.data_loading_success),
+                    0)
             }
         }
     }
@@ -133,13 +135,21 @@ class MovieListFragment : Fragment() {
         imm.showSoftInput(this, 0)
     }
 
-    fun View.hideKeyboard() : Boolean {
+    fun View.hideKeyboard(): Boolean {
         try {
             val inputMethodManager =
                 context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            return inputMethodManager.hideSoftInputFromWindow(windowToken, 0) }
-        catch (ignored: RuntimeException){}
+            return inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+        } catch (ignored: RuntimeException) {
+        }
         return false
+    }
+
+    private fun View.showSnackbar(
+        text: String,
+        length: Int = Snackbar.LENGTH_INDEFINITE,
+    ) {
+        Snackbar.make(this, text, length).show()
     }
 
 }
