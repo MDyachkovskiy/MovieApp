@@ -6,4 +6,5 @@
     <string name="tv_TopSerials">Лучшие сериалы</string>
     <string name="movie_title">Название фильма</string>
     <string name="movie_description">Описание фильма</string>
+    <string name="search_bar">Поиск фильма</string>
 </resources>

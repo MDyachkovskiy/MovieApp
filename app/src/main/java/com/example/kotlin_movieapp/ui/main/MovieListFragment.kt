@@ -1,9 +1,11 @@
 package com.example.kotlin_movieapp.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -48,6 +50,11 @@ class MovieListFragment : Fragment() {
 
         viewModel.getData().observe(viewLifecycleOwner, observer)
         viewModel.getMovie()
+
+        with(binding) {
+            searchBarText.showKewboard()
+            searchButton.hideKeyboard()
+        }
 
     }
 
@@ -119,4 +126,20 @@ class MovieListFragment : Fragment() {
             )
         }
     }
+
+    fun View.showKewboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        this.requestFocus()
+        imm.showSoftInput(this, 0)
+    }
+
+    fun View.hideKeyboard() : Boolean {
+        try {
+            val inputMethodManager =
+                context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            return inputMethodManager.hideSoftInputFromWindow(windowToken, 0) }
+        catch (ignored: RuntimeException){}
+        return false
+    }
+
 }
