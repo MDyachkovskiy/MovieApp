@@ -54,6 +54,9 @@ class MovieDetailsFragment : Fragment() {
 
         movieBundle = arguments?.getParcelable<Movie>(KEY_BUNDLE_MOVIE) ?: Movie()
 
+        movieDetail.visibility = View.GONE
+        loadingLayout.visibility = View.VISIBLE
+
         val loader = MovieLoader(movieBundle.id, onLoadListener)
         loader.loadMovie()
 
@@ -67,7 +70,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun displayMovie(movieDTO : MovieDTO) {
         with(binding) {
-            movie_detail.visibility = View.VISIBLE
+            movieDetail.visibility = View.VISIBLE
             loadingLayout.visibility = View.GONE
 
             movieDescription.text = movieDTO.description
