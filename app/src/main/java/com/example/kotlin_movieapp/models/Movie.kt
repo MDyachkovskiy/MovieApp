@@ -12,7 +12,7 @@ data class Movie(
 ) : Parcelable
 
 fun getTopMovies() : List<Movie> = listOf(
-        Movie(id = 0,
+        Movie(id = ,
             image = 0,
             name = "2001 год: Космическая одиссея",
             description = "Экипаж космического корабля «Дискавери» — капитаны Дэйв Боумэн, Фрэнк" +

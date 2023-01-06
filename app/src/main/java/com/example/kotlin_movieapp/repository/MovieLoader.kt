@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Handler
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.example.kotlin_movieapp.BuildConfig
 import com.example.kotlin_movieapp.models.MovieDTO
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -22,7 +23,7 @@ class MovieLoader(
         fun onFailed(throwable: Throwable)
     }
 
-    private val KINOPOISK_API_KEY = "0BP0C4W-SFJM1TW-JXJTT9F-HPKRHF9"
+    private val KINOPOISK_API_KEY = BuildConfig.KINOPOISK_API_KEY
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun loadMovie() {
