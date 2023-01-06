@@ -10,7 +10,6 @@ import com.example.kotlin_movieapp.models.Movie
 import com.example.kotlin_movieapp.models.MovieDTO
 import com.example.kotlin_movieapp.repository.MovieLoader
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
-import kotlinx.android.synthetic.main.movie_detail_fragment.*
 
 class MovieDetailsFragment : Fragment() {
 
@@ -54,8 +53,8 @@ class MovieDetailsFragment : Fragment() {
 
         movieBundle = arguments?.getParcelable<Movie>(KEY_BUNDLE_MOVIE) ?: Movie()
 
-        movieDetail.visibility = View.GONE
-        loadingLayout.visibility = View.VISIBLE
+        binding.movieDetail.visibility = View.GONE
+        binding.loadingLayout.visibility = View.VISIBLE
 
         val loader = MovieLoader(movieBundle.id, onLoadListener)
         loader.loadMovie()
