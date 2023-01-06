@@ -2,6 +2,7 @@ package com.example.kotlin_movieapp.repository
 
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.kotlin_movieapp.BuildConfig
@@ -33,8 +34,6 @@ class MovieLoader(
             val uri = URL(
                 "https://api.kinopoisk.dev/movie?token=${KINOPOISK_API_KEY}&search=${movieId}&field=id")
 
-            val handler = Handler()
-
             Thread {
                 lateinit var urlConnection: HttpsURLConnection
 
@@ -50,7 +49,7 @@ class MovieLoader(
 
                     val movieDTO: MovieDTO = Gson().fromJson(response, MovieDTO::class.java)
 
-                    handler.post {
+                    Handler(Looper.getMainLooper()).post {
                         listener.onLoaded(movieDTO)
                     }
 
@@ -58,7 +57,7 @@ class MovieLoader(
                     Log.e("", "Fail connection", e)
                     e.printStackTrace()
 
-                    handler.post {
+                    Handler(Looper.getMainLooper()).post {
                         listener.onFailed(e)
                     }
                 } finally {

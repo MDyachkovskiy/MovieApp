@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.MovieDetailFragmentBinding
 import com.example.kotlin_movieapp.models.Movie
 import com.example.kotlin_movieapp.models.MovieDTO
@@ -75,6 +76,14 @@ class MovieDetailsFragment : Fragment() {
             movieDescription.text = movieDTO.description
             movieTitle.text = movieDTO.name
             moviePoster.setImageResource(movieBundle.image)
+            movieReleaseDate.text = movieDTO.year.toString()
+            movieLength.text = getString(R.string.movieLength, movieDTO.movieLength.toString())
+            movieBudget.text = getString(R.string.movieBudget,
+                movieDTO.budget?.value?.toString(), movieDTO.budget?.currency);
+            movieKpRating.text = movieDTO.rating?.kp.toString()
+            movieImdbRating.text = movieDTO.rating?.imdb.toString()
+            movieGenres.text = movieDTO.genres?.joinToString(", ")
+            movieCountry.text = movieDTO.countries?.joinToString(", ")
         }
     }
 }
