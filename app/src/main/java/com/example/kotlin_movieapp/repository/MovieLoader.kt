@@ -31,7 +31,7 @@ class MovieLoader(
         try {
 
             val uri = URL(
-                "${KINOPOISK_DOMAIN}movie?token=${KINOPOISK_TOKEN}&search=${movieId}&field=id")
+                "${KINOPOISK_DOMAIN}/movie?token=${KINOPOISK_TOKEN}&search=${movieId}&field=id")
 
             Thread {
                 lateinit var urlConnection: HttpsURLConnection
