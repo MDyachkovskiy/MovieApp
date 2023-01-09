@@ -1,12 +1,11 @@
 package com.example.kotlin_movieapp.repository
 
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.example.kotlin_movieapp.BuildConfig
-import com.example.kotlin_movieapp.models.MovieDTO
+import com.example.kotlin_movieapp.models.DTO.MovieDTO
+import com.example.kotlin_movieapp.utils.KINOPOSIK_DOMAIN
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -24,15 +23,15 @@ class MovieLoader(
         fun onFailed(throwable: Throwable)
     }
 
-    private val KINOPOISK_API_KEY = BuildConfig.KINOPOISK_API_KEY
+    private val KINOPOISK_TOKEN = BuildConfig.KINOPOISK_API_KEY
+    private val KINOPOISK_DOMAIN = KINOPOSIK_DOMAIN
 
-    @RequiresApi(Build.VERSION_CODES.N)
     fun loadMovie() {
 
         try {
 
             val uri = URL(
-                "https://api.kinopoisk.dev/movie?token=${KINOPOISK_API_KEY}&search=${movieId}&field=id")
+                "${KINOPOISK_DOMAIN}movie?token=${KINOPOISK_TOKEN}&search=${movieId}&field=id")
 
             Thread {
                 lateinit var urlConnection: HttpsURLConnection
@@ -72,7 +71,6 @@ class MovieLoader(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     private fun getLines(reader: BufferedReader): String {
         return reader.lines().collect(Collectors.joining("\n"))
     }

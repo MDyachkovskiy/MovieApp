@@ -27,6 +27,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <service android:name=".ui.main.movieDetails.MovieDetailsService"/>
+
     </application>
 
 </manifest>

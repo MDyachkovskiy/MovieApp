@@ -3,7 +3,7 @@ package com.example.kotlin_movieapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.kotlin_movieapp.databinding.ActivityMainBinding
-import com.example.kotlin_movieapp.ui.main.MovieListFragment
+import com.example.kotlin_movieapp.ui.main.movieList.MovieListFragment
 
 class MainActivity : AppCompatActivity() {
 

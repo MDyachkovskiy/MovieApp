@@ -1,4 +1,4 @@
-package com.example.kotlin_movieapp.ui.main
+package com.example.kotlin_movieapp.ui.main.movieDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.MovieDetailFragmentBinding
 import com.example.kotlin_movieapp.models.Movie
-import com.example.kotlin_movieapp.models.MovieDTO
+import com.example.kotlin_movieapp.models.DTO.MovieDTO
 import com.example.kotlin_movieapp.repository.MovieLoader
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 
