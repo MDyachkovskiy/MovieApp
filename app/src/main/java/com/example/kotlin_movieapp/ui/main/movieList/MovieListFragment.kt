@@ -79,6 +79,7 @@ class MovieListFragment : Fragment() {
                     getString(R.string.data_loading_success),
                     0)
             }
+            else -> {}
         }
     }
 

@@ -22,4 +22,5 @@
     <!-- объединение строк в коде -->
     <string name="movieBudget"> %1$s %2$s</string>
     <string name="movieLength"> %1$s мин</string>
+    <string name="critical_error">Произошла непредвиденная ошибка</string>
 </resources>
