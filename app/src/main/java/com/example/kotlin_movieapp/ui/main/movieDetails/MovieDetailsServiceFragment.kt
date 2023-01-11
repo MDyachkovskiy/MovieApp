@@ -70,8 +70,12 @@ class MovieDetailsServiceFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        context?.let {
+            LocalBroadcastManager.getInstance(it).unregisterReceiver(receiver)
+        }
+
         _binding = null
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver)
+
     }
 
     private fun displayMovie(movieDTO : MovieDTO) {

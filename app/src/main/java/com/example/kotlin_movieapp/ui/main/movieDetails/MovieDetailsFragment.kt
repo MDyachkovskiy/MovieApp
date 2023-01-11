@@ -49,7 +49,7 @@ class MovieDetailsFragment : Fragment() {
         binding.movieDetail.visibility = View.GONE
         binding.loadingLayout.visibility = View.VISIBLE
 
-        movieBundle = arguments?.getParcelable<Movie>(KEY_BUNDLE_MOVIE) ?: Movie()
+        movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: Movie()
 
         viewModel.liveData.observe(viewLifecycleOwner, Observer{
                 appState -> renderData(appState) })
