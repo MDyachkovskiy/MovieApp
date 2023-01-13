@@ -24,7 +24,7 @@ class MovieDetailsService(val name: String = "") : IntentService(name) {
             val movieId = it.getIntExtra(KEY_SERVICE_MOVIE_ID, 0)
 
             val uri = URL(
-                "${KINOPOISK_DOMAIN}/movie?token=${KINOPOISK_TOKEN}&search=${movieId}&field=id")
+                "${KINOPOISK_DOMAIN}/movie?${KINOPOISK_TOKEN}&search=${movieId}&field=id")
 
             lateinit var urlConnection: HttpsURLConnection
 

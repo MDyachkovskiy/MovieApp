@@ -9,11 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.MovieDetailFragmentBinding
-import com.example.kotlin_movieapp.models.Movie
 import com.example.kotlin_movieapp.models.DTO.MovieDTO
-import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.models.Movie
+import com.example.kotlin_movieapp.ui.main.DetailsState
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
-import com.google.android.material.snackbar.Snackbar
+import com.example.kotlin_movieapp.utils.showSnackBar
 
 class MovieDetailsFragment : Fragment() {
 
@@ -46,40 +46,38 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.movieDetail.visibility = View.GONE
         binding.loadingLayout.visibility = View.VISIBLE
 
         movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: Movie()
 
-        viewModel.liveData.observe(viewLifecycleOwner, Observer{
-                appState -> renderData(appState) })
-
-        viewModel.loadMovie(movieBundle.id)
+        viewModel.getLiveData().observe(viewLifecycleOwner, Observer{
+               renderData(it)
+        })
     }
 
-    private fun renderData(appState: AppState?) {
+    private fun renderData(appState: DetailsState) {
         when (appState) {
-            is AppState.Error -> {
+            is DetailsState.Error -> {
                 binding.loadingLayout.visibility = View.GONE
                 binding.movieDetail.showSnackBar(
                     getString(R.string.data_loading_error),
+                    getString(R.string.reload),
+                    {
+                        viewModel.getMovieFromRemoteSource(movieBundle.id)
+                    },
                     0)
             }
 
-            is AppState.Loading -> {
+            is DetailsState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
             }
 
-            is AppState.SuccessMovieDetails -> {
+            is DetailsState.Success -> {
+                binding.movieDetail.visibility = View.VISIBLE
                 binding.loadingLayout.visibility = View.GONE
                 displayMovie(appState.movieDTO)
                 binding.movieDetail.showSnackBar(
                     getString(R.string.data_loading_success),
-                    0)
-            }
-            else -> {
-                binding.movieDetail.showSnackBar(
-                    getString(R.string.critical_error),
                     0)
             }
         }
@@ -99,22 +97,22 @@ class MovieDetailsFragment : Fragment() {
                 movieDTO.budget?.value?.toString(), movieDTO.budget?.currency);
             movieKpRating.text = movieDTO.rating?.kp.toString()
             movieImdbRating.text = movieDTO.rating?.imdb.toString()
-            movieGenres.text = movieDTO.genres?.joinToString(", ")
+
+            movieGenres.text = movieDTO.genres?.let{
+                var result = ""
+                for(genre in it) {
+                    result = ", $result$genre"
+                }
+                result
+            }
+
             movieCountry.text = movieDTO.countries?.joinToString(", ")
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         _binding = null
-    }
-
-    private fun View.showSnackBar(
-        text: String,
-        length: Int = Snackbar.LENGTH_INDEFINITE,
-    ) {
-        Snackbar.make(this, text, length).show()
     }
 
 }
