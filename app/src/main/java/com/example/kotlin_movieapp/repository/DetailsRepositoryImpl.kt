@@ -1,12 +1,14 @@
 package com.example.kotlin_movieapp.repository
 
-import okhttp3.Callback
+import com.example.kotlin_movieapp.models.DTO.MovieDTO
+import retrofit2.Callback
+
 
 class DetailsRepositoryImpl (
     private val remoteDataSource: RemoteDataSource
 ) : DetailsRepository {
 
-    override fun getMovieDetails(requestLink: Int, callback: Callback) {
-        remoteDataSource.getMovieDetails(requestLink, callback)
+    override fun getMovieDetailsFromServer(movieId: Int, callback: Callback<MovieDTO>) {
+        remoteDataSource.getMovieDetails(movieId, callback)
     }
 }

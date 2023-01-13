@@ -1,21 +1,31 @@
 package com.example.kotlin_movieapp.repository
 
-import com.example.kotlin_movieapp.BuildConfig
-import okhttp3.Callback
+import com.example.kotlin_movieapp.models.DTO.MovieDTO
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
-import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-private const val KINOPOISK_DOMAIN = "https://api.kinopoisk.dev"
-private const val KINOPOISK_TOKEN = BuildConfig.KINOPOISK_API_KEY
+private const val KINOPOISK_DOMAIN = "https://api.kinopoisk.dev/"
 
 class RemoteDataSource {
 
-   fun getMovieDetails(requestLink: Int, callback: Callback) {
+    private val kinopoiskAPI = Retrofit.Builder()
+        .baseUrl(KINOPOISK_DOMAIN)
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+        .client(createOkHttpClient())
+        .build().create(KinopoiskAPI::class.java)
 
-        val builder: Request.Builder = Request.Builder().apply{
-            url(KINOPOISK_DOMAIN+"/movie?${KINOPOISK_TOKEN}&search=${requestLink}&field=id")
-        }
+   fun getMovieDetails(movieId: Int, callback: retrofit2.Callback<MovieDTO>) {
+        kinopoiskAPI.getMovie(movieId).enqueue(callback)
+    }
 
-        OkHttpClient().newCall(builder.build()).enqueue(callback)
+    private fun createOkHttpClient (): OkHttpClient {
+        val httpClient = OkHttpClient.Builder()
+
+        httpClient.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+
+        return httpClient.build()
     }
 }
