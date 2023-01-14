@@ -12,7 +12,7 @@ import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.adapters.MovieServiceAdapter
 import com.example.kotlin_movieapp.databinding.MovieListFragmentBinding
-import com.example.kotlin_movieapp.models.CollectionItem
+import com.example.kotlin_movieapp.models.Top250Response
 import com.example.kotlin_movieapp.ui.main.AppState
 import com.google.android.material.snackbar.Snackbar
 
@@ -81,10 +81,12 @@ class MovieListFragment : Fragment() {
         }
     }
 
-    private fun initRV(data: List<CollectionItem>) {
+    private fun initRV(data: Top250Response) {
+
+        val movieList = data.top250Movies
 
         binding.RVTopMovies.apply {
-            adapter = MovieAdapter(data)
+            adapter = MovieAdapter(movieList)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,
@@ -93,7 +95,7 @@ class MovieListFragment : Fragment() {
         }
 
         binding.RVSerials.apply {
-            adapter = MovieServiceAdapter(data)
+            adapter = MovieServiceAdapter(movieList)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,
@@ -102,7 +104,7 @@ class MovieListFragment : Fragment() {
         }
 
         binding.RVNewMovies.apply {
-            adapter = MovieAdapter(data)
+            adapter = MovieAdapter(movieList)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,

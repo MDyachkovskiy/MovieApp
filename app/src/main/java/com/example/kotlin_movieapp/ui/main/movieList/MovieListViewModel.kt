@@ -3,7 +3,7 @@ package com.example.kotlin_movieapp.ui.main.movieList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kotlin_movieapp.models.CollectionItem
+import com.example.kotlin_movieapp.models.Top250Response
 import com.example.kotlin_movieapp.repository.CollectionsRepository
 import com.example.kotlin_movieapp.repository.CollectionsRepositoryImpl
 import com.example.kotlin_movieapp.repository.RemoteDataSource
@@ -24,12 +24,12 @@ class MovieListViewModel(
         return liveData
     }
 
-    private val callback = object : retrofit2.Callback<List<CollectionItem>> {
+    private val callback = object : retrofit2.Callback<Top250Response> {
         override fun onResponse(
-            call: Call<List<CollectionItem>>,
-            response: Response<List<CollectionItem>>,
+            call: Call<Top250Response>,
+            response: Response<Top250Response>,
         ) {
-            val serverResponse : List <CollectionItem>? = response.body()
+            val serverResponse : Top250Response? = response.body()
             liveData.postValue(
                 if (response.isSuccessful && serverResponse != null) {
                     checkResponse(serverResponse)
@@ -39,7 +39,7 @@ class MovieListViewModel(
             )
         }
 
-        private fun checkResponse(serverResponse : List<CollectionItem>) : AppState {
+        private fun checkResponse(serverResponse : Top250Response) : AppState {
             return if (serverResponse == null) {
                 AppState.Error(Throwable(CORRUPTED_DATA))
             } else {
@@ -47,7 +47,7 @@ class MovieListViewModel(
             }
         }
 
-        override fun onFailure(call: Call<List<CollectionItem>>, t: Throwable) {
+        override fun onFailure(call: Call<Top250Response>, t: Throwable) {
             liveData.postValue(AppState.Error(Throwable(t.message ?: REQUEST_ERROR)))
         }
 

@@ -6,7 +6,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class CollectionItem(
-    val id: Int? = 0,
+    val id: Int?,
     var poster: Poster?,
-    val name: String = "",
+    val name: String?,
+    val top250: Int?
 ) : Parcelable

@@ -1,7 +1,7 @@
 package com.example.kotlin_movieapp.repository
 
-import com.example.kotlin_movieapp.models.CollectionItem
 import com.example.kotlin_movieapp.models.DTO.MovieDTO
+import com.example.kotlin_movieapp.models.Top250Response
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,7 +23,7 @@ class RemoteDataSource {
         kinopoiskAPI.getMovie(movieId).enqueue(callback)
     }
 
-    fun getTop250Collection(callback: Callback<List<CollectionItem>>){
+    fun getTop250Collection(callback: Callback<Top250Response>){
         kinopoiskAPI.getTop250Collection().enqueue(callback)
     }
 

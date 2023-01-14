@@ -11,6 +11,7 @@ import com.example.kotlin_movieapp.databinding.MovieItemBinding
 import com.example.kotlin_movieapp.models.CollectionItem
 import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
+import com.squareup.picasso.Picasso
 
 class MovieAdapter(
     private var movieData: List<CollectionItem>
@@ -37,7 +38,7 @@ class MovieAdapter(
             val binding = MovieItemBinding.bind(itemView)
             with(binding) {
 
-                movieName.text = movie.name
+                Picasso.get()?.load(movie.poster?.url)?.into(moviePoster)
 
                 root.setOnClickListener {
                     (itemView.context as MainActivity).supportFragmentManager

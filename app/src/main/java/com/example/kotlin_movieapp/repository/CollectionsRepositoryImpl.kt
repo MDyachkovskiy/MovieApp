@@ -1,6 +1,6 @@
 package com.example.kotlin_movieapp.repository
 
-import com.example.kotlin_movieapp.models.CollectionItem
+import com.example.kotlin_movieapp.models.Top250Response
 import retrofit2.Callback
 
 class CollectionsRepositoryImpl(
@@ -8,7 +8,7 @@ class CollectionsRepositoryImpl(
 ) : CollectionsRepository {
 
     override fun getTop250CollectionFromServer(
-        callback: Callback<List<CollectionItem>>)
+        callback: Callback<Top250Response>)
     {
         remoteDataSource.getTop250Collection(callback)
     }
