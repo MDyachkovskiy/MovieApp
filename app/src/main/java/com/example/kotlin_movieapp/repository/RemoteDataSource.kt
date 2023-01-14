@@ -1,9 +1,11 @@
 package com.example.kotlin_movieapp.repository
 
+import com.example.kotlin_movieapp.models.CollectionItem
 import com.example.kotlin_movieapp.models.DTO.MovieDTO
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -17,8 +19,12 @@ class RemoteDataSource {
         .client(createOkHttpClient())
         .build().create(KinopoiskAPI::class.java)
 
-   fun getMovieDetails(movieId: Int, callback: retrofit2.Callback<MovieDTO>) {
+   fun getMovieDetails(movieId: Int, callback: Callback<MovieDTO>) {
         kinopoiskAPI.getMovie(movieId).enqueue(callback)
+    }
+
+    fun getTop250Collection(callback: Callback<List<CollectionItem>>){
+        kinopoiskAPI.getTop250Collection().enqueue(callback)
     }
 
     private fun createOkHttpClient (): OkHttpClient {
@@ -28,4 +34,6 @@ class RemoteDataSource {
 
         return httpClient.build()
     }
+
+
 }

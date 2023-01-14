@@ -53,6 +53,12 @@ class MovieDetailsFragment : Fragment() {
         viewModel.getLiveData().observe(viewLifecycleOwner, Observer{
                renderData(it)
         })
+
+        requestMovieDetail(movieBundle.id)
+    }
+
+    private fun requestMovieDetail(movieId: Int) {
+        viewModel.getMovieFromRemoteSource(movieId)
     }
 
     private fun renderData(appState: DetailsState) {

@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.MainActivity
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.MovieItemBinding
-import com.example.kotlin_movieapp.models.Movie
+import com.example.kotlin_movieapp.models.CollectionItem
 import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsServiceFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 
 class MovieServiceAdapter(
-    private var movieData: List<Movie>
+    private var movieData: List<CollectionItem>
     ) : RecyclerView.Adapter<MovieServiceAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,10 +33,10 @@ class MovieServiceAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(movie: Movie) {
+        fun bind(movie: CollectionItem) {
             val binding = MovieItemBinding.bind(itemView)
             with(binding) {
-                moviePoster.setImageResource(movie.image)
+
                 movieName.text = movie.name
 
                 root.setOnClickListener {
