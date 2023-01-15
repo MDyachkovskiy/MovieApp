@@ -5,7 +5,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.kotlin_movieapp.BuildConfig
-import com.example.kotlin_movieapp.models.DTO.MovieDTO
+import com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.utils.*
 import com.google.gson.Gson
 import java.io.BufferedReader

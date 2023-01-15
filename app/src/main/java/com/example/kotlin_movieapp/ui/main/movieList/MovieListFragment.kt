@@ -12,7 +12,7 @@ import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.adapters.MovieServiceAdapter
 import com.example.kotlin_movieapp.databinding.MovieListFragmentBinding
-import com.example.kotlin_movieapp.models.Top250Response
+import com.example.kotlin_movieapp.models.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.ui.main.AppState
 import com.google.android.material.snackbar.Snackbar
 
@@ -33,6 +33,7 @@ class MovieListFragment : Fragment() {
         _binding = MovieListFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
+
     }
 
     private val viewModel: MovieListViewModel by lazy {
@@ -48,7 +49,7 @@ class MovieListFragment : Fragment() {
             renderData(it)
         })
 
-        viewModel.getTop250MovieCollection()
+        viewModel.getTop250Collection()
 
     }
 

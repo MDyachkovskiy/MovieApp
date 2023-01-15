@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.MainActivity
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.MovieItemBinding
-import com.example.kotlin_movieapp.models.CollectionItem
+import com.example.kotlin_movieapp.models.collectionResponse.CollectionItem
 import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsServiceFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.squareup.picasso.Picasso
@@ -38,7 +38,7 @@ class MovieServiceAdapter(
             val binding = MovieItemBinding.bind(itemView)
             with(binding) {
 
-                Picasso.get()?.load(movie.poster?.url)?.into(moviePoster)
+                Picasso.get()?.load(movie.poster?.previewUrl)?.into(moviePoster)
 
                 root.setOnClickListener {
                     (itemView.context as MainActivity).supportFragmentManager

@@ -3,7 +3,7 @@ package com.example.kotlin_movieapp.ui.main.movieList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kotlin_movieapp.models.Top250Response
+import com.example.kotlin_movieapp.models.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.repository.CollectionsRepository
 import com.example.kotlin_movieapp.repository.CollectionsRepositoryImpl
 import com.example.kotlin_movieapp.repository.RemoteDataSource
@@ -29,7 +29,7 @@ class MovieListViewModel(
             call: Call<Top250Response>,
             response: Response<Top250Response>,
         ) {
-            val serverResponse : Top250Response? = response.body()
+            val serverResponse: Top250Response? = response.body()
             liveData.postValue(
                 if (response.isSuccessful && serverResponse != null) {
                     checkResponse(serverResponse)
@@ -38,6 +38,10 @@ class MovieListViewModel(
                 }
             )
         }
+        override fun onFailure(call: Call<Top250Response>, t: Throwable) {
+            liveData.postValue(AppState.Error(Throwable(t.message ?: REQUEST_ERROR)))
+        }
+    }
 
         private fun checkResponse(serverResponse : Top250Response) : AppState {
             return if (serverResponse == null) {
@@ -47,13 +51,7 @@ class MovieListViewModel(
             }
         }
 
-        override fun onFailure(call: Call<Top250Response>, t: Throwable) {
-            liveData.postValue(AppState.Error(Throwable(t.message ?: REQUEST_ERROR)))
-        }
-
-    }
-
-    fun getTop250MovieCollection() {
+    fun getTop250Collection() {
         liveData.value = AppState.Loading
         repository.getTop250CollectionFromServer(callback)
     }

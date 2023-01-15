@@ -1,8 +1,8 @@
 package com.example.kotlin_movieapp.repository
 
-import com.example.kotlin_movieapp.models.DTO.MovieDTO
+import com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse.MovieDTO
 
 
 interface DetailsRepository {
-    fun getMovieDetailsFromServer(requestLink: Int, callback: retrofit2.Callback<MovieDTO>)
+    fun getMovieDetailsFromServer(movieId: Int?, callback: retrofit2.Callback<MovieDTO>)
 }

@@ -1,7 +1,8 @@
 package com.example.kotlin_movieapp.repository
 
-import com.example.kotlin_movieapp.models.DTO.MovieDTO
-import com.example.kotlin_movieapp.models.Top250Response
+import com.example.kotlin_movieapp.models.collectionResponse.Top250Response
+import com.example.kotlin_movieapp.models.collectionResponse.TopTvShowsResponse
+import com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse.MovieDTO
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,12 +20,16 @@ class RemoteDataSource {
         .client(createOkHttpClient())
         .build().create(KinopoiskAPI::class.java)
 
-   fun getMovieDetails(movieId: Int, callback: Callback<MovieDTO>) {
+   fun getMovieDetails(movieId: Int?, callback: Callback<MovieDTO>) {
         kinopoiskAPI.getMovie(movieId).enqueue(callback)
     }
 
     fun getTop250Collection(callback: Callback<Top250Response>){
         kinopoiskAPI.getTop250Collection().enqueue(callback)
+    }
+
+    fun getTopTvShowsCollection(callback: Callback<TopTvShowsResponse>){
+        kinopoiskAPI.getTopTvShowsCollection().enqueue(callback)
     }
 
     private fun createOkHttpClient (): OkHttpClient {

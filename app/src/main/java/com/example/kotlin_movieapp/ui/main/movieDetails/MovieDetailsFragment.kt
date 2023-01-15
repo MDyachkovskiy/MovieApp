@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.MovieDetailFragmentBinding
-import com.example.kotlin_movieapp.models.DTO.MovieDTO
-import com.example.kotlin_movieapp.models.Movie
+import com.example.kotlin_movieapp.models.collectionResponse.CollectionItem
+import com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.ui.main.DetailsState
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.showSnackBar
@@ -20,7 +21,7 @@ class MovieDetailsFragment : Fragment() {
     private var _binding: MovieDetailFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var movieBundle : Movie
+    private lateinit var movieBundle : CollectionItem
 
     private val viewModel: MovieDetailsViewModel by lazy {
         ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
@@ -48,7 +49,7 @@ class MovieDetailsFragment : Fragment() {
 
         binding.loadingLayout.visibility = View.VISIBLE
 
-        movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: Movie()
+        movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: CollectionItem()
 
         viewModel.getLiveData().observe(viewLifecycleOwner, Observer{
                renderData(it)
@@ -57,7 +58,7 @@ class MovieDetailsFragment : Fragment() {
         requestMovieDetail(movieBundle.id)
     }
 
-    private fun requestMovieDetail(movieId: Int) {
+    private fun requestMovieDetail(movieId: Int?) {
         viewModel.getMovieFromRemoteSource(movieId)
     }
 
@@ -96,7 +97,10 @@ class MovieDetailsFragment : Fragment() {
 
             movieDescription.text = movieDTO.description
             movieTitle.text = movieDTO.name
-            moviePoster.setImageResource(movieBundle.image)
+
+            view?.let {
+                Glide.with(it).load(movieDTO.poster?.url).into(moviePoster) }
+
             movieReleaseDate.text = movieDTO.year.toString()
             movieLength.text = getString(R.string.movieLength, movieDTO.movieLength.toString())
             movieBudget.text = getString(R.string.movieBudget,
@@ -104,14 +108,7 @@ class MovieDetailsFragment : Fragment() {
             movieKpRating.text = movieDTO.rating?.kp.toString()
             movieImdbRating.text = movieDTO.rating?.imdb.toString()
 
-            movieGenres.text = movieDTO.genres?.let{
-                var result = ""
-                for(genre in it) {
-                    result = ", $result$genre"
-                }
-                result
-            }
-
+            movieGenres.text = movieDTO.genres?.joinToString(", ")
             movieCountry.text = movieDTO.countries?.joinToString(", ")
         }
     }

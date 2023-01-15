@@ -1,9 +1,9 @@
-package com.example.kotlin_movieapp.models.DTO
+package com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Country(
+data class Genre(
     val name: String?
 ) : Parcelable

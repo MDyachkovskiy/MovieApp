@@ -1,6 +1,6 @@
 package com.example.kotlin_movieapp.ui.main
 
-import com.example.kotlin_movieapp.models.Top250Response
+import com.example.kotlin_movieapp.models.collectionResponse.Top250Response
 
 sealed class AppState {
     object Loading : AppState()
