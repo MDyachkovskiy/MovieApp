@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.MovieDetailFragmentBinding
-import com.example.kotlin_movieapp.models.collectionResponse.CollectionItem
-import com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse.MovieDTO
+import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem
+import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.ui.main.DetailsState
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.showSnackBar

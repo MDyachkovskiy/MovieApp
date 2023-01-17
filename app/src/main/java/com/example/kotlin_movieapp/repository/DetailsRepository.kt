@@ -1,6 +1,6 @@
 package com.example.kotlin_movieapp.repository
 
-import com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse.MovieDTO
+import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 
 
 interface DetailsRepository {

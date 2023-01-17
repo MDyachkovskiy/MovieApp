@@ -1,4 +1,4 @@
-package com.example.kotlin_movieapp.ui.main.movieList
+package com.example.kotlin_movieapp.ui.main.top250Movie
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,19 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
-import com.example.kotlin_movieapp.adapters.MovieServiceAdapter
-import com.example.kotlin_movieapp.databinding.MovieListFragmentBinding
-import com.example.kotlin_movieapp.models.collectionResponse.Top250Response
+import com.example.kotlin_movieapp.databinding.Top250movieFragmentBinding
+import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.ui.main.AppState
 import com.google.android.material.snackbar.Snackbar
 
-class MovieListFragment : Fragment() {
+class Top250MovieFragment : Fragment() {
 
-    private var _binding: MovieListFragmentBinding? = null
+    private var _binding: Top250movieFragmentBinding? = null
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance() = MovieListFragment()
+        fun newInstance() = Top250MovieFragment()
     }
 
     override fun onCreateView(
@@ -30,20 +29,18 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
 
-        _binding = MovieListFragmentBinding.inflate(inflater, container, false)
+        _binding = Top250movieFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
 
     }
 
-    private val viewModel: MovieListViewModel by lazy {
-        ViewModelProvider(this).get(MovieListViewModel::class.java)
+    private val viewModel: Top250MovieViewModel by lazy {
+        ViewModelProvider(this).get(Top250MovieViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.loadingLayout.visibility = View.VISIBLE
 
         viewModel.getData().observe(viewLifecycleOwner, Observer {
             renderData(it)
@@ -63,7 +60,7 @@ class MovieListFragment : Fragment() {
         when (appState) {
             is AppState.Error -> {
                 binding.loadingLayout.visibility = View.GONE
-                binding.main.showSnackBar(
+                binding.top250fragment.showSnackBar(
                     getString(R.string.data_loading_error),
                     0)
             }
@@ -72,13 +69,11 @@ class MovieListFragment : Fragment() {
                 binding.loadingLayout.visibility = View.VISIBLE
             }
 
-            is AppState.Success -> {
+            is AppState.SuccessMovie -> {
                 binding.loadingLayout.visibility = View.GONE
                 initRV(appState.movieData)
-                binding.main.showSnackBar(
-                    getString(R.string.data_loading_success),
-                    0)
             }
+            is AppState.SuccessTvShow -> return
         }
     }
 
@@ -86,31 +81,12 @@ class MovieListFragment : Fragment() {
 
         val movieList = data.top250Movies
 
-        binding.RVTopMovies.apply {
+        binding.RVTop250.apply {
             adapter = MovieAdapter(movieList)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,
-                false
-            )
-        }
-
-        binding.RVSerials.apply {
-            adapter = MovieServiceAdapter(movieList)
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-        }
-
-        binding.RVNewMovies.apply {
-            adapter = MovieAdapter(movieList)
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
+                false)
         }
     }
 

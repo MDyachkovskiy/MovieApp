@@ -1,6 +1,6 @@
 package com.example.kotlin_movieapp.ui.main
 
-import com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse.MovieDTO
+import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 
 sealed class DetailsState {
     object Loading : DetailsState()

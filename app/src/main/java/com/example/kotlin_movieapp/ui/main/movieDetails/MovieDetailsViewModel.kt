@@ -2,7 +2,7 @@ package com.example.kotlin_movieapp.ui.main.movieDetails
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse.MovieDTO
+import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.repository.DetailsRepository
 import com.example.kotlin_movieapp.repository.DetailsRepositoryImpl
 import com.example.kotlin_movieapp.repository.RemoteDataSource

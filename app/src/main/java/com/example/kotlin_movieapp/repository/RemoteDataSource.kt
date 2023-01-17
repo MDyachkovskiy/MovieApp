@@ -1,8 +1,8 @@
 package com.example.kotlin_movieapp.repository
 
-import com.example.kotlin_movieapp.models.collectionResponse.Top250Response
-import com.example.kotlin_movieapp.models.collectionResponse.TopTvShowsResponse
-import com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse.MovieDTO
+import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
+import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
+import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

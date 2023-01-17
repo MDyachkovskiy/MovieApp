@@ -1,7 +1,7 @@
 package com.example.kotlin_movieapp.repository
 
-import com.example.kotlin_movieapp.models.collectionResponse.Top250Response
-import com.example.kotlin_movieapp.models.collectionResponse.TopTvShowsResponse
+import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
+import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
 import retrofit2.Callback
 
 class CollectionsRepositoryImpl(
