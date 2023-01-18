@@ -2,6 +2,7 @@ package com.example.kotlin_movieapp.repository
 
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
+import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
 import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -30,6 +31,10 @@ class RemoteDataSource {
 
     fun getTopTvShowsCollection(callback: Callback<TopTvShowsResponse>){
         kinopoiskAPI.getTopTvShowsCollection().enqueue(callback)
+    }
+
+    fun getUpComingCollection(callback: Callback<UpComingResponse>){
+        kinopoiskAPI.getUpComingCollection().enqueue(callback)
     }
 
     private fun createOkHttpClient (): OkHttpClient {

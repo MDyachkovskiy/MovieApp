@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kotlin_movieapp.databinding.ActivityMainBinding
 import com.example.kotlin_movieapp.repository.ConnectivityReceiver
+import com.example.kotlin_movieapp.ui.main.movieList.MovieListFragment
 import com.example.kotlin_movieapp.ui.main.top250Movie.Top250MovieFragment
 import com.example.kotlin_movieapp.ui.main.topTvShows.TopTvShowsFragment
 import com.example.kotlin_movieapp.ui.main.upComing.UpComingMovieFragment
@@ -26,9 +27,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container_UpComing, UpComingMovieFragment.newInstance())
-                .replace(R.id.container_Top250, Top250MovieFragment.newInstance())
-                .replace(R.id.container_TvShows, TopTvShowsFragment.newInstance())
+                .replace(R.id.main_container, MovieListFragment.newInstance())
                 .commitNow()
         }
     }

@@ -73,7 +73,7 @@ class TopTvShowsFragment : Fragment() {
                 binding.loadingLayout.visibility = View.GONE
                 initRV(appState.movieData)
             }
-            is AppState.SuccessMovie -> return
+            else -> {return }
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.kotlin_movieapp.repository
 
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
+import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
 import retrofit2.Callback
 
 class CollectionsRepositoryImpl(
@@ -15,6 +16,10 @@ class CollectionsRepositoryImpl(
 
     override fun getTopTvShowsCollectionFromServer(callback: Callback<TopTvShowsResponse>) {
         remoteDataSource.getTopTvShowsCollection(callback)
+    }
+
+    override fun getUpComingCollectionFromServer(callback: Callback<UpComingResponse>) {
+        remoteDataSource.getUpComingCollection(callback)
     }
 
 

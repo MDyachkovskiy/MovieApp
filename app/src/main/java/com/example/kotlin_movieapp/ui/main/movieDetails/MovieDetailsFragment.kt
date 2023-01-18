@@ -47,6 +47,7 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.movieDetail.visibility = View.VISIBLE
         binding.loadingLayout.visibility = View.VISIBLE
 
         movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: CollectionItem()

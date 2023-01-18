@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.UpcomingFragmentBinding
-import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
+import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
 import com.example.kotlin_movieapp.ui.main.AppState
 import com.google.android.material.snackbar.Snackbar
 
@@ -46,7 +46,7 @@ class UpComingMovieFragment : Fragment() {
             renderData(it)
         })
 
-        viewModel.getTop250Collection()
+        viewModel.getUpComingCollection()
 
     }
 
@@ -69,7 +69,7 @@ class UpComingMovieFragment : Fragment() {
                 binding.loadingLayout.visibility = View.VISIBLE
             }
 
-            is AppState.SuccessMovie -> {
+            is AppState.SuccessUpComing -> {
                 binding.loadingLayout.visibility = View.GONE
                 initRV(appState.movieData)
             }
@@ -77,9 +77,9 @@ class UpComingMovieFragment : Fragment() {
         }
     }
 
-    private fun initRV(data: Top250Response) {
+    private fun initRV(data: UpComingResponse) {
 
-        val movieList = data.top250Movies
+        val movieList = data.UpComingMovies
 
         binding.RVUpComing.apply {
             adapter = MovieAdapter(movieList)

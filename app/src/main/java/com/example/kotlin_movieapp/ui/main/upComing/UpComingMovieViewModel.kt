@@ -3,7 +3,7 @@ package com.example.kotlin_movieapp.ui.main.upComing
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
+import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
 import com.example.kotlin_movieapp.repository.CollectionsRepository
 import com.example.kotlin_movieapp.repository.CollectionsRepositoryImpl
 import com.example.kotlin_movieapp.repository.RemoteDataSource
@@ -24,12 +24,12 @@ class UpComingMovieViewModel(
         return liveData
     }
 
-    private val callback = object : retrofit2.Callback<Top250Response> {
+    private val callback = object : retrofit2.Callback<UpComingResponse> {
         override fun onResponse(
-            call: Call<Top250Response>,
-            response: Response<Top250Response>,
+            call: Call<UpComingResponse>,
+            response: Response<UpComingResponse>,
         ) {
-            val serverResponse: Top250Response? = response.body()
+            val serverResponse: UpComingResponse? = response.body()
             liveData.postValue(
                 if (response.isSuccessful && serverResponse != null) {
                     checkResponse(serverResponse)
@@ -38,22 +38,22 @@ class UpComingMovieViewModel(
                 }
             )
         }
-        override fun onFailure(call: Call<Top250Response>, t: Throwable) {
+        override fun onFailure(call: Call<UpComingResponse>, t: Throwable) {
             liveData.postValue(AppState.Error(Throwable(t.message ?: REQUEST_ERROR)))
         }
     }
 
-        private fun checkResponse(serverResponse : Top250Response) : AppState {
+        private fun checkResponse(serverResponse : UpComingResponse) : AppState {
             return if (serverResponse == null) {
                 AppState.Error(Throwable(CORRUPTED_DATA))
             } else {
-                AppState.SuccessMovie(serverResponse)
+                AppState.SuccessUpComing(serverResponse)
             }
         }
 
-    fun getTop250Collection() {
+    fun getUpComingCollection() {
         liveData.value = AppState.Loading
-        repository.getTop250CollectionFromServer(callback)
+        repository.getUpComingCollectionFromServer(callback)
     }
 
 }
