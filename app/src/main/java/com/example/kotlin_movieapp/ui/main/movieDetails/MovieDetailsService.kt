@@ -5,7 +5,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.kotlin_movieapp.BuildConfig
-import com.example.kotlin_movieapp.models.DTO.MovieDTO
+import com.example.kotlin_movieapp.models.collectionResponse.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.utils.*
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -24,7 +24,7 @@ class MovieDetailsService(val name: String = "") : IntentService(name) {
             val movieId = it.getIntExtra(KEY_SERVICE_MOVIE_ID, 0)
 
             val uri = URL(
-                "${KINOPOISK_DOMAIN}/movie?token=${KINOPOISK_TOKEN}&search=${movieId}&field=id")
+                "${KINOPOISK_DOMAIN}/movie?${KINOPOISK_TOKEN}&search=${movieId}&field=id")
 
             lateinit var urlConnection: HttpsURLConnection
 

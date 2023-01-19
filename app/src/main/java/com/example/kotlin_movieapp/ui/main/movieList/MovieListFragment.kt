@@ -12,8 +12,7 @@ import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.adapters.MovieServiceAdapter
 import com.example.kotlin_movieapp.databinding.MovieListFragmentBinding
-import com.example.kotlin_movieapp.models.Movie
-import com.example.kotlin_movieapp.models.MovieSourceImpl
+import com.example.kotlin_movieapp.models.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.ui.main.AppState
 import com.google.android.material.snackbar.Snackbar
 
@@ -34,6 +33,7 @@ class MovieListFragment : Fragment() {
         _binding = MovieListFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
+
     }
 
     private val viewModel: MovieListViewModel by lazy {
@@ -43,11 +43,13 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.loadingLayout.visibility = View.VISIBLE
 
-        val observer = Observer<AppState> { appState -> renderData(appState) }
+        viewModel.getData().observe(viewLifecycleOwner, Observer {
+            renderData(it)
+        })
 
-        viewModel.getData().observe(viewLifecycleOwner, observer)
-        viewModel.getMovie()
+        viewModel.getTop250Collection()
 
     }
 
@@ -72,29 +74,20 @@ class MovieListFragment : Fragment() {
 
             is AppState.Success -> {
                 binding.loadingLayout.visibility = View.GONE
-                fillArrayWithPictures(appState.movieData).also {
-                    initRV(it)
-                }
+                initRV(appState.movieData)
                 binding.main.showSnackBar(
                     getString(R.string.data_loading_success),
                     0)
             }
-            else -> {}
         }
     }
 
-    private fun fillArrayWithPictures(movieData: List<Movie>): List<Movie> {
-        val pictures = MovieSourceImpl(resources).getImages()
-        for (i in movieData.indices) {
-            movieData.elementAt(i).image = pictures[i]
-        }
-        return movieData
-    }
+    private fun initRV(data: Top250Response) {
 
-    private fun initRV(data: List<Movie>) {
+        val movieList = data.top250Movies
 
         binding.RVTopMovies.apply {
-            adapter = MovieAdapter(data)
+            adapter = MovieAdapter(movieList)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,
@@ -103,7 +96,7 @@ class MovieListFragment : Fragment() {
         }
 
         binding.RVSerials.apply {
-            adapter = MovieServiceAdapter(data)
+            adapter = MovieServiceAdapter(movieList)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,
@@ -112,7 +105,7 @@ class MovieListFragment : Fragment() {
         }
 
         binding.RVNewMovies.apply {
-            adapter = MovieAdapter(data)
+            adapter = MovieAdapter(movieList)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,
@@ -127,5 +120,4 @@ class MovieListFragment : Fragment() {
     ) {
         Snackbar.make(this, text, length).show()
     }
-
 }
