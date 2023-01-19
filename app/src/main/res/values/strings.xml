@@ -6,4 +6,7 @@
     <string name="tv_TopSerials">Лучшие сериалы</string>
     <string name="movie_title">Название фильма</string>
     <string name="movie_description">Описание фильма</string>
+    <string name="search_bar">Поиск фильма</string>
+    <string name="data_loading_error">Ошибка загрузки данных</string>
+    <string name="data_loading_success">Данные успешно загружены</string>
 </resources>

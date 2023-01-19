@@ -4,14 +4,10 @@ import com.example.kotlin_movieapp.models.Movie
 import com.example.kotlin_movieapp.models.getTopMovies
 
 
-class RepositoryImpl() : Repository {
+class RepositoryImpl : Repository {
 
-    override fun getMovieFromServer() : Movie {
-        return Movie();
-    }
+    override fun getMovieFromServer() : Movie = Movie();
 
-    override fun getMovieFromLocalStorage() : List<Movie> {
-        Thread.sleep(2000L)
-        return getTopMovies()
-    }
+
+    override fun getMovieFromLocalStorage() : List<Movie> = getTopMovies()
 }

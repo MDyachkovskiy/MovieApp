@@ -11,8 +11,7 @@ data class Movie(
     val description : String = ""
 ) : Parcelable
 
-fun getTopMovies() : List<Movie> {
-    return listOf(
+fun getTopMovies() : List<Movie> = listOf(
         Movie(id = 0,
             image = 0,
             name = "2001 год: Космическая одиссея",
@@ -80,4 +79,3 @@ fun getTopMovies() : List<Movie> {
 
         )
     )
-}

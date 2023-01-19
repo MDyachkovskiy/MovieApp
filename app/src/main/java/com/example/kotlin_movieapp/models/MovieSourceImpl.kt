@@ -11,41 +11,24 @@ class MovieSourceImpl (private val resources: Resources) : MovieSource {
 
     }
 
-    fun init() : MovieSourceImpl {
-        val movieNames = resources.getStringArray(R.array.MovieNames)
-        val pictures = topMovieImages
-        for (i in 0..6) {
-            movieSource.add(Movie(i, pictures[i], movieNames[i], ""))
-        }
-        return this
-    }
-
     private val topMovieImages: IntArray
-    private get() {
+    get() {
         val pictures = resources.obtainTypedArray(R.array.MoviePosters)
         val length = pictures.length()
         val answer = IntArray(length)
-        for (i in 0..length-1) {
+        for (i in 0 until length) {
             answer[i] = pictures.getResourceId(i,0)
         }
         return answer
     }
 
-   fun getImages() : IntArray {
-        return topMovieImages;
-    }
+   fun getImages() : IntArray = topMovieImages;
 
-    override fun getMovie(position: Int): Movie {
-        return movieSource[position]
-    }
+    override fun getMovie(position: Int): Movie = movieSource[position]
 
-    override fun size(): Int {
-        return movieSource.size
-    }
+    override fun size(): Int = movieSource.size
 
-    override fun indexOf(movie: Movie): Int {
-        return movieSource.indexOf(movie)
-    }
+    override fun indexOf(movie: Movie): Int = movieSource.indexOf(movie)
 
 }
 
