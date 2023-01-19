@@ -1,5 +1,9 @@
-package com.example.kotlin_movieapp.models
+package com.example.kotlin_movieapp.models.DTO
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class MovieDTO(
     val budget: Budget?,
     val countries: List<Country>?,
@@ -14,4 +18,4 @@ data class MovieDTO(
     val rating: Rating?,
     val similarMovies: List<SimilarMovy>?,
     val year: Int?
-)
+) : Parcelable

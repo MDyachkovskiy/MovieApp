@@ -9,12 +9,12 @@ import com.example.kotlin_movieapp.MainActivity
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.MovieItemBinding
 import com.example.kotlin_movieapp.models.Movie
-import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsFragment
+import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsServiceFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 
-class MovieAdapter(
+class MovieServiceAdapter(
     private var movieData: List<Movie>
-    ) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+    ) : RecyclerView.Adapter<MovieServiceAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = MovieItemBinding.inflate(LayoutInflater.from(parent.context),
@@ -44,7 +44,7 @@ class MovieAdapter(
                         .beginTransaction()
                         .addToBackStack("tag")
                         .add(R.id.container,
-                            MovieDetailsFragment.newInstance(Bundle().apply {
+                            MovieDetailsServiceFragment.newInstance(Bundle().apply {
                                 putParcelable(KEY_BUNDLE_MOVIE, movie)
                             }))
                         .commit()

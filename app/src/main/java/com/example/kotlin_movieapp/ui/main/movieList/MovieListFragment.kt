@@ -1,4 +1,4 @@
-package com.example.kotlin_movieapp.ui.main
+package com.example.kotlin_movieapp.ui.main.movieList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,14 +10,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
+import com.example.kotlin_movieapp.adapters.MovieServiceAdapter
 import com.example.kotlin_movieapp.databinding.MovieListFragmentBinding
 import com.example.kotlin_movieapp.models.Movie
 import com.example.kotlin_movieapp.models.MovieSourceImpl
+import com.example.kotlin_movieapp.ui.main.AppState
 import com.google.android.material.snackbar.Snackbar
 
 class MovieListFragment : Fragment() {
 
-    private lateinit var movieAdapter: MovieAdapter
     private var _binding: MovieListFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -35,8 +36,8 @@ class MovieListFragment : Fragment() {
         return binding.root
     }
 
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
+    private val viewModel: MovieListViewModel by lazy {
+        ViewModelProvider(this).get(MovieListViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,6 +79,7 @@ class MovieListFragment : Fragment() {
                     getString(R.string.data_loading_success),
                     0)
             }
+            else -> {}
         }
     }
 
@@ -91,10 +93,8 @@ class MovieListFragment : Fragment() {
 
     private fun initRV(data: List<Movie>) {
 
-        movieAdapter = MovieAdapter(data)
-
         binding.RVTopMovies.apply {
-            adapter = movieAdapter
+            adapter = MovieAdapter(data)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,
@@ -103,7 +103,7 @@ class MovieListFragment : Fragment() {
         }
 
         binding.RVSerials.apply {
-            adapter = movieAdapter
+            adapter = MovieServiceAdapter(data)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,
@@ -112,7 +112,7 @@ class MovieListFragment : Fragment() {
         }
 
         binding.RVNewMovies.apply {
-            adapter = movieAdapter
+            adapter = MovieAdapter(data)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,

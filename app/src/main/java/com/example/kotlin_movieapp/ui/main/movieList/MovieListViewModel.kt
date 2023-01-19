@@ -1,16 +1,17 @@
-package com.example.kotlin_movieapp.ui.main
+package com.example.kotlin_movieapp.ui.main.movieList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlin_movieapp.repository.RepositoryImpl
+import com.example.kotlin_movieapp.ui.main.AppState
 
-class MainViewModel(private val liveData : MutableLiveData<AppState> = MutableLiveData(),
-                    private val repository : RepositoryImpl = RepositoryImpl()
-                    ) :
-    ViewModel() {
+class MovieListViewModel(
+    private val liveData: MutableLiveData<AppState> = MutableLiveData(),
+    private val repository: RepositoryImpl = RepositoryImpl(),
+) : ViewModel() {
 
-    fun getData() : LiveData<AppState> {
+    fun getData(): LiveData<AppState> {
         return liveData
     }
 
