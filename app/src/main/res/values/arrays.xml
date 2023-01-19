@@ -1,26 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="MovieNames">
-        <item> 2001 год: Космическая одиссея  </item>
-        <item> Чужой </item>
-        <item> Всё о Еве </item>
-        <item> Амадей </item>
-        <item> Амели </item>
-        <item> Апокалипсис сегодня </item>
-        <item> Аватар </item>
-
-    </string-array>
-
-    <string-array name="MoviePosters">
-        <item> @drawable/movie_1</item>
-        <item> @drawable/movie_2</item>
-        <item> @drawable/movie_3</item>
-        <item> @drawable/movie_4</item>
-        <item> @drawable/movie_5</item>
-        <item> @drawable/movie_6</item>
-        <item> @drawable/movie_7</item>
-
-    </string-array>
-
 </resources>
