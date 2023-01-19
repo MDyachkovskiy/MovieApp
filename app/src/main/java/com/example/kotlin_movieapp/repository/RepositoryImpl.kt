@@ -1,19 +1,17 @@
 package com.example.kotlin_movieapp.repository
 
-
 import com.example.kotlin_movieapp.models.Movie
-import com.example.kotlin_movieapp.models.MovieSource
-import com.example.kotlin_movieapp.models.MovieSourceImpl
+import com.example.kotlin_movieapp.models.getTopMovies
 
 
 class RepositoryImpl() : Repository {
 
-    override fun getMovieFromServer(): Movie {
+    override fun getMovieFromServer() : Movie {
         return Movie();
     }
 
-    override fun getMovieFromLocalStorage(): Movie {
-        //return MovieSourceImpl(context.resources).init()
-        return Movie();
+    override fun getMovieFromLocalStorage() : List<Movie> {
+        Thread.sleep(2000L)
+        return getTopMovies()
     }
 }

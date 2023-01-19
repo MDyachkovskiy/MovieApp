@@ -1,0 +1,55 @@
+package com.example.kotlin_movieapp.ui.main
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.kotlin_movieapp.databinding.MovieDetailFragmentBinding
+import com.example.kotlin_movieapp.models.Movie
+import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
+import kotlinx.android.synthetic.main.movie_item.*
+
+class MovieDetailsFragment : Fragment() {
+
+    private var _binding: MovieDetailFragmentBinding? = null
+    private val binding
+        get() = _binding!!
+
+    companion object {
+        fun newInstance(bundle: Bundle) : MovieDetailsFragment {
+            val fragment = MovieDetailsFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+
+        _binding = MovieDetailFragmentBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val movie : Movie = requireArguments().getParcelable<Movie>(KEY_BUNDLE_MOVIE)!!
+        renderData(movie)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
+    }
+
+    private fun renderData(movie : Movie){
+        binding.movieDescription.text = movie.description
+        binding.movieTitle.text = movie.name
+        binding.moviePoster.setImageResource(movie.image)
+    }
+
+}

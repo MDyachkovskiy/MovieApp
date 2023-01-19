@@ -9,31 +9,32 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.adapters.MovieAdapter
-import com.example.kotlin_movieapp.databinding.FragmentMainBinding
+import com.example.kotlin_movieapp.databinding.MovieListFragmentBinding
+import com.example.kotlin_movieapp.models.Movie
 import com.example.kotlin_movieapp.models.MovieSource
 import com.example.kotlin_movieapp.models.MovieSourceImpl
 import com.google.android.material.snackbar.Snackbar
 
-class MainFragment : Fragment() {
+class MovieListFragment : Fragment() {
 
     private lateinit var movieAdapter: MovieAdapter
-    private var _binding: FragmentMainBinding? = null
+    private var _binding: MovieListFragmentBinding? = null
     private val binding
-    get() = _binding!!
+        get() = _binding!!
     private lateinit var data: MovieSource
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = MovieListFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
 
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = MovieListFragmentBinding.inflate(inflater, container, false)
 
-        initRV()
+        //initRV()
 
         return binding.root
     }
@@ -43,13 +44,13 @@ class MainFragment : Fragment() {
 
         val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        val observer = object:Observer<AppState> {
+        val observer = object : Observer<AppState> {
             override fun onChanged(appState: AppState) {
                 renderData(appState)
             }
         }
 
-        viewModel.getData().observe(viewLifecycleOwner,observer)
+        viewModel.getData().observe(viewLifecycleOwner, observer)
         viewModel.getMovie()
 
     }
@@ -61,10 +62,13 @@ class MainFragment : Fragment() {
     }
 
     private fun renderData(appState: AppState) {
-        when(appState){
+        when (appState) {
             is AppState.Error -> {
                 binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.main, "Возникла ошибка загрузки данных", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.main,
+                    "Возникла ошибка загрузки данных",
+                    Snackbar.LENGTH_LONG)
+                    .show()
             }
 
             is AppState.Loading -> {
@@ -73,14 +77,23 @@ class MainFragment : Fragment() {
 
             is AppState.Success -> {
                 binding.loadingLayout.visibility = View.GONE
+                val fullMovieData = fillArrayWithPictures(appState.movieData)
+                initRV(fullMovieData)
             }
         }
     }
 
+    fun fillArrayWithPictures(movieData: List<Movie>): List<Movie> {
+        var array = movieData
+        val pictures = MovieSourceImpl(resources).getImages()
+        val length = array.size-1
+        for (i in 0..length) {
+            array.elementAt(i).image = pictures[i]
+        }
+        return array
+    }
 
-    private fun initRV() {
-
-        this.data = MovieSourceImpl(resources).init()
+    fun initRV(data: List<Movie>) {
 
         movieAdapter = MovieAdapter(data)
 

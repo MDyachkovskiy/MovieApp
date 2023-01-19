@@ -3,13 +3,13 @@ package com.example.kotlin_movieapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.kotlin_movieapp.databinding.ActivityMainBinding
-import com.example.kotlin_movieapp.ui.main.MainFragment
+import com.example.kotlin_movieapp.ui.main.MovieListFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding : ActivityMainBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, MovieListFragment.newInstance())
                 .commitNow()
         }
     }
