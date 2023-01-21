@@ -1,5 +1,6 @@
 package com.example.kotlin_movieapp.repository
 
+import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
 import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
@@ -12,6 +13,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 private const val KINOPOISK_DOMAIN = "https://api.kinopoisk.dev/"
+
+private const val RATING_FIELD = "rating.kp"
+
+private const val NAME_FIELD = "name"
+
+private const val SORT_FIELD = "id name top250 poster type rating.kp"
 
 class RemoteDataSource {
 
@@ -37,6 +44,19 @@ class RemoteDataSource {
         kinopoiskAPI.getUpComingCollection().enqueue(callback)
     }
 
+    fun getSearchCollection(rating: Int?, name: String,
+        callback: Callback<SearchResponse>){
+        kinopoiskAPI.getSearchCollection(
+            RATING_FIELD,
+            "$rating-10",
+            NAME_FIELD,
+            name,
+            RATING_FIELD,
+            -1,
+            SORT_FIELD
+        ).enqueue(callback)
+    }
+
     private fun createOkHttpClient (): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
 
@@ -44,6 +64,4 @@ class RemoteDataSource {
 
         return httpClient.build()
     }
-
-
 }
