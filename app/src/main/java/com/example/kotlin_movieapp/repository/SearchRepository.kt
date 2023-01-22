@@ -3,7 +3,21 @@ package com.example.kotlin_movieapp.repository
 import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 
 interface SearchRepository {
-    fun getSearchResultFromServer(rating: Int?,
-                                  name: String,
-                                  callback: retrofit2.Callback<SearchResponse>)
+    fun getAdultLatinSearchResultFromServer(rating: Int?,
+                                            name: String,
+                                            callback: retrofit2.Callback<SearchResponse>)
+
+    fun getLatinSearchResultFromServer(rating: Int?,
+                                       name: String,
+                                       callback: retrofit2.Callback<SearchResponse>)
+
+    fun getAdultCyrillicSearchResultFromServer(rating: Int?,
+                                               name: String,
+                                               callback: retrofit2.Callback<SearchResponse>)
+
+    fun getCyrillicSearchResultFromServer(rating: Int?,
+                                          name: String,
+                                          callback: retrofit2.Callback<SearchResponse>)
+
+
 }

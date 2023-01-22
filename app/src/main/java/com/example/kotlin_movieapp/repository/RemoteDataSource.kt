@@ -18,7 +18,11 @@ private const val RATING_FIELD = "rating.kp"
 
 private const val NAME_FIELD = "name"
 
-private const val SORT_FIELD = "id name top250 poster type rating.kp"
+private const val ENLISH_NAME_FIELD = "alternativeName"
+
+private const val AGE_RATING = "ageRating"
+
+private const val SORT_FIELD = "id name top250 poster type rating.kp description"
 
 class RemoteDataSource {
 
@@ -44,15 +48,86 @@ class RemoteDataSource {
         kinopoiskAPI.getUpComingCollection().enqueue(callback)
     }
 
-    fun getSearchCollection(rating: Int?, name: String,
-        callback: Callback<SearchResponse>){
-        kinopoiskAPI.getSearchCollection(
+    fun getAdultCyrillicSearchCollection(rating: Int?, name: String,
+                                         callback: Callback<SearchResponse>){
+        kinopoiskAPI.getAdultCyrillicSearchCollection(
             RATING_FIELD,
             "$rating-10",
             NAME_FIELD,
             name,
             RATING_FIELD,
             -1,
+            AGE_RATING,
+            6,
+            AGE_RATING,
+            12,
+            AGE_RATING,
+            16,
+            AGE_RATING,
+            18,
+            AGE_RATING,
+            SORT_FIELD
+        ).enqueue(callback)
+    }
+
+    fun getCyrillicSearchCollection(rating: Int?, name: String,
+                                    callback: Callback<SearchResponse>){
+        kinopoiskAPI.getCyrillicSearchCollection(
+            RATING_FIELD,
+            "$rating-10",
+            NAME_FIELD,
+            name,
+            RATING_FIELD,
+            -1,
+            AGE_RATING,
+            6,
+            AGE_RATING,
+            12,
+            AGE_RATING,
+            16,
+            AGE_RATING,
+            SORT_FIELD
+        ).enqueue(callback)
+    }
+
+    fun getAdultLatinSearchCollection(rating: Int?, name: String,
+                                      callback: Callback<SearchResponse>){
+        kinopoiskAPI.getAdultLatinSearchCollection(
+            RATING_FIELD,
+            "$rating-10",
+            ENLISH_NAME_FIELD,
+            name,
+            RATING_FIELD,
+            -1,
+            AGE_RATING,
+            6,
+            AGE_RATING,
+            12,
+            AGE_RATING,
+            16,
+            AGE_RATING,
+            18,
+            AGE_RATING,
+            SORT_FIELD
+        ).enqueue(callback)
+    }
+
+    fun getLatinSearchCollection(rating: Int?, name: String,
+                                 callback: Callback<SearchResponse>){
+        kinopoiskAPI.getLatinSearchCollection(
+            RATING_FIELD,
+            "$rating-10",
+            ENLISH_NAME_FIELD,
+            name,
+            RATING_FIELD,
+            -1,
+            AGE_RATING,
+            6,
+            AGE_RATING,
+            12,
+            AGE_RATING,
+            16,
+            AGE_RATING,
             SORT_FIELD
         ).enqueue(callback)
     }

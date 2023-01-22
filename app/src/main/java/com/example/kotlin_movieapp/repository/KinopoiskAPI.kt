@@ -40,14 +40,7 @@ private const val POPULAR_NOW_END_POINT =
             "&selectFields=id name top250 poster type"
 
 private const val SEARCH_END_POINT =
-    "movie/?$KINOPOISK_TOKEN" +
-            "&field=rating.kp" +
-            "&search={rating}-10" +
-            "&field=name" +
-            "&search={name}" +
-            "&sortField=rating.kp" +
-            "&sortType=-1" +
-            "&selectFields=id name top250 poster type rating.kp"
+    "movie/?$KINOPOISK_TOKEN"
 
 interface KinopoiskAPI {
     @GET(MOVIE_END_POINT)
@@ -68,13 +61,78 @@ interface KinopoiskAPI {
     ) : Call<UpComingResponse>
 
     @GET(SEARCH_END_POINT)
-    fun getSearchCollection(
+    fun getAdultCyrillicSearchCollection(
         @Query ("field") ratingField : String,
         @Query ("search") rate: String,
         @Query ("field") nameField: String,
         @Query ("search") name: String,
         @Query ("sortField") sortField: String,
         @Query ("sortType") sortType: Int,
+        @Query ("field") ageRating6: String,
+        @Query ("search") age6: Int,
+        @Query ("field") ageRating12: String,
+        @Query ("search") age12: Int,
+        @Query ("field") ageRating16: String,
+        @Query ("search") age16: Int,
+        @Query ("field") ageRating18: String,
+        @Query ("search") age18: Int,
+        @Query ("field") ageRatingNull: String,
+        @Query ("selectFields") selectFields: String,
+    ) : Call<SearchResponse>
+
+    @GET(SEARCH_END_POINT)
+    fun getCyrillicSearchCollection(
+        @Query ("field") ratingField : String,
+        @Query ("search") rate: String,
+        @Query ("field") nameField: String,
+        @Query ("search") name: String,
+        @Query ("sortField") sortField: String,
+        @Query ("sortType") sortType: Int,
+        @Query ("field") ageRating6: String,
+        @Query ("search") age6: Int,
+        @Query ("field") ageRating12: String,
+        @Query ("search") age12: Int,
+        @Query ("field") ageRating16: String,
+        @Query ("search") age16: Int,
+        @Query ("field") ageRatingNull: String,
+        @Query ("selectFields") selectFields: String,
+    ) : Call<SearchResponse>
+
+    @GET(SEARCH_END_POINT)
+    fun getAdultLatinSearchCollection(
+        @Query ("field") ratingField : String,
+        @Query ("search") rate: String,
+        @Query ("field") englishNameField: String,
+        @Query ("search") name: String,
+        @Query ("sortField") sortField: String,
+        @Query ("sortType") sortType: Int,
+        @Query ("field") ageRating6: String,
+        @Query ("search") age6: Int,
+        @Query ("field") ageRating12: String,
+        @Query ("search") age12: Int,
+        @Query ("field") ageRating16: String,
+        @Query ("search") age16: Int,
+        @Query ("field") ageRating18: String,
+        @Query ("search") age18: Int,
+        @Query ("field") ageRatingNull: String,
+        @Query ("selectFields") selectFields: String,
+    ) : Call<SearchResponse>
+
+    @GET(SEARCH_END_POINT)
+    fun getLatinSearchCollection(
+        @Query ("field") ratingField : String,
+        @Query ("search") rate: String,
+        @Query ("field") englishNameField: String,
+        @Query ("search") name: String,
+        @Query ("sortField") sortField: String,
+        @Query ("sortType") sortType: Int,
+        @Query ("field") ageRating6: String,
+        @Query ("search") age6: Int,
+        @Query ("field") ageRating12: String,
+        @Query ("search") age12: Int,
+        @Query ("field") ageRating16: String,
+        @Query ("search") age16: Int,
+        @Query ("field") ageRatingNull: String,
         @Query ("selectFields") selectFields: String,
     ) : Call<SearchResponse>
 

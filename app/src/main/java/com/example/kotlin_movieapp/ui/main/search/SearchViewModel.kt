@@ -50,13 +50,24 @@ class SearchViewModel(
             }
         }
 
-    fun getAdultSearchCollection() {
+    fun getAdultLatinSearchCollection(rating: Int?, name: String) {
         liveData.value = AppState.Loading
+        repository.getAdultLatinSearchResultFromServer(rating, name, callback)
     }
 
-    fun getSearchCollection(rating: Int?, name: String) {
+    fun getLatinSearchCollection(rating: Int?, name: String) {
         liveData.value = AppState.Loading
-        repository.getSearchResultFromServer(rating, name, callback)
+        repository.getLatinSearchResultFromServer(rating, name, callback)
+    }
+
+    fun getAdultCyrillicSearchCollection(rating: Int?, name: String) {
+        liveData.value = AppState.Loading
+        repository.getAdultCyrillicSearchResultFromServer(rating, name, callback)
+    }
+
+    fun getCyrillicSearchCollection(rating: Int?, name: String) {
+        liveData.value = AppState.Loading
+        repository.getCyrillicSearchResultFromServer(rating, name, callback)
     }
 
 }

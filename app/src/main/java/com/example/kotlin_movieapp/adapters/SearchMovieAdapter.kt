@@ -39,6 +39,8 @@ class SearchMovieAdapter(
 
                 movieTitle.text = movie.name
 
+                movieDescription.text = movie.description
+
                 Picasso.get()?.load(movie.poster?.previewUrl)?.into(poster)
 
                 root.setOnClickListener {

@@ -6,6 +6,7 @@
         <SwitchPreferenceCompat
             app:icon="@drawable/ic_baseline_18_up_rating_24"
             app:key="adult_content"
+            app:defaultValue="true"
             app:title="@string/adult_content"
             app:summaryOff="@string/adult_off"
             app:summaryOn="@string/adult_on"/>

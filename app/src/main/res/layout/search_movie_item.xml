@@ -41,6 +41,7 @@
         android:includeFontPadding="false"
         android:textSize="13sp"
         android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/poster"
         app:layout_constraintTop_toTopOf="@id/poster" />

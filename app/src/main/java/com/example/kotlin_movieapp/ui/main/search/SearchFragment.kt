@@ -13,6 +13,7 @@ import com.example.kotlin_movieapp.adapters.SearchMovieAdapter
 import com.example.kotlin_movieapp.databinding.SearchFragmentBinding
 import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 import com.example.kotlin_movieapp.ui.main.AppState
+import java.util.regex.Pattern
 
 class SearchFragment : Fragment() {
 
@@ -50,20 +51,29 @@ class SearchFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
 
                 val sp = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }
-                val adult = sp?.getBoolean("adult_content", false)
+                val adult = sp?.getBoolean("adult_content", true)
                 val rating = sp?.getInt("searching_ratings", 5)
 
-                if (query != null && adult == true) {
-                    viewModel.getSearchCollection(rating, query)
+                if (query != null && adult == true && checkLanguage(query)) {
+                    viewModel.getAdultCyrillicSearchCollection(rating, query)
+                } else if (query != null && adult == true && !checkLanguage(query)){
+                    viewModel.getAdultLatinSearchCollection(rating, query)
+                } else if (query != null && adult == false && checkLanguage(query)){
+                    viewModel.getCyrillicSearchCollection(rating, query)
+                } else if (query != null && adult == false && !checkLanguage(query)){
+                    viewModel.getLatinSearchCollection(rating, query)
                 }
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-
                 return true
             }
         })
+    }
+
+    private fun checkLanguage (query: String) : Boolean{
+        return Pattern.matches(".*\\p{InCyrillic}.*",query)
     }
 
     private fun renderData(appState : AppState) {
