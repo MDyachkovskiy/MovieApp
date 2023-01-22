@@ -1,4 +1,4 @@
-package com.example.kotlin_movieapp.repository
+package com.example.kotlin_movieapp.repository.search
 
 import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 

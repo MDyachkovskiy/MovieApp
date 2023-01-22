@@ -1,10 +1,11 @@
-package com.example.kotlin_movieapp
+package com.example.kotlin_movieapp.ui.main
 
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.ActivityMainBinding
 import com.example.kotlin_movieapp.repository.ConnectivityReceiver
 import com.example.kotlin_movieapp.ui.main.favoritesList.FavoritesListFragment

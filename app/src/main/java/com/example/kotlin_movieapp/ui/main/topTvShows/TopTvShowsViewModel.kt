@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
-import com.example.kotlin_movieapp.repository.CollectionsRepository
-import com.example.kotlin_movieapp.repository.CollectionsRepositoryImpl
+import com.example.kotlin_movieapp.repository.collections.CollectionsRepository
+import com.example.kotlin_movieapp.repository.collections.CollectionsRepositoryImpl
 import com.example.kotlin_movieapp.repository.RemoteDataSource
 import com.example.kotlin_movieapp.ui.main.AppState
 import retrofit2.Call

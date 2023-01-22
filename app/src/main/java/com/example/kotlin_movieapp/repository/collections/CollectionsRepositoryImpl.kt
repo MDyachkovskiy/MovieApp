@@ -1,8 +1,9 @@
-package com.example.kotlin_movieapp.repository
+package com.example.kotlin_movieapp.repository.collections
 
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
 import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
+import com.example.kotlin_movieapp.repository.RemoteDataSource
 import retrofit2.Callback
 
 class CollectionsRepositoryImpl(

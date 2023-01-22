@@ -1,4 +1,4 @@
-package com.example.kotlin_movieapp.repository
+package com.example.kotlin_movieapp.repository.collections
 
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 import com.example.kotlin_movieapp.repository.RemoteDataSource
-import com.example.kotlin_movieapp.repository.SearchRepositoryImpl
+import com.example.kotlin_movieapp.repository.search.SearchRepositoryImpl
 import com.example.kotlin_movieapp.ui.main.AppState
 import retrofit2.Call
 import retrofit2.Response

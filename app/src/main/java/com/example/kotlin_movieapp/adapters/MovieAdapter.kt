@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kotlin_movieapp.MainActivity
+import com.example.kotlin_movieapp.ui.main.MainActivity
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.MovieItemBinding
 import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem

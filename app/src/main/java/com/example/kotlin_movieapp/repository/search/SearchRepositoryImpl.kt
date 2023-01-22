@@ -1,6 +1,7 @@
-package com.example.kotlin_movieapp.repository
+package com.example.kotlin_movieapp.repository.search
 
 import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
+import com.example.kotlin_movieapp.repository.RemoteDataSource
 import retrofit2.Callback
 
 
