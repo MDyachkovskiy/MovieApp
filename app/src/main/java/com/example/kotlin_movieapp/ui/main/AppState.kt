@@ -4,6 +4,7 @@ import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
 import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
+import com.example.kotlin_movieapp.model.room.HistoryMovieItem
 
 sealed class AppState {
     object Loading : AppState()
@@ -15,6 +16,8 @@ sealed class AppState {
     data class SuccessUpComing(val movieData : UpComingResponse) : AppState()
 
     data class SuccessSearch (val movieData: SearchResponse) : AppState()
+
+    data class SuccessHistory (val movieData: List<HistoryMovieItem>) : AppState()
 
     data class Error(val error : Throwable) : AppState()
 }

@@ -1,11 +1,14 @@
 package com.example.kotlin_movieapp.ui.main.movieDetails
 
+import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlin_movieapp.App
 import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.repository.movieDetails.DetailsRepository
 import com.example.kotlin_movieapp.repository.movieDetails.DetailsRepositoryImpl
 import com.example.kotlin_movieapp.repository.RemoteDataSource
+import com.example.kotlin_movieapp.repository.history.LocalRepositoryImpl
 import com.example.kotlin_movieapp.ui.main.DetailsState
 
 private const val SERVER_ERROR = "Ошибка сервера"
@@ -14,7 +17,8 @@ private const val CORRUPTED_DATA = "Неполные данные"
 
 class MovieDetailsViewModel(
     private val liveData: MutableLiveData<DetailsState> = MutableLiveData(),
-    private val repository: DetailsRepository = DetailsRepositoryImpl(RemoteDataSource()),
+    private val detailsRepository: DetailsRepository = DetailsRepositoryImpl(RemoteDataSource()),
+    private val historyRepository: LocalRepositoryImpl = LocalRepositoryImpl(App.getHistoryDao())
 ) : ViewModel() {
 
     private val callback = object : retrofit2.Callback<MovieDTO> {
@@ -51,6 +55,14 @@ class MovieDetailsViewModel(
 
     fun getMovieFromRemoteSource(movieId: Int?) {
         liveData.value = DetailsState.Loading
-        repository.getMovieDetailsFromServer(movieId, callback)
+        detailsRepository.getMovieDetailsFromServer(movieId, callback)
+    }
+
+    fun saveMovieToDB (movieDTO: MovieDTO, date: Long) {
+        historyRepository.saveEntity(movieDTO, date)
+    }
+
+    fun addCommentToMovie (movieDTO: MovieDTO, text: Editable?) {
+        historyRepository.addUserComment(movieDTO,text)
     }
 }

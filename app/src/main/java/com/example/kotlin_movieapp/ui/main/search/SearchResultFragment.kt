@@ -1,36 +1,29 @@
-package com.example.kotlin_movieapp.ui.main.history
+package com.example.kotlin_movieapp.ui.main.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlin_movieapp.adapters.HistoryMovieAdapter
-import com.example.kotlin_movieapp.databinding.HistoryFragmentBinding
-import com.example.kotlin_movieapp.model.room.HistoryMovieItem
+import com.example.kotlin_movieapp.adapters.SearchMovieAdapter
+import com.example.kotlin_movieapp.databinding.SearchResultFragmentBinding
+import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 import com.example.kotlin_movieapp.ui.main.AppState
 
-class HistoryFragment : Fragment() {
+class SearchResultFragment (
+    val appState: AppState
+        ) : Fragment() {
 
-    private var _binding: HistoryFragmentBinding? = null
+    private var _binding: SearchResultFragmentBinding? = null
     private val binding get() = _binding!!
-
-    private val viewModel: HistoryViewModel by lazy {
-        ViewModelProvider(this).get(HistoryViewModel::class.java)
-    }
-
-    companion object {
-        fun newInstance() = HistoryFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = HistoryFragmentBinding.inflate(inflater, container, false)
+
+        _binding = SearchResultFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -38,15 +31,8 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loadingLayout.visibility = View.VISIBLE
+        renderData(appState)
 
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer{
-            renderData(it)
-        })
-
-        Thread {
-            viewModel.getAllHistory()
-        }.start()
     }
 
     private fun renderData(appState : AppState) {
@@ -57,7 +43,7 @@ class HistoryFragment : Fragment() {
             AppState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
             }
-            is AppState.SuccessHistory -> {
+            is AppState.SuccessSearch -> {
                 binding.loadingLayout.visibility = View.GONE
                 initRV(appState.movieData)
             }
@@ -65,10 +51,11 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    private fun initRV(movieData: List<HistoryMovieItem>) {
+    private fun initRV(movieData: SearchResponse) {
+        val movieList = movieData.searchResults
 
-        binding.historyRecyclerView.apply {
-            adapter = HistoryMovieAdapter(movieData)
+        binding.searchRecyclerView.apply {
+            adapter = SearchMovieAdapter(movieList)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.VERTICAL,
@@ -78,7 +65,7 @@ class HistoryFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
         _binding = null
     }
-
 }

@@ -22,6 +22,7 @@
     <!-- объединение строк в коде -->
     <string name="movieBudget"> %1$s %2$s</string>
     <string name="movieLength"> %1$s мин</string>
+    <string name="concDate"> %1$s %2$s</string>
 
     <!-- отображения текста в приложении -->
     <string name="critical_error">Произошла непредвиденная ошибка</string>
@@ -40,5 +41,16 @@
     <string name="adult_content">Взрослый контент</string>
     <string name="searching_rating">Минимальный рейтинг фильма</string>
 
+    <!-- MovieDetailsFragment Titles -->
+    <string name="userNoteTitle">Добавьте свой комментарий</string>
+    <string name="userCommentHint">Оставьте здесь свой комментарий по фильму</string>
+
+    <!-- Fragment Titles -->
+    <string name="your_search_result">Мы нашли следующие фильмы по вашему запросу</string>
+    <string name="history">История ваших просмотров</string>
+
+    <!-- HistoryFragment -->
+    <string name="userComments">Ваши комментарии по фильму:</string>
+    <string name="viewingDate">Дата просмотра:</string>
 
 </resources>

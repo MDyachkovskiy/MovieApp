@@ -14,7 +14,13 @@ interface HistoryDao {
     fun all() : List<HistoryEntity>
 
     @Query("SELECT * FROM HistoryEntity WHERE name LIKE :name")
-    fun getDataByWord (name: String) : List<HistoryEntity>
+    fun getDataByWord (name: String?) : List<HistoryEntity>
+
+    @Query("SELECT * FROM HistoryEntity WHERE name LIKE :name")
+    fun getDataByMovieName (name: String?) : HistoryEntity
+
+    @Query("SELECT * FROM HistoryEntity WHERE kinopoiskId LIKE :id")
+    fun getMoviebyId (id: Long) : HistoryEntity
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert (entity: HistoryEntity)
@@ -25,6 +31,6 @@ interface HistoryDao {
     @Delete
     fun delete (entity: HistoryEntity)
 
-    @Query ("DELETE FROM HistoryEntity WHERE id = :id")
+    @Query ("DELETE FROM HistoryEntity WHERE kinopoiskId = :id")
     fun deleteById(id: Long)
 }

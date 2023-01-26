@@ -5,9 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class HistoryEntity(
-    @PrimaryKey (autoGenerate = true) val id: Long = 0,
-    val name: String? ="",
-    val description: String? ="",
-    val date: Long = 0,
-    val userNotes: String? = "",
+    @PrimaryKey
+    var kinopoiskId: Int? = 0,
+    var name: String? ="",
+    var description: String? ="",
+    var poster: String? = null,
+    var date: Long = 0L,
+    var userNote: String? = "",
 )

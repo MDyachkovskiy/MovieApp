@@ -1,18 +1,14 @@
 package com.example.kotlin_movieapp.ui.main.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlin_movieapp.adapters.SearchMovieAdapter
+import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.SearchFragmentBinding
-import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
-import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.ui.main.history.HistoryFragment
 import java.util.regex.Pattern
 
 class SearchFragment : Fragment() {
@@ -29,6 +25,8 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
 
+        setHasOptionsMenu(true)
+
         _binding = SearchFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -42,7 +40,10 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getData().observe(viewLifecycleOwner, Observer {
-            renderData(it)
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, SearchResultFragment(it))
+                .commit()
         })
 
         binding.searchView.setOnQueryTextListener(object
@@ -56,11 +57,11 @@ class SearchFragment : Fragment() {
 
                 if (query != null && adult == true && checkLanguage(query)) {
                     viewModel.getAdultCyrillicSearchCollection(rating, query)
-                } else if (query != null && adult == true && !checkLanguage(query)){
+                } else if (query != null && adult == true && !checkLanguage(query)) {
                     viewModel.getAdultLatinSearchCollection(rating, query)
-                } else if (query != null && adult == false && checkLanguage(query)){
+                } else if (query != null && adult == false && checkLanguage(query)) {
                     viewModel.getCyrillicSearchCollection(rating, query)
-                } else if (query != null && adult == false && !checkLanguage(query)){
+                } else if (query != null && adult == false && !checkLanguage(query)) {
                     viewModel.getLatinSearchCollection(rating, query)
                 }
                 return true
@@ -72,36 +73,31 @@ class SearchFragment : Fragment() {
         })
     }
 
-    private fun checkLanguage (query: String) : Boolean{
-        return Pattern.matches(".*\\p{InCyrillic}.*",query)
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun renderData(appState : AppState) {
-        when (appState) {
-            is AppState.Error -> {
-                binding.loadingLayout.visibility = View.VISIBLE
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.history -> {
+                childFragmentManager.apply {
+                    beginTransaction()
+                        .replace(R.id.container, HistoryFragment.newInstance())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+                true
             }
-            AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
+            else -> {
+                super.onOptionsItemSelected(item)
             }
-            is AppState.SuccessSearch -> {
-                binding.loadingLayout.visibility = View.GONE
-                initRV(appState.movieData)
-            }
-            else -> {return}
         }
     }
 
-    private fun initRV(movieData: SearchResponse) {
-        val movieList = movieData.searchResults
-
-        binding.searchRecyclerView.apply {
-            adapter = SearchMovieAdapter(movieList)
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.VERTICAL,
-                false)
-        }
+    private fun checkLanguage(query: String): Boolean {
+        return Pattern.matches(".*\\p{InCyrillic}.*", query)
     }
 
     override fun onDestroyView() {

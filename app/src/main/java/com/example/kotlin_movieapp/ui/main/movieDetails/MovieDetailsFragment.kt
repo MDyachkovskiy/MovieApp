@@ -1,6 +1,8 @@
 package com.example.kotlin_movieapp.ui.main.movieDetails
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,7 @@ class MovieDetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var movieBundle : CollectionItem
+    private lateinit var movie : MovieDTO
 
     private val viewModel: MovieDetailsViewModel by lazy {
         ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
@@ -50,13 +53,29 @@ class MovieDetailsFragment : Fragment() {
         binding.movieDetail.visibility = View.VISIBLE
         binding.loadingLayout.visibility = View.VISIBLE
 
+        binding.userNote.addTextChangedListener (object : TextWatcher{
+            override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(text: Editable?) {
+              Thread{
+                  addCommentToMovie(movie, text)
+              }.start()
+
+            }
+
+        })
+
         movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: CollectionItem()
 
         viewModel.getLiveData().observe(viewLifecycleOwner, Observer{
                renderData(it)
         })
 
-        requestMovieDetail(movieBundle.id)
+        requestMovieDetail(movieBundle.kinopoiskId)
     }
 
     private fun requestMovieDetail(movieId: Int?) {
@@ -71,7 +90,7 @@ class MovieDetailsFragment : Fragment() {
                     getString(R.string.data_loading_error),
                     getString(R.string.reload),
                     {
-                        viewModel.getMovieFromRemoteSource(movieBundle.id)
+                        viewModel.getMovieFromRemoteSource(movieBundle.kinopoiskId)
                     },
                     0)
             }
@@ -83,6 +102,7 @@ class MovieDetailsFragment : Fragment() {
             is DetailsState.Success -> {
                 binding.movieDetail.visibility = View.VISIBLE
                 binding.loadingLayout.visibility = View.GONE
+                movie = appState.movieDTO
                 displayMovie(appState.movieDTO)
                 binding.movieDetail.showSnackBar(
                     getString(R.string.data_loading_success),
@@ -92,6 +112,12 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun displayMovie(movieDTO : MovieDTO) {
+
+        Thread{
+            val date = System.currentTimeMillis()
+            saveMovie(movieDTO, date)
+        }.start()
+
         with(binding) {
             movieDetail.visibility = View.VISIBLE
             loadingLayout.visibility = View.GONE
@@ -112,6 +138,14 @@ class MovieDetailsFragment : Fragment() {
             movieGenres.text = movieDTO.genres?.joinToString(", ")
             movieCountry.text = movieDTO.countries?.joinToString(", ")
         }
+    }
+
+    private fun saveMovie(movieDTO: MovieDTO, date: Long) {
+        viewModel.saveMovieToDB(movieDTO, date)
+    }
+
+    private fun addCommentToMovie(movieDTO: MovieDTO, text: Editable?){
+        viewModel.addCommentToMovie(movieDTO, text)
     }
 
     override fun onDestroyView() {
