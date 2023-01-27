@@ -17,6 +17,7 @@ import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.ui.main.DetailsState
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.showSnackBar
+import com.example.kotlin_movieapp.utils.showToast
 
 class MovieDetailsFragment : Fragment() {
 
@@ -68,6 +69,20 @@ class MovieDetailsFragment : Fragment() {
             }
 
         })
+
+        binding.favorite.setOnCheckedChangeListener{ checkBox, isChecked ->
+            if (isChecked) {
+                Thread {
+                    saveFavoriteMovie(movie)
+                }.start()
+                binding.movieDetail.showToast(getString(R.string.addMovieToFavorite))
+            } else {
+                Thread {
+                    deleteFavoriteMovie(movie)
+                }.start()
+                binding.movieDetail.showToast(getString(R.string.deleteMovieFromFavorite))
+            }
+        }
 
         movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: CollectionItem()
 
@@ -142,6 +157,14 @@ class MovieDetailsFragment : Fragment() {
 
     private fun saveMovie(movieDTO: MovieDTO, date: Long) {
         viewModel.saveMovieToDB(movieDTO, date)
+    }
+
+    private fun saveFavoriteMovie (movieDTO: MovieDTO) {
+        viewModel.saveFavoriteMovieToDB(movieDTO)
+    }
+
+    private fun deleteFavoriteMovie (movieDTO: MovieDTO) {
+        viewModel.saveFavoriteMovieToDB(movieDTO)
     }
 
     private fun addCommentToMovie(movieDTO: MovieDTO, text: Editable?){

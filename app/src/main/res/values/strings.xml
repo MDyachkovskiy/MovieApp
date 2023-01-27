@@ -52,5 +52,7 @@
     <!-- HistoryFragment -->
     <string name="userComments">Ваши комментарии по фильму:</string>
     <string name="viewingDate">Дата просмотра:</string>
+    <string name="addMovieToFavorite">Фильм добавлен в Понравившиеся</string>
+    <string name="deleteMovieFromFavorite">Фильм удален с Понравившихся</string>
 
 </resources>

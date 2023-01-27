@@ -1,4 +1,4 @@
-package com.example.kotlin_movieapp.model.room
+package com.example.kotlin_movieapp.model.room.history
 
 import androidx.room.Dao
 import androidx.room.Delete

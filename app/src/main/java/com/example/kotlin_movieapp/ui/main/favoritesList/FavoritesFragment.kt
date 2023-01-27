@@ -1,4 +1,4 @@
-package com.example.kotlin_movieapp.ui.main.history
+package com.example.kotlin_movieapp.ui.main.favoritesList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,29 +8,30 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlin_movieapp.adapters.HistoryMovieAdapter
-import com.example.kotlin_movieapp.databinding.HistoryFragmentBinding
-import com.example.kotlin_movieapp.model.room.history.HistoryMovieItem
+import com.example.kotlin_movieapp.adapters.FavoriteMovieAdapter
+import com.example.kotlin_movieapp.databinding.FavoritesFragmentBinding
+import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.ui.main.AppState
 
-class HistoryFragment : Fragment() {
+class FavoritesFragment : Fragment() {
 
-    private var _binding: HistoryFragmentBinding? = null
+    private var _binding: FavoritesFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: HistoryViewModel by lazy {
-        ViewModelProvider(this).get(HistoryViewModel::class.java)
+    private val viewModel: FavoritesViewModel by lazy {
+        ViewModelProvider (this).get (FavoritesViewModel::class.java)
     }
 
     companion object {
-        fun newInstance() = HistoryFragment()
+        fun newInstance() = FavoritesFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = HistoryFragmentBinding.inflate(inflater, container, false)
+
+        _binding = FavoritesFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -40,13 +41,13 @@ class HistoryFragment : Fragment() {
 
         binding.loadingLayout.visibility = View.VISIBLE
 
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer{
+        Thread {
+            viewModel.getAllFavorites()
+        }.start()
+
+        viewModel.getLiveData().observe(viewLifecycleOwner, Observer {
             renderData(it)
         })
-
-        Thread {
-            viewModel.getAllHistory()
-        }.start()
     }
 
     private fun renderData(appState : AppState) {
@@ -57,7 +58,7 @@ class HistoryFragment : Fragment() {
             AppState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
             }
-            is AppState.SuccessHistory -> {
+            is AppState.SuccessFavorites -> {
                 binding.loadingLayout.visibility = View.GONE
                 initRV(appState.movieData)
             }
@@ -65,10 +66,10 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    private fun initRV(movieData: List<HistoryMovieItem>) {
+    private fun initRV(movieData: List<FavoriteMovieItem>) {
 
-        binding.historyRecyclerView.apply {
-            adapter = HistoryMovieAdapter(movieData)
+        binding.recyclerView.apply {
+            adapter = FavoriteMovieAdapter(movieData)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.VERTICAL,
@@ -78,7 +79,7 @@ class HistoryFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
         _binding = null
     }
-
 }

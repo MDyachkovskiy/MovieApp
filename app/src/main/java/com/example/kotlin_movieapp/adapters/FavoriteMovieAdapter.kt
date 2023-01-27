@@ -7,20 +7,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.ui.main.MainActivity
 import com.example.kotlin_movieapp.R
-import com.example.kotlin_movieapp.databinding.HistoryMovieItemBinding
-import com.example.kotlin_movieapp.model.room.history.HistoryMovieItem
+import com.example.kotlin_movieapp.databinding.FavoriteMovieItemBinding
+import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
-import com.example.kotlin_movieapp.utils.convertHistoryMovieItemToCollectionItem
+import com.example.kotlin_movieapp.utils.convertFavoriteMovieItemToCollectionItem
 import com.squareup.picasso.Picasso
 import java.util.*
 
-class HistoryMovieAdapter(
-    private var movieData: List<HistoryMovieItem>
-    ) : RecyclerView.Adapter<HistoryMovieAdapter.ViewHolder>() {
+class FavoriteMovieAdapter(
+    private var movieData: List<FavoriteMovieItem>
+    ) : RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = HistoryMovieItemBinding.inflate(LayoutInflater.from(parent.context),
+        val binding = FavoriteMovieItemBinding.inflate(LayoutInflater.from(parent.context),
             parent,
             false)
 
@@ -35,8 +35,8 @@ class HistoryMovieAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(movie: HistoryMovieItem) {
-            val binding = HistoryMovieItemBinding.bind(itemView)
+        fun bind(movie: FavoriteMovieItem) {
+            val binding = FavoriteMovieItemBinding.bind(itemView)
             with(binding) {
 
                 movieTitle.text = movie.name
@@ -57,7 +57,7 @@ class HistoryMovieAdapter(
                         .add(R.id.main_container,
                             MovieDetailsFragment.newInstance(Bundle().apply {
                                 putParcelable(KEY_BUNDLE_MOVIE,
-                                    convertHistoryMovieItemToCollectionItem(movie))
+                                    convertFavoriteMovieItemToCollectionItem(movie))
                             }))
                         .commit()
                 }

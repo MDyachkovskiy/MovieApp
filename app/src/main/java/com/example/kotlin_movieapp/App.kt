@@ -2,8 +2,9 @@ package com.example.kotlin_movieapp
 
 import android.app.Application
 import androidx.room.Room
-import com.example.kotlin_movieapp.model.room.HistoryDao
+import com.example.kotlin_movieapp.model.room.history.HistoryDao
 import com.example.kotlin_movieapp.model.room.HistoryDataBase
+import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieDao
 
 class App : Application() {
 
@@ -29,6 +30,19 @@ class App : Application() {
                 }
             }
             return db!!.historyDao()
+        }
+
+        fun getFavoriteDao() : FavoriteMovieDao {
+            synchronized(HistoryDataBase::class.java) {
+                if(db == null) {
+                    if (appInstance == null) throw IllegalStateException("APP must not be null")
+
+                    db = Room.databaseBuilder(appInstance!!.applicationContext,
+                    HistoryDataBase::class.java,
+                    "Favorites.db").build()
+                }
+            }
+            return db!!.favoriteDao()
         }
     }
 }
