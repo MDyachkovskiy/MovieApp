@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
-import com.example.kotlin_movieapp.databinding.TvshowsFragmentBinding
+import com.example.kotlin_movieapp.databinding.FragmentTvshowsBinding
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
 import com.example.kotlin_movieapp.ui.main.AppState
 import com.google.android.material.snackbar.Snackbar
 
 class TopTvShowsFragment : Fragment() {
 
-    private var _binding: TvshowsFragmentBinding? = null
+    private var _binding: FragmentTvshowsBinding? = null
     private val binding get() = _binding!!
 
     companion object {
@@ -29,7 +29,7 @@ class TopTvShowsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
 
-        _binding = TvshowsFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentTvshowsBinding.inflate(inflater, container, false)
 
         return binding.root
 

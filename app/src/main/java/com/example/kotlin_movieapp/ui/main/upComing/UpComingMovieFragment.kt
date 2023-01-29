@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
-import com.example.kotlin_movieapp.databinding.UpcomingFragmentBinding
+import com.example.kotlin_movieapp.databinding.FragmentUpcomingBinding
 import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
 import com.example.kotlin_movieapp.ui.main.AppState
 import com.google.android.material.snackbar.Snackbar
 
 class UpComingMovieFragment : Fragment() {
 
-    private var _binding: UpcomingFragmentBinding? = null
+    private var _binding: FragmentUpcomingBinding? = null
     private val binding get() = _binding!!
 
     companion object {
@@ -29,7 +29,7 @@ class UpComingMovieFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
 
-        _binding = UpcomingFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentUpcomingBinding.inflate(inflater, container, false)
 
         return binding.root
 

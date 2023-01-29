@@ -4,6 +4,7 @@ import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
 import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
+import com.example.kotlin_movieapp.model.room.contacts.ContactsItem
 import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.model.room.history.HistoryMovieItem
 
@@ -21,6 +22,8 @@ sealed class AppState {
     data class SuccessHistory (val movieData: List<HistoryMovieItem>) : AppState()
 
     data class SuccessFavorites (val movieData: List<FavoriteMovieItem>) : AppState()
+
+    data class SuccessContacts (val contactsData: List<ContactsItem>) : AppState()
 
     data class Error(val error : Throwable) : AppState()
 }

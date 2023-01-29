@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
-import com.example.kotlin_movieapp.databinding.Top250movieFragmentBinding
+import com.example.kotlin_movieapp.databinding.FragmentTop250movieBinding
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.ui.main.AppState
 import com.google.android.material.snackbar.Snackbar
 
 class Top250MovieFragment : Fragment() {
 
-    private var _binding: Top250movieFragmentBinding? = null
+    private var _binding: FragmentTop250movieBinding? = null
     private val binding get() = _binding!!
 
     companion object {
@@ -29,7 +29,7 @@ class Top250MovieFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
 
-        _binding = Top250movieFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentTop250movieBinding.inflate(inflater, container, false)
 
         return binding.root
 
