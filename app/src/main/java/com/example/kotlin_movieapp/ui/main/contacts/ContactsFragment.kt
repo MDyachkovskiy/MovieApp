@@ -3,8 +3,10 @@ package com.example.kotlin_movieapp.ui.main.contacts
 import android.Manifest
 import android.app.AlertDialog
 import android.content.ContentResolver
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.LayoutInflater
@@ -79,7 +81,7 @@ class ContactsFragment : Fragment() {
 
     private fun initRV(contactsData: List<ContactsItem>) {
         binding.contactsRecyclerView.apply{
-            adapter = ContactsAdapter(contactsData)
+            adapter = ContactsAdapter(contactsData, activity)
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.VERTICAL,
@@ -188,6 +190,14 @@ class ContactsFragment : Fragment() {
                 .setNegativeButton("Не надо") { dialog, _ -> dialog.dismiss() }
                 .create()
                 .show()
+        }
+    }
+
+    private fun makePhoneCall(phoneNumber : String) {
+        if (phoneNumber.isNotEmpty()){
+            val callIntent = Intent(Intent.ACTION_CALL)
+            callIntent.data = Uri.parse("tel:$phoneNumber")
+            startActivity(callIntent)
         }
     }
 
