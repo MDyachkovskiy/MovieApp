@@ -65,5 +65,11 @@
     <string name="moviePoster">Постер к фильму</string>
     <string name="actorPhoto">Фото актера</string>
 
+    <!-- PersonDetailsFragment -->
+    <string name="personProfession">Карьера</string>
+    <string name="dateOfBirth">Дата рождения</string>
+    <string name="age">Возраст</string>
+    <string name="placeOfBirth">Место рождения</string>
+
 
 </resources>

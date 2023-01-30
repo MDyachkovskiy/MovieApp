@@ -9,7 +9,7 @@ import com.example.kotlin_movieapp.ui.main.MainActivity
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.ItemPersonsBinding
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
-import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsFragment
+import com.example.kotlin_movieapp.ui.main.personDetails.PersonDetailsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.squareup.picasso.Picasso
 
@@ -47,7 +47,7 @@ class PersonsAdapter(
                         .beginTransaction()
                         .addToBackStack("tag")
                         .add(R.id.main_container,
-                            MovieDetailsFragment.newInstance(Bundle().apply {
+                            PersonDetailsFragment.newInstance(Bundle().apply {
                                 putParcelable(KEY_BUNDLE_PERSON, person)
                             }))
                         .commit()

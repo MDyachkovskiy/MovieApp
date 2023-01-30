@@ -19,6 +19,7 @@ import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
 import com.example.kotlin_movieapp.ui.main.DetailsState
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
+import com.example.kotlin_movieapp.utils.convertListToStringLine
 import com.example.kotlin_movieapp.utils.showSnackBar
 import com.example.kotlin_movieapp.utils.showToast
 
@@ -126,6 +127,7 @@ class MovieDetailsFragment : Fragment() {
                     getString(R.string.data_loading_success),
                     0)
             }
+            else -> return
         }
     }
 
@@ -155,8 +157,11 @@ class MovieDetailsFragment : Fragment() {
             movieKpRating.text = movieDTO.rating?.kp.toString()
             movieImdbRating.text = movieDTO.rating?.imdb.toString()
 
-            movieGenres.text = movieDTO.genres?.joinToString(", ")
-            movieCountry.text = movieDTO.countries?.joinToString(", ")
+            movieGenres.text = convertListToStringLine(movieDTO.genres){
+                    genre -> genre.name }
+
+            movieCountry.text = convertListToStringLine(movieDTO.countries){
+                    country -> country.name }
         }
     }
 
