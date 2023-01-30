@@ -9,11 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
+import com.example.kotlin_movieapp.adapters.PersonsAdapter
 import com.example.kotlin_movieapp.databinding.FragmentMovieDetailBinding
 import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem
 import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
+import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
 import com.example.kotlin_movieapp.ui.main.DetailsState
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.showSnackBar
@@ -70,7 +73,7 @@ class MovieDetailsFragment : Fragment() {
 
         })
 
-        binding.favorite.setOnCheckedChangeListener{ checkBox, isChecked ->
+        binding.favorite.setOnCheckedChangeListener{ _, isChecked ->
             if (isChecked) {
                 Thread {
                     saveFavoriteMovie(movie)
@@ -143,6 +146,8 @@ class MovieDetailsFragment : Fragment() {
             view?.let {
                 Glide.with(it).load(movieDTO.poster?.url).into(moviePoster) }
 
+            initPersonsRecyclerView(movieDTO.persons)
+
             movieReleaseDate.text = movieDTO.year.toString()
             movieLength.text = getString(R.string.movieLength, movieDTO.movieLength.toString())
             movieBudget.text = getString(R.string.movieBudget,
@@ -152,6 +157,33 @@ class MovieDetailsFragment : Fragment() {
 
             movieGenres.text = movieDTO.genres?.joinToString(", ")
             movieCountry.text = movieDTO.countries?.joinToString(", ")
+        }
+    }
+
+    private fun initPersonsRecyclerView (persons: List <Person>) {
+        val actors = persons.filter {
+            it.enProfession == "actor"
+        }
+        val movieStaff = persons.filter{
+            it.enProfession != "actor"
+        }
+
+        binding.actorsRV.apply {
+            adapter = PersonsAdapter(actors)
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        }
+
+        binding.movieStaffRV.apply {
+            adapter = PersonsAdapter(movieStaff)
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
         }
     }
 
