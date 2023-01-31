@@ -13,8 +13,9 @@ import com.example.kotlin_movieapp.databinding.FragmentPersonBinding
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
 import com.example.kotlin_movieapp.model.personDetailsResponse.PersonDTO
 import com.example.kotlin_movieapp.ui.main.DetailsState
+import com.example.kotlin_movieapp.ui.main.map.MapsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
-import com.example.kotlin_movieapp.utils.convertListToStringLine
+import com.example.kotlin_movieapp.utils.convert
 import com.example.kotlin_movieapp.utils.showSnackBar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -108,15 +109,21 @@ class PersonDetailsFragment : Fragment() {
 
             personName.text = personDTO.name ?: ""
 
-            personProfession.text = convertListToStringLine(personDTO.profession) {
-                    profession -> profession.value }
+            personProfession.text = personDTO.profession?.convert(){
+                    profession -> profession.value}
 
             personAge.text = personDTO.age?.toString()
 
             personDateOfBirth.text = convertDate(personDTO.birthday)
 
-            personPlaceOfBirth.text = convertListToStringLine(personDTO.birthPlace){
+            val birthLocation = personDTO.birthPlace?.convert(){
                     birthPlace ->  birthPlace.value }
+            personPlaceOfBirth.text = birthLocation
+
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.placeOfBirthMapContainer, MapsFragment(birthLocation))
+                .commit()
         }
     }
 

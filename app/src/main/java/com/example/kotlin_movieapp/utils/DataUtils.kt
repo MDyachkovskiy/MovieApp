@@ -111,6 +111,5 @@ fun convertContactsItemToContactsEntity (contact: ContactsItem):
         phoneNumber = contact.phoneNumber
     )
 
-fun <T> convertListToStringLine (list: List<T>?, getValue: (T) -> String?) : String? {
-    return list?.joinToString (", ") { it -> getValue(it) ?: "" }
-}
+fun <T> List<T>.convert(getValue: (T) -> String?) = this.joinToString(", "){
+        it -> getValue(it) ?: "" }

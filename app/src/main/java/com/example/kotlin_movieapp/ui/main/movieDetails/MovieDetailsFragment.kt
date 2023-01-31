@@ -18,10 +18,7 @@ import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem
 import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
 import com.example.kotlin_movieapp.ui.main.DetailsState
-import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
-import com.example.kotlin_movieapp.utils.convertListToStringLine
-import com.example.kotlin_movieapp.utils.showSnackBar
-import com.example.kotlin_movieapp.utils.showToast
+import com.example.kotlin_movieapp.utils.*
 
 class MovieDetailsFragment : Fragment() {
 
@@ -157,11 +154,9 @@ class MovieDetailsFragment : Fragment() {
             movieKpRating.text = movieDTO.rating?.kp.toString()
             movieImdbRating.text = movieDTO.rating?.imdb.toString()
 
-            movieGenres.text = convertListToStringLine(movieDTO.genres){
-                    genre -> genre.name }
+            movieGenres.text = movieDTO.genres?.convert { genre -> genre.name }
 
-            movieCountry.text = convertListToStringLine(movieDTO.countries){
-                    country -> country.name }
+            movieCountry.text = movieDTO.countries?.convert {country -> country.name}
         }
     }
 

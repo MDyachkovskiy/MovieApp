@@ -32,6 +32,7 @@
     <!-- Отображения текста в приложении -->
     <string name="critical_error">Произошла непредвиденная ошибка</string>
     <string name="reload">Повторить попытку</string>
+    <string name="notFoundBirthCityGeoposition">Не удалось отобразить точное место рождения</string>
 
     <!-- Меню навигация -->
     <string name="collections">Коллекции</string>
@@ -70,6 +71,7 @@
     <string name="dateOfBirth">Дата рождения</string>
     <string name="age">Возраст</string>
     <string name="placeOfBirth">Место рождения</string>
+
 
 
 </resources>
