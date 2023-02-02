@@ -72,6 +72,11 @@
     <string name="age">Возраст</string>
     <string name="placeOfBirth">Место рождения</string>
 
+    <!-- Сервис пуш-уведомлений -->
+    <string name="lowPriorChannelName">Канал низкого приоритета</string>
+    <string name="lowPriorChannelDesc">канал для отправки сообщений с низким приоритетом</string>
+    <string name="highPriorChannelName">Канал высокого приоритета</string>
+    <string name="highPriorChannelDesc">канал для отправки сообщений с высоким приоритетом</string>
 
 
 </resources>
