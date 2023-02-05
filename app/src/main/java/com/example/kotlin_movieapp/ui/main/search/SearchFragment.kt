@@ -9,6 +9,7 @@ import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentSearchBinding
 import com.example.kotlin_movieapp.ui.main.contacts.ContactsFragment
 import com.example.kotlin_movieapp.ui.main.history.HistoryFragment
+import com.example.kotlin_movieapp.utils.replaceFragment
 import java.util.regex.Pattern
 
 class SearchFragment : Fragment() {
@@ -82,22 +83,12 @@ class SearchFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_history -> {
-                childFragmentManager.apply {
-                    beginTransaction()
-                        .replace(R.id.container, HistoryFragment.newInstance())
-                        .addToBackStack("")
-                        .commitAllowingStateLoss()
-                }
+                childFragmentManager.replaceFragment(R.id.container, HistoryFragment.newInstance())
                 true
             }
 
             R.id.menu_get_contacts -> {
-                childFragmentManager.apply {
-                    beginTransaction()
-                        .replace(R.id.container, ContactsFragment.newInstance())
-                        .addToBackStack("")
-                        .commitAllowingStateLoss()
-                }
+                childFragmentManager.replaceFragment(R.id.container, ContactsFragment.newInstance())
                 true
             }
             else -> {

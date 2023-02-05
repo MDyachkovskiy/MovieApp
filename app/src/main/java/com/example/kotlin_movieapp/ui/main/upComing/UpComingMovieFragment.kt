@@ -47,7 +47,6 @@ class UpComingMovieFragment : Fragment() {
         }
 
         viewModel.getUpComingCollection()
-
     }
 
     override fun onDestroyView() {

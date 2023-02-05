@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
@@ -16,6 +15,7 @@ import com.example.kotlin_movieapp.ui.main.DetailsState
 import com.example.kotlin_movieapp.ui.main.map.MapsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.convert
+import com.example.kotlin_movieapp.utils.replaceFragment
 import com.example.kotlin_movieapp.utils.showSnackBar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -29,7 +29,7 @@ class PersonDetailsFragment : Fragment() {
     private lateinit var person : PersonDTO
 
     private val viewModel: PersonDetailsViewModel by lazy {
-        ViewModelProvider(this).get(PersonDetailsViewModel::class.java)
+        ViewModelProvider(this)[PersonDetailsViewModel::class.java]
     }
 
     companion object {
@@ -59,9 +59,9 @@ class PersonDetailsFragment : Fragment() {
 
         requestPersonDetail(personBundle.id)
 
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer{
-               renderData(it)
-        })
+        viewModel.getLiveData().observe(viewLifecycleOwner) {
+            renderData(it)
+        }
     }
 
     private fun requestPersonDetail(personId: Int?) {
@@ -109,21 +109,20 @@ class PersonDetailsFragment : Fragment() {
 
             personName.text = personDTO.name ?: ""
 
-            personProfession.text = personDTO.profession?.convert(){
+            personProfession.text = personDTO.profession?.convert {
                     profession -> profession.value}
 
             personAge.text = personDTO.age?.toString()
 
             personDateOfBirth.text = convertDate(personDTO.birthday)
 
-            val birthLocation = personDTO.birthPlace?.convert(){
+            val birthLocation = personDTO.birthPlace?.convert{
                     birthPlace ->  birthPlace.value }
             personPlaceOfBirth.text = birthLocation
 
-            childFragmentManager
-                .beginTransaction()
-                .replace(R.id.placeOfBirthMapContainer, MapsFragment(birthLocation))
-                .commit()
+            childFragmentManager.replaceFragment(
+                R.id.placeOfBirthMapContainer,
+                MapsFragment(birthLocation) )
         }
     }
 

@@ -47,7 +47,6 @@ class TopTvShowsFragment : Fragment() {
         }
 
         viewModel.getTvShowsCollection()
-
     }
 
     override fun onDestroyView() {
