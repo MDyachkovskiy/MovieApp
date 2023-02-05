@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -29,7 +28,7 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var movie : MovieDTO
 
     private val viewModel: MovieDetailsViewModel by lazy {
-        ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
+        ViewModelProvider(this)[MovieDetailsViewModel::class.java]
     }
 
     companion object {
@@ -68,7 +67,6 @@ class MovieDetailsFragment : Fragment() {
               }.start()
 
             }
-
         })
 
         binding.favorite.setOnCheckedChangeListener{ _, isChecked ->
@@ -87,9 +85,9 @@ class MovieDetailsFragment : Fragment() {
 
         movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: CollectionItem()
 
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer{
-               renderData(it)
-        })
+        viewModel.getLiveData().observe(viewLifecycleOwner) {
+            renderData(it)
+        }
 
         requestMovieDetail(movieBundle.kinopoiskId)
     }
@@ -150,7 +148,7 @@ class MovieDetailsFragment : Fragment() {
             movieReleaseDate.text = movieDTO.year.toString()
             movieLength.text = getString(R.string.movieLength, movieDTO.movieLength.toString())
             movieBudget.text = getString(R.string.movieBudget,
-                movieDTO.budget?.value?.toString(), movieDTO.budget?.currency);
+                movieDTO.budget?.value?.toString(), movieDTO.budget?.currency)
             movieKpRating.text = movieDTO.rating?.kp.toString()
             movieImdbRating.text = movieDTO.rating?.imdb.toString()
 
@@ -168,23 +166,8 @@ class MovieDetailsFragment : Fragment() {
             it.enProfession != "actor"
         }
 
-        binding.actorsRV.apply {
-            adapter = PersonsAdapter(actors)
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-        }
-
-        binding.movieStaffRV.apply {
-            adapter = PersonsAdapter(movieStaff)
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-        }
+        binding.actorsRV.init(PersonsAdapter(actors), LinearLayoutManager.HORIZONTAL)
+        binding.movieStaffRV.init(PersonsAdapter(movieStaff), LinearLayoutManager.HORIZONTAL)
     }
 
     private fun saveMovie(movieDTO: MovieDTO, date: Long) {

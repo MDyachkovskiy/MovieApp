@@ -10,6 +10,7 @@ import com.example.kotlin_movieapp.adapters.SearchMovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentSearchResultBinding
 import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.utils.init
 
 class SearchResultFragment (
     val appState: AppState
@@ -32,7 +33,6 @@ class SearchResultFragment (
         super.onViewCreated(view, savedInstanceState)
 
         renderData(appState)
-
     }
 
     private fun renderData(appState : AppState) {
@@ -53,19 +53,11 @@ class SearchResultFragment (
 
     private fun initRV(movieData: SearchResponse) {
         val movieList = movieData.searchResults
-
-        binding.searchRecyclerView.apply {
-            adapter = SearchMovieAdapter(movieList)
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.VERTICAL,
-                false)
-        }
+        binding.searchRecyclerView.init(SearchMovieAdapter(movieList), LinearLayoutManager.VERTICAL)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         _binding = null
     }
 }

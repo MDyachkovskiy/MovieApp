@@ -3,7 +3,6 @@ package com.example.kotlin_movieapp.ui.main.search
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.example.kotlin_movieapp.R
@@ -34,18 +33,18 @@ class SearchFragment : Fragment() {
     }
 
     private val viewModel: SearchViewModel by lazy {
-        ViewModelProvider(this).get(SearchViewModel::class.java)
+        ViewModelProvider(this)[SearchViewModel::class.java]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getData().observe(viewLifecycleOwner, Observer {
+        viewModel.getData().observe(viewLifecycleOwner) {
             childFragmentManager
                 .beginTransaction()
                 .replace(R.id.container, SearchResultFragment(it))
                 .commit()
-        })
+        }
 
         binding.searchView.setOnQueryTextListener(object
             : androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -113,7 +112,6 @@ class SearchFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         _binding = null
     }
 }

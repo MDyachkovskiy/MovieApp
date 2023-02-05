@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.adapters.HistoryMovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentHistoryBinding
 import com.example.kotlin_movieapp.model.room.history.HistoryMovieItem
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.utils.init
 
 class HistoryFragment : Fragment() {
 
@@ -19,7 +19,7 @@ class HistoryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: HistoryViewModel by lazy {
-        ViewModelProvider(this).get(HistoryViewModel::class.java)
+        ViewModelProvider(this)[HistoryViewModel::class.java]
     }
 
     companion object {
@@ -40,9 +40,9 @@ class HistoryFragment : Fragment() {
 
         binding.loadingLayout.visibility = View.VISIBLE
 
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer{
+        viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
-        })
+        }
 
         Thread {
             viewModel.getAllHistory()
@@ -66,14 +66,10 @@ class HistoryFragment : Fragment() {
     }
 
     private fun initRV(movieData: List<HistoryMovieItem>) {
-
-        binding.historyRecyclerView.apply {
-            adapter = HistoryMovieAdapter(movieData)
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.VERTICAL,
-                false)
-        }
+        binding.historyRecyclerView.init(
+            HistoryMovieAdapter(movieData),
+            LinearLayoutManager.VERTICAL
+        )
     }
 
     override fun onDestroyView() {

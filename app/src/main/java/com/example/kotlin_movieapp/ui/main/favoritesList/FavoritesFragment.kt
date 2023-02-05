@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.adapters.FavoriteMovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentFavoritesBinding
 import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.utils.init
 
 class FavoritesFragment : Fragment() {
 
@@ -19,7 +19,7 @@ class FavoritesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: FavoritesViewModel by lazy {
-        ViewModelProvider (this).get (FavoritesViewModel::class.java)
+        ViewModelProvider (this)[FavoritesViewModel::class.java]
     }
 
     companion object {
@@ -45,9 +45,9 @@ class FavoritesFragment : Fragment() {
             viewModel.getAllFavorites()
         }.start()
 
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
-        })
+        }
     }
 
     private fun renderData(appState : AppState) {
@@ -67,19 +67,11 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun initRV(movieData: List<FavoriteMovieItem>) {
-
-        binding.recyclerView.apply {
-            adapter = FavoriteMovieAdapter(movieData)
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.VERTICAL,
-                false)
-        }
+        binding.recyclerView.init(FavoriteMovieAdapter(movieData), LinearLayoutManager.VERTICAL)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         _binding = null
     }
 }

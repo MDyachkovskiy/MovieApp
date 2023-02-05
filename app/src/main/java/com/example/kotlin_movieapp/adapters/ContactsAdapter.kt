@@ -52,8 +52,6 @@ class ContactsAdapter (
             }
         }
 
-
-
         private fun makePhoneCall(phoneNumber : String) {
             if (phoneNumber.isNotEmpty()){
                 val callIntent = Intent(Intent.ACTION_CALL)
@@ -104,7 +102,5 @@ class ContactsAdapter (
                     REQUEST_CODE)
             }
         }
-
-
     }
 }

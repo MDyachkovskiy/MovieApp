@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.R
@@ -13,6 +12,7 @@ import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentUpcomingBinding
 import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.utils.init
 import com.google.android.material.snackbar.Snackbar
 
 class UpComingMovieFragment : Fragment() {
@@ -36,15 +36,15 @@ class UpComingMovieFragment : Fragment() {
     }
 
     private val viewModel: UpComingMovieViewModel by lazy {
-        ViewModelProvider(this).get(UpComingMovieViewModel::class.java)
+        ViewModelProvider(this)[UpComingMovieViewModel::class.java]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getData().observe(viewLifecycleOwner, Observer {
+        viewModel.getData().observe(viewLifecycleOwner) {
             renderData(it)
-        })
+        }
 
         viewModel.getUpComingCollection()
 
@@ -52,7 +52,6 @@ class UpComingMovieFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         _binding = null
     }
 
@@ -78,17 +77,8 @@ class UpComingMovieFragment : Fragment() {
     }
 
     private fun initRV(data: UpComingResponse) {
-
         val movieList = data.UpComingMovies
-
-        binding.RVUpComing.apply {
-            adapter = MovieAdapter(movieList)
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-        }
+        binding.RVUpComing.init(MovieAdapter(movieList), LinearLayoutManager.HORIZONTAL)
     }
 
     private fun View.showSnackBar(

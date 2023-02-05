@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.R
@@ -13,6 +12,7 @@ import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentTvshowsBinding
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.utils.init
 import com.google.android.material.snackbar.Snackbar
 
 class TopTvShowsFragment : Fragment() {
@@ -36,15 +36,15 @@ class TopTvShowsFragment : Fragment() {
     }
 
     private val viewModel: TopTvShowsViewModel by lazy {
-        ViewModelProvider(this).get(TopTvShowsViewModel::class.java)
+        ViewModelProvider(this)[TopTvShowsViewModel::class.java]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getData().observe(viewLifecycleOwner, Observer {
+        viewModel.getData().observe(viewLifecycleOwner) {
             renderData(it)
-        })
+        }
 
         viewModel.getTvShowsCollection()
 
@@ -52,7 +52,6 @@ class TopTvShowsFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         _binding = null
     }
 
@@ -78,16 +77,8 @@ class TopTvShowsFragment : Fragment() {
     }
 
     private fun initRV(data: TopTvShowsResponse) {
-
         val movieList = data.topTvShows
-
-        binding.RVTvShows.apply {
-            adapter = MovieAdapter(movieList)
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false)
-        }
+        binding.RVTvShows.init(MovieAdapter(movieList), LinearLayoutManager.HORIZONTAL)
     }
 
     private fun View.showSnackBar(
