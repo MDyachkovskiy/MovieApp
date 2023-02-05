@@ -14,7 +14,7 @@ import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
 import com.example.kotlin_movieapp.ui.main.AppState
 import com.example.kotlin_movieapp.ui.main.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
-import com.google.android.material.snackbar.Snackbar
+import com.example.kotlin_movieapp.utils.showSnackBar
 
 class UpComingMovieFragment : Fragment() {
 
@@ -76,12 +76,5 @@ class UpComingMovieFragment : Fragment() {
     private fun initRV(data: UpComingResponse) {
         val movieList = data.UpComingMovies
         binding.RVUpComing.init(MovieAdapter(movieList), LinearLayoutManager.HORIZONTAL)
-    }
-
-    private fun View.showSnackBar(
-        text: String,
-        length: Int = Snackbar.LENGTH_INDEFINITE,
-    ) {
-        Snackbar.make(this, text, length).show()
     }
 }

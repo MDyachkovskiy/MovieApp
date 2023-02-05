@@ -14,13 +14,13 @@ import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.ui.main.AppState
 import com.example.kotlin_movieapp.ui.main.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
-import com.google.android.material.snackbar.Snackbar
+import com.example.kotlin_movieapp.utils.showSnackBar
 
 class Top250MovieFragment : Fragment() {
 
     private var _binding: FragmentTop250movieBinding? = null
     private val binding get() = _binding!!
-    private val dataRenderer by lazy {AppStateRenderer(binding)}
+    private val dataRenderer by lazy { AppStateRenderer(binding) }
 
 
     companion object {
@@ -63,25 +63,21 @@ class Top250MovieFragment : Fragment() {
             is AppState.Error -> {
                 binding.top250fragment.showSnackBar(
                     getString(R.string.data_loading_error),
-                    0)
+                    0
+                )
             }
 
             is AppState.SuccessMovie -> {
                 initRV(appState.movieData)
             }
-            else -> {return}
+            else -> {
+                return
+            }
         }
     }
 
     private fun initRV(data: Top250Response) {
         val movieList = data.top250Movies
         binding.RVTop250.init(MovieAdapter(movieList), LinearLayoutManager.HORIZONTAL)
-    }
-
-    private fun View.showSnackBar(
-        text: String,
-        length: Int = Snackbar.LENGTH_INDEFINITE,
-    ) {
-        Snackbar.make(this, text, length).show()
     }
 }

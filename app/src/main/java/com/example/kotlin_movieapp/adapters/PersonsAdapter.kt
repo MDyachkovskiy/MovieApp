@@ -45,7 +45,8 @@ class PersonsAdapter(
                         PersonDetailsFragment::class.java,
                         KEY_BUNDLE_PERSON,
                         person
-                    )}
+                    )
+                }
             }
         }
     }
