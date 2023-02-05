@@ -16,6 +16,7 @@ import com.example.kotlin_movieapp.databinding.FragmentMovieDetailBinding
 import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem
 import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
+import com.example.kotlin_movieapp.ui.main.AppStateRenderer
 import com.example.kotlin_movieapp.ui.main.DetailsState
 import com.example.kotlin_movieapp.utils.*
 
@@ -26,6 +27,8 @@ class MovieDetailsFragment : Fragment() {
 
     private lateinit var movieBundle : CollectionItem
     private lateinit var movie : MovieDTO
+
+    private val dataRenderer by lazy {AppStateRenderer(binding)}
 
     private val viewModel: MovieDetailsViewModel by lazy {
         ViewModelProvider(this)[MovieDetailsViewModel::class.java]
@@ -97,9 +100,9 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun renderData(appState: DetailsState) {
+        dataRenderer.render(appState)
         when (appState) {
             is DetailsState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
                 binding.movieDetail.showSnackBar(
                     getString(R.string.data_loading_error),
                     getString(R.string.reload),
@@ -108,14 +111,7 @@ class MovieDetailsFragment : Fragment() {
                     },
                     0)
             }
-
-            is DetailsState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-
-            is DetailsState.Success -> {
-                binding.movieDetail.visibility = View.VISIBLE
-                binding.loadingLayout.visibility = View.GONE
+            is DetailsState.SuccessMovie -> {
                 movie = appState.movieDTO
                 displayMovie(appState.movieDTO)
                 binding.movieDetail.showSnackBar(
@@ -134,8 +130,6 @@ class MovieDetailsFragment : Fragment() {
         }.start()
 
         with(binding) {
-            movieDetail.visibility = View.VISIBLE
-            loadingLayout.visibility = View.GONE
 
             movieDescription.text = movieDTO.description
             movieTitle.text = movieDTO.name
@@ -190,5 +184,4 @@ class MovieDetailsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

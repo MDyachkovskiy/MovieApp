@@ -10,6 +10,7 @@ import com.example.kotlin_movieapp.adapters.SearchMovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentSearchResultBinding
 import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.ui.main.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 
 class SearchResultFragment (
@@ -18,6 +19,7 @@ class SearchResultFragment (
 
     private var _binding: FragmentSearchResultBinding? = null
     private val binding get() = _binding!!
+    private val dataRenderer by lazy {AppStateRenderer(binding)}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,15 +38,9 @@ class SearchResultFragment (
     }
 
     private fun renderData(appState : AppState) {
+        dataRenderer.render(appState)
         when (appState) {
-            is AppState.Error -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-            AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
             is AppState.SuccessSearch -> {
-                binding.loadingLayout.visibility = View.GONE
                 initRV(appState.movieData)
             }
             else -> {return}

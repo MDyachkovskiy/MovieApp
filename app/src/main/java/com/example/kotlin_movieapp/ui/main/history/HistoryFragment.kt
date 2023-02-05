@@ -11,12 +11,15 @@ import com.example.kotlin_movieapp.adapters.HistoryMovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentHistoryBinding
 import com.example.kotlin_movieapp.model.room.history.HistoryMovieItem
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.ui.main.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 
 class HistoryFragment : Fragment() {
 
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
+
+    private val dataRenderer by lazy {AppStateRenderer(binding)}
 
     private val viewModel: HistoryViewModel by lazy {
         ViewModelProvider(this)[HistoryViewModel::class.java]
@@ -50,15 +53,11 @@ class HistoryFragment : Fragment() {
     }
 
     private fun renderData(appState : AppState) {
+
+        dataRenderer.render(appState)
+
         when (appState) {
-            is AppState.Error -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-            AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
             is AppState.SuccessHistory -> {
-                binding.loadingLayout.visibility = View.GONE
                 initRV(appState.movieData)
             }
             else -> {return}

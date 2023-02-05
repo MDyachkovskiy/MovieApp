@@ -7,7 +7,7 @@ sealed class DetailsState {
 
     object Loading : DetailsState()
 
-    data class Success(val movieDTO : MovieDTO) : DetailsState()
+    data class SuccessMovie(val movieDTO : MovieDTO) : DetailsState()
 
     data class Error(val error : Throwable) : DetailsState()
 

@@ -11,12 +11,15 @@ import com.example.kotlin_movieapp.adapters.FavoriteMovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentFavoritesBinding
 import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.ui.main.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 
 class FavoritesFragment : Fragment() {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
+
+    private val dataRenderer by lazy {AppStateRenderer(binding)}
 
     private val viewModel: FavoritesViewModel by lazy {
         ViewModelProvider (this)[FavoritesViewModel::class.java]
@@ -51,15 +54,11 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun renderData(appState : AppState) {
+
+        dataRenderer.render(appState)
+
         when (appState) {
-            is AppState.Error -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-            AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
             is AppState.SuccessFavorites -> {
-                binding.loadingLayout.visibility = View.GONE
                 initRV(appState.movieData)
             }
             else -> {return}

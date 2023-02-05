@@ -11,6 +11,7 @@ import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentPersonBinding
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
 import com.example.kotlin_movieapp.model.personDetailsResponse.PersonDTO
+import com.example.kotlin_movieapp.ui.main.AppStateRenderer
 import com.example.kotlin_movieapp.ui.main.DetailsState
 import com.example.kotlin_movieapp.ui.main.map.MapsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
@@ -27,6 +28,8 @@ class PersonDetailsFragment : Fragment() {
 
     private lateinit var personBundle : Person
     private lateinit var person : PersonDTO
+
+    private val dataRenderer by lazy {AppStateRenderer(binding)}
 
     private val viewModel: PersonDetailsViewModel by lazy {
         ViewModelProvider(this)[PersonDetailsViewModel::class.java]
@@ -69,9 +72,11 @@ class PersonDetailsFragment : Fragment() {
     }
 
     private fun renderData(appState: DetailsState) {
+
+        dataRenderer.render(appState)
+
         when (appState) {
             is DetailsState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
                 binding.movieDetail.showSnackBar(
                     getString(R.string.data_loading_error),
                     getString(R.string.reload),
@@ -81,13 +86,7 @@ class PersonDetailsFragment : Fragment() {
                     0)
             }
 
-            is DetailsState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-
             is DetailsState.SuccessPerson -> {
-                binding.movieDetail.visibility = View.VISIBLE
-                binding.loadingLayout.visibility = View.GONE
                 person = appState.personDTO
                 displayPerson(appState.personDTO)
                 binding.movieDetail.showSnackBar(
@@ -101,8 +100,6 @@ class PersonDetailsFragment : Fragment() {
     private fun displayPerson(personDTO : PersonDTO) {
 
         with(binding) {
-            movieDetail.visibility = View.VISIBLE
-            loadingLayout.visibility = View.GONE
 
             view?.let {
                 Glide.with(it).load(personDTO.photo).into(personPhoto) }

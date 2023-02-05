@@ -18,6 +18,7 @@ import com.example.kotlin_movieapp.adapters.ContactsAdapter
 import com.example.kotlin_movieapp.databinding.FragmentContactsBinding
 import com.example.kotlin_movieapp.model.room.contacts.ContactsItem
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.ui.main.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 
 const val REQUEST_CODE = 42
@@ -26,6 +27,8 @@ class ContactsFragment : Fragment() {
 
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
+
+    private val dataRenderer by lazy {AppStateRenderer(binding)}
 
     private val viewModel: ContactsViewModel by lazy {
         ViewModelProvider (this)[ContactsViewModel::class.java]
@@ -59,15 +62,10 @@ class ContactsFragment : Fragment() {
     }
 
     private fun renderData(appState: AppState) {
+        dataRenderer.render(appState)
+
         when(appState) {
-            is AppState.Error -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-            is AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
             is AppState.SuccessContacts -> {
-                binding.loadingLayout.visibility = View.GONE
                 initRV (appState.contactsData)
             }
             else -> return

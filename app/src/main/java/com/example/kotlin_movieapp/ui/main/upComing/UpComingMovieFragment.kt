@@ -12,6 +12,7 @@ import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentUpcomingBinding
 import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.ui.main.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 import com.google.android.material.snackbar.Snackbar
 
@@ -19,6 +20,8 @@ class UpComingMovieFragment : Fragment() {
 
     private var _binding: FragmentUpcomingBinding? = null
     private val binding get() = _binding!!
+
+    private val dataRenderer by lazy {AppStateRenderer(binding)}
 
     companion object {
         fun newInstance() = UpComingMovieFragment()
@@ -55,20 +58,15 @@ class UpComingMovieFragment : Fragment() {
     }
 
     private fun renderData(appState: AppState) {
+        dataRenderer.render(appState)
         when (appState) {
             is AppState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
                 binding.upcomingfragment.showSnackBar(
                     getString(R.string.data_loading_error),
                     0)
             }
 
-            is AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-
             is AppState.SuccessUpComing -> {
-                binding.loadingLayout.visibility = View.GONE
                 initRV(appState.movieData)
             }
             else -> {return}

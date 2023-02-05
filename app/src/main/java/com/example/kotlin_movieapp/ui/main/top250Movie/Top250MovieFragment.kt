@@ -12,6 +12,7 @@ import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentTop250movieBinding
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.ui.main.AppState
+import com.example.kotlin_movieapp.ui.main.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 import com.google.android.material.snackbar.Snackbar
 
@@ -19,6 +20,8 @@ class Top250MovieFragment : Fragment() {
 
     private var _binding: FragmentTop250movieBinding? = null
     private val binding get() = _binding!!
+    private val dataRenderer by lazy {AppStateRenderer(binding)}
+
 
     companion object {
         fun newInstance() = Top250MovieFragment()
@@ -54,20 +57,16 @@ class Top250MovieFragment : Fragment() {
     }
 
     private fun renderData(appState: AppState) {
+        dataRenderer.render(appState)
+
         when (appState) {
             is AppState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
                 binding.top250fragment.showSnackBar(
                     getString(R.string.data_loading_error),
                     0)
             }
 
-            is AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-
             is AppState.SuccessMovie -> {
-                binding.loadingLayout.visibility = View.GONE
                 initRV(appState.movieData)
             }
             else -> {return}

@@ -41,10 +41,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getData().observe(viewLifecycleOwner) {
-            childFragmentManager
-                .beginTransaction()
-                .replace(R.id.container, SearchResultFragment(it))
-                .commit()
+            childFragmentManager.replaceFragment(R.id.container, SearchResultFragment(it))
         }
 
         binding.searchView.setOnQueryTextListener(object
