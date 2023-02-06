@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.adapters.SearchMovieAdapter
-import com.example.kotlin_movieapp.databinding.SearchResultFragmentBinding
+import com.example.kotlin_movieapp.databinding.FragmentSearchResultBinding
 import com.example.kotlin_movieapp.model.collectionResponse.SearchResponse
 import com.example.kotlin_movieapp.ui.main.AppState
 
@@ -15,7 +15,7 @@ class SearchResultFragment (
     val appState: AppState
         ) : Fragment() {
 
-    private var _binding: SearchResultFragmentBinding? = null
+    private var _binding: FragmentSearchResultBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -23,7 +23,7 @@ class SearchResultFragment (
         savedInstanceState: Bundle?,
     ): View {
 
-        _binding = SearchResultFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchResultBinding.inflate(inflater, container, false)
 
         return binding.root
     }

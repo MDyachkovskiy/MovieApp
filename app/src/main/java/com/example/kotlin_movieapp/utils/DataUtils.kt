@@ -3,6 +3,8 @@ package com.example.kotlin_movieapp.utils
 import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem
 import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Poster
+import com.example.kotlin_movieapp.model.room.contacts.ContactsEntity
+import com.example.kotlin_movieapp.model.room.contacts.ContactsItem
 import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieEntity
 import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.model.room.history.HistoryEntity
@@ -90,4 +92,21 @@ fun convertFavoriteMovieItemToCollectionItem (movie: FavoriteMovieItem) : Collec
         name = movie.name,
         description = movie.description,
         poster = Poster(previewUrl = movie.poster),
+    )
+
+fun convertListContactsEntityToContactsItem (entityList : List<ContactsEntity>) : List<ContactsItem>
+{
+    return entityList.map {
+        ContactsItem(
+            it.id,
+            it.name,
+            it.phoneNumber)
+    }
+}
+
+fun convertContactsItemToContactsEntity (contact: ContactsItem):
+        ContactsEntity = ContactsEntity (
+        id = contact.id,
+        name = contact.name,
+        phoneNumber = contact.phoneNumber
     )

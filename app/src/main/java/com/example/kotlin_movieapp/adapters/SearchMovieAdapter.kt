@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.ui.main.MainActivity
 import com.example.kotlin_movieapp.R
-import com.example.kotlin_movieapp.databinding.SearchMovieItemBinding
+import com.example.kotlin_movieapp.databinding.ItemSearchMovieBinding
 import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem
 import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
@@ -18,7 +18,7 @@ class SearchMovieAdapter(
     ) : RecyclerView.Adapter<SearchMovieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = SearchMovieItemBinding.inflate(LayoutInflater.from(parent.context),
+        val binding = ItemSearchMovieBinding.inflate(LayoutInflater.from(parent.context),
             parent,
             false)
 
@@ -34,7 +34,7 @@ class SearchMovieAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movie: CollectionItem) {
-            val binding = SearchMovieItemBinding.bind(itemView)
+            val binding = ItemSearchMovieBinding.bind(itemView)
             with(binding) {
 
                 movieTitle.text = movie.name

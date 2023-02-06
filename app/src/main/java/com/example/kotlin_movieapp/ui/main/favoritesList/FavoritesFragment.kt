@@ -9,13 +9,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.adapters.FavoriteMovieAdapter
-import com.example.kotlin_movieapp.databinding.FavoritesFragmentBinding
+import com.example.kotlin_movieapp.databinding.FragmentFavoritesBinding
 import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.ui.main.AppState
 
 class FavoritesFragment : Fragment() {
 
-    private var _binding: FavoritesFragmentBinding? = null
+    private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: FavoritesViewModel by lazy {
@@ -31,7 +31,7 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
 
-        _binding = FavoritesFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
         return binding.root
     }

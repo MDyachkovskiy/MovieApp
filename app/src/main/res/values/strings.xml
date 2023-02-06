@@ -54,5 +54,6 @@
     <string name="viewingDate">Дата просмотра:</string>
     <string name="addMovieToFavorite">Фильм добавлен в Понравившиеся</string>
     <string name="deleteMovieFromFavorite">Фильм удален с Понравившихся</string>
+    <string name="get_contacts">Получить контакты</string>
 
 </resources>

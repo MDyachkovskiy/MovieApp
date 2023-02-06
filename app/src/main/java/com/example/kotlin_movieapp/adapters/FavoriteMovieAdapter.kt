@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.ui.main.MainActivity
 import com.example.kotlin_movieapp.R
-import com.example.kotlin_movieapp.databinding.FavoriteMovieItemBinding
+import com.example.kotlin_movieapp.databinding.ItemFavoriteMovieBinding
 import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
@@ -20,7 +20,7 @@ class FavoriteMovieAdapter(
     ) : RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = FavoriteMovieItemBinding.inflate(LayoutInflater.from(parent.context),
+        val binding = ItemFavoriteMovieBinding.inflate(LayoutInflater.from(parent.context),
             parent,
             false)
 
@@ -36,7 +36,7 @@ class FavoriteMovieAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movie: FavoriteMovieItem) {
-            val binding = FavoriteMovieItemBinding.bind(itemView)
+            val binding = ItemFavoriteMovieBinding.bind(itemView)
             with(binding) {
 
                 movieTitle.text = movie.name

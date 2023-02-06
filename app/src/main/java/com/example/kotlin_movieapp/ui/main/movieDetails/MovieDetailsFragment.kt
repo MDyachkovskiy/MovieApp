@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
-import com.example.kotlin_movieapp.databinding.MovieDetailFragmentBinding
+import com.example.kotlin_movieapp.databinding.FragmentMovieDetailBinding
 import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem
 import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.ui.main.DetailsState
@@ -21,7 +21,7 @@ import com.example.kotlin_movieapp.utils.showToast
 
 class MovieDetailsFragment : Fragment() {
 
-    private var _binding: MovieDetailFragmentBinding? = null
+    private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var movieBundle : CollectionItem
@@ -43,7 +43,7 @@ class MovieDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = MovieDetailFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
 
         return binding.root
     }

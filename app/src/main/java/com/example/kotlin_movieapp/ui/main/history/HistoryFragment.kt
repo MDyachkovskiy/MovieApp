@@ -9,13 +9,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.adapters.HistoryMovieAdapter
-import com.example.kotlin_movieapp.databinding.HistoryFragmentBinding
+import com.example.kotlin_movieapp.databinding.FragmentHistoryBinding
 import com.example.kotlin_movieapp.model.room.history.HistoryMovieItem
 import com.example.kotlin_movieapp.ui.main.AppState
 
 class HistoryFragment : Fragment() {
 
-    private var _binding: HistoryFragmentBinding? = null
+    private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: HistoryViewModel by lazy {
@@ -30,7 +30,7 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = HistoryFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
         return binding.root
     }

@@ -7,13 +7,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.example.kotlin_movieapp.R
-import com.example.kotlin_movieapp.databinding.SearchFragmentBinding
+import com.example.kotlin_movieapp.databinding.FragmentSearchBinding
+import com.example.kotlin_movieapp.ui.main.contacts.ContactsFragment
 import com.example.kotlin_movieapp.ui.main.history.HistoryFragment
 import java.util.regex.Pattern
 
 class SearchFragment : Fragment() {
 
-    private var _binding: SearchFragmentBinding? = null
+    private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
     companion object {
@@ -27,7 +28,7 @@ class SearchFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        _binding = SearchFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -81,10 +82,20 @@ class SearchFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.history -> {
+            R.id.menu_history -> {
                 childFragmentManager.apply {
                     beginTransaction()
                         .replace(R.id.container, HistoryFragment.newInstance())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+                true
+            }
+
+            R.id.menu_get_contacts -> {
+                childFragmentManager.apply {
+                    beginTransaction()
+                        .replace(R.id.container, ContactsFragment.newInstance())
                         .addToBackStack("")
                         .commitAllowingStateLoss()
                 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.ui.main.MainActivity
 import com.example.kotlin_movieapp.R
-import com.example.kotlin_movieapp.databinding.HistoryMovieItemBinding
+import com.example.kotlin_movieapp.databinding.ItemHistoryMovieBinding
 import com.example.kotlin_movieapp.model.room.history.HistoryMovieItem
 import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
@@ -20,7 +20,7 @@ class HistoryMovieAdapter(
     ) : RecyclerView.Adapter<HistoryMovieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = HistoryMovieItemBinding.inflate(LayoutInflater.from(parent.context),
+        val binding = ItemHistoryMovieBinding.inflate(LayoutInflater.from(parent.context),
             parent,
             false)
 
@@ -36,7 +36,7 @@ class HistoryMovieAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movie: HistoryMovieItem) {
-            val binding = HistoryMovieItemBinding.bind(itemView)
+            val binding = ItemHistoryMovieBinding.bind(itemView)
             with(binding) {
 
                 movieTitle.text = movie.name
