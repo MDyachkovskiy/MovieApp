@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Kotlin_MovieApp</string>
     <string name="tv_movieName">Название фильма</string>
-    <string name="tv_Top100movies">Топ 100 лучших фильмов</string>
-    <string name="tv_NewMovies">Новинки кино</string>
-    <string name="tv_TopSerials">Лучшие сериалы</string>
+    <string name="tv_Top250movies">Топ 250 лучших фильмов</string>
+    <string name="tv_UpComing">Новинки кино</string>
+    <string name="tv_TopTvShows">Лучшие сериалы</string>
     <string name="movie_title">Название фильма</string>
     <string name="movie_description">Описание фильма</string>
     <string name="search_bar">Поиск фильма</string>
@@ -22,6 +22,37 @@
     <!-- объединение строк в коде -->
     <string name="movieBudget"> %1$s %2$s</string>
     <string name="movieLength"> %1$s мин</string>
+    <string name="concDate"> %1$s %2$s</string>
+
+    <!-- отображения текста в приложении -->
     <string name="critical_error">Произошла непредвиденная ошибка</string>
     <string name="reload">Повторить попытку</string>
+
+    <!-- меню навигация -->
+    <string name="collections">Коллекции</string>
+    <string name="favorites">Понравившиеся</string>
+    <string name="search">Поиск</string>
+    <string name="settings">Настройки</string>
+
+    <!-- Preference Titles -->
+    <string name="searching_parameters">Настройки поиска фильмов</string>
+    <string name="adult_off">Запрещен поиск фильмов, содержащих сцены, предназначенные для взрослых</string>
+    <string name="adult_on">Разрешен поиск фильмов, содержащих сцены, предназначенные для взрослых</string>
+    <string name="adult_content">Взрослый контент</string>
+    <string name="searching_rating">Минимальный рейтинг фильма</string>
+
+    <!-- MovieDetailsFragment Titles -->
+    <string name="userNoteTitle">Добавьте свой комментарий</string>
+    <string name="userCommentHint">Оставьте здесь свой комментарий по фильму</string>
+
+    <!-- Fragment Titles -->
+    <string name="your_search_result">Мы нашли следующие фильмы по вашему запросу</string>
+    <string name="history">История ваших просмотров</string>
+
+    <!-- HistoryFragment -->
+    <string name="userComments">Ваши комментарии по фильму:</string>
+    <string name="viewingDate">Дата просмотра:</string>
+    <string name="addMovieToFavorite">Фильм добавлен в Понравившиеся</string>
+    <string name="deleteMovieFromFavorite">Фильм удален с Понравившихся</string>
+
 </resources>

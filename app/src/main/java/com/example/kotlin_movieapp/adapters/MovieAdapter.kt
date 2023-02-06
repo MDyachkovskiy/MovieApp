@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kotlin_movieapp.MainActivity
+import com.example.kotlin_movieapp.ui.main.MainActivity
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.MovieItemBinding
-import com.example.kotlin_movieapp.models.collectionResponse.CollectionItem
+import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem
 import com.example.kotlin_movieapp.ui.main.movieDetails.MovieDetailsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.squareup.picasso.Picasso
@@ -44,7 +44,7 @@ class MovieAdapter(
                     (itemView.context as MainActivity).supportFragmentManager
                         .beginTransaction()
                         .addToBackStack("tag")
-                        .add(R.id.container,
+                        .add(R.id.main_container,
                             MovieDetailsFragment.newInstance(Bundle().apply {
                                 putParcelable(KEY_BUNDLE_MOVIE, movie)
                             }))
