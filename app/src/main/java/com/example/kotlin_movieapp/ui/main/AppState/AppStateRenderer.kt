@@ -1,17 +1,17 @@
-package com.example.kotlin_movieapp.ui.main
+package com.example.kotlin_movieapp.ui.main.AppState
 
 import android.view.View
 import androidx.viewbinding.ViewBinding
+import com.example.kotlin_movieapp.R
 
 class AppStateRenderer (
     private val binding: ViewBinding
     ) {
 
     fun render(appState: AppState) {
-        val loadingLayoutField = binding::class.java.getDeclaredField("loadingLayout")
 
-        loadingLayoutField.isAccessible = true
-        val loadingLayout = loadingLayoutField.get(binding) as? View
+        val loadingLayout = binding.root.findViewById<View>(R.id.includedLoadingLayout)
+
         if (loadingLayout != null) {
             when (appState) {
                 is AppState.Error -> {
@@ -28,10 +28,9 @@ class AppStateRenderer (
         }
 
     fun render(appState: DetailsState) {
-        val loadingLayoutField = binding::class.java.getDeclaredField("loadingLayout")
 
-        loadingLayoutField.isAccessible = true
-        val loadingLayout = loadingLayoutField.get(binding) as? View
+        val loadingLayout = binding.root.findViewById<View>(R.id.includedLoadingLayout)
+
         if (loadingLayout != null) {
             when (appState) {
                 is DetailsState.Error -> {

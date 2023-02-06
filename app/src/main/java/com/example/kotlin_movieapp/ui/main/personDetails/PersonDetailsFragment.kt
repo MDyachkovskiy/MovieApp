@@ -11,8 +11,8 @@ import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentPersonBinding
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
 import com.example.kotlin_movieapp.model.personDetailsResponse.PersonDTO
-import com.example.kotlin_movieapp.ui.main.AppStateRenderer
-import com.example.kotlin_movieapp.ui.main.DetailsState
+import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
+import com.example.kotlin_movieapp.ui.main.AppState.DetailsState
 import com.example.kotlin_movieapp.ui.main.map.MapsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.convert
@@ -29,7 +29,7 @@ class PersonDetailsFragment : Fragment() {
     private lateinit var personBundle : Person
     private lateinit var person : PersonDTO
 
-    private val dataRenderer by lazy {AppStateRenderer(binding)}
+    private val dataRenderer by lazy { AppStateRenderer(binding) }
 
     private val viewModel: PersonDetailsViewModel by lazy {
         ViewModelProvider(this)[PersonDetailsViewModel::class.java]
@@ -55,8 +55,7 @@ class PersonDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.movieDetail.visibility = View.VISIBLE
-        binding.loadingLayout.visibility = View.VISIBLE
+        binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
 
         personBundle = arguments?.getParcelable(KEY_BUNDLE_PERSON)?: Person()
 
@@ -77,7 +76,7 @@ class PersonDetailsFragment : Fragment() {
 
         when (appState) {
             is DetailsState.Error -> {
-                binding.movieDetail.showSnackBar(
+                binding.personDetail.showSnackBar(
                     getString(R.string.data_loading_error),
                     getString(R.string.reload),
                     {
@@ -89,7 +88,7 @@ class PersonDetailsFragment : Fragment() {
             is DetailsState.SuccessPerson -> {
                 person = appState.personDTO
                 displayPerson(appState.personDTO)
-                binding.movieDetail.showSnackBar(
+                binding.personDetail.showSnackBar(
                     getString(R.string.data_loading_success),
                     0)
             }

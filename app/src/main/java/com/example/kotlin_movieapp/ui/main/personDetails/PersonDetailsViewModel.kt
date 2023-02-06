@@ -6,7 +6,7 @@ import com.example.kotlin_movieapp.model.personDetailsResponse.PersonDTO
 import com.example.kotlin_movieapp.repository.RemoteDataSource
 import com.example.kotlin_movieapp.repository.personDetails.PersonDetailsRepository
 import com.example.kotlin_movieapp.repository.personDetails.PersonDetailsRepositoryImpl
-import com.example.kotlin_movieapp.ui.main.DetailsState
+import com.example.kotlin_movieapp.ui.main.AppState.DetailsState
 import retrofit2.Call
 import retrofit2.Response
 
@@ -15,8 +15,8 @@ private const val REQUEST_ERROR = "Ошибка запроса на сервер
 private const val CORRUPTED_DATA = "Неполные данные"
 
 class PersonDetailsViewModel (
-        private val liveData: MutableLiveData<DetailsState> = MutableLiveData(),
-        private val personRepository: PersonDetailsRepository =
+    private val liveData: MutableLiveData<DetailsState> = MutableLiveData(),
+    private val personRepository: PersonDetailsRepository =
             PersonDetailsRepositoryImpl(RemoteDataSource())
 ) : ViewModel() {
 

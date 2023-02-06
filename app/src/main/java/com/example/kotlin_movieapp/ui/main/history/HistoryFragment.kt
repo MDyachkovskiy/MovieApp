@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.adapters.HistoryMovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentHistoryBinding
 import com.example.kotlin_movieapp.model.room.history.HistoryMovieItem
-import com.example.kotlin_movieapp.ui.main.AppState
-import com.example.kotlin_movieapp.ui.main.AppStateRenderer
+import com.example.kotlin_movieapp.ui.main.AppState.AppState
+import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 
 class HistoryFragment : Fragment() {
@@ -19,7 +19,7 @@ class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
-    private val dataRenderer by lazy {AppStateRenderer(binding)}
+    private val dataRenderer by lazy { AppStateRenderer(binding) }
 
     private val viewModel: HistoryViewModel by lazy {
         ViewModelProvider(this)[HistoryViewModel::class.java]
@@ -41,7 +41,7 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loadingLayout.visibility = View.VISIBLE
+        binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
 
         viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)

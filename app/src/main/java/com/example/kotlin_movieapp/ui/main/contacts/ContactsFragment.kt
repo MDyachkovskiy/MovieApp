@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.adapters.ContactsAdapter
 import com.example.kotlin_movieapp.databinding.FragmentContactsBinding
 import com.example.kotlin_movieapp.model.room.contacts.ContactsItem
-import com.example.kotlin_movieapp.ui.main.AppState
-import com.example.kotlin_movieapp.ui.main.AppStateRenderer
+import com.example.kotlin_movieapp.ui.main.AppState.AppState
+import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 
 const val REQUEST_CODE = 42
@@ -28,7 +28,7 @@ class ContactsFragment : Fragment() {
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
 
-    private val dataRenderer by lazy {AppStateRenderer(binding)}
+    private val dataRenderer by lazy { AppStateRenderer(binding) }
 
     private val viewModel: ContactsViewModel by lazy {
         ViewModelProvider (this)[ContactsViewModel::class.java]

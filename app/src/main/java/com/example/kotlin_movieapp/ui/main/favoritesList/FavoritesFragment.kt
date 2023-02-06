@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.adapters.FavoriteMovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentFavoritesBinding
 import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieItem
-import com.example.kotlin_movieapp.ui.main.AppState
-import com.example.kotlin_movieapp.ui.main.AppStateRenderer
+import com.example.kotlin_movieapp.ui.main.AppState.AppState
+import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 
 class FavoritesFragment : Fragment() {
@@ -19,7 +19,7 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private val dataRenderer by lazy {AppStateRenderer(binding)}
+    private val dataRenderer by lazy { AppStateRenderer(binding) }
 
     private val viewModel: FavoritesViewModel by lazy {
         ViewModelProvider (this)[FavoritesViewModel::class.java]
@@ -42,7 +42,7 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loadingLayout.visibility = View.VISIBLE
+        binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
 
         Thread {
             viewModel.getAllFavorites()

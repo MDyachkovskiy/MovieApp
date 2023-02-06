@@ -11,8 +11,8 @@ import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentUpcomingBinding
 import com.example.kotlin_movieapp.model.collectionResponse.UpComingResponse
-import com.example.kotlin_movieapp.ui.main.AppState
-import com.example.kotlin_movieapp.ui.main.AppStateRenderer
+import com.example.kotlin_movieapp.ui.main.AppState.AppState
+import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.utils.showSnackBar
 
@@ -21,7 +21,7 @@ class UpComingMovieFragment : Fragment() {
     private var _binding: FragmentUpcomingBinding? = null
     private val binding get() = _binding!!
 
-    private val dataRenderer by lazy {AppStateRenderer(binding)}
+    private val dataRenderer by lazy { AppStateRenderer(binding) }
 
     companion object {
         fun newInstance() = UpComingMovieFragment()

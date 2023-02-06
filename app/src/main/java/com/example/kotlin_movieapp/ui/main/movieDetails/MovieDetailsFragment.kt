@@ -16,8 +16,8 @@ import com.example.kotlin_movieapp.databinding.FragmentMovieDetailBinding
 import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem
 import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
-import com.example.kotlin_movieapp.ui.main.AppStateRenderer
-import com.example.kotlin_movieapp.ui.main.DetailsState
+import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
+import com.example.kotlin_movieapp.ui.main.AppState.DetailsState
 import com.example.kotlin_movieapp.utils.*
 
 class MovieDetailsFragment : Fragment() {
@@ -28,7 +28,7 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var movieBundle : CollectionItem
     private lateinit var movie : MovieDTO
 
-    private val dataRenderer by lazy {AppStateRenderer(binding)}
+    private val dataRenderer by lazy { AppStateRenderer(binding) }
 
     private val viewModel: MovieDetailsViewModel by lazy {
         ViewModelProvider(this)[MovieDetailsViewModel::class.java]
@@ -55,7 +55,7 @@ class MovieDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.movieDetail.visibility = View.VISIBLE
-        binding.loadingLayout.visibility = View.VISIBLE
+        binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
 
         binding.userNote.addTextChangedListener (object : TextWatcher{
             override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -101,6 +101,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun renderData(appState: DetailsState) {
         dataRenderer.render(appState)
+
         when (appState) {
             is DetailsState.Error -> {
                 binding.movieDetail.showSnackBar(

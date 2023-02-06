@@ -11,8 +11,8 @@ import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentTop250movieBinding
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
-import com.example.kotlin_movieapp.ui.main.AppState
-import com.example.kotlin_movieapp.ui.main.AppStateRenderer
+import com.example.kotlin_movieapp.ui.main.AppState.AppState
+import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.utils.showSnackBar
 
