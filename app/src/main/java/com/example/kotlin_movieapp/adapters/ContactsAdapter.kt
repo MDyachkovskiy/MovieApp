@@ -1,7 +1,6 @@
 package com.example.kotlin_movieapp.adapters
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -14,8 +13,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.databinding.ItemContactsBinding
 import com.example.kotlin_movieapp.model.room.contacts.ContactsItem
-
-const val REQUEST_CODE = 23
+import com.example.kotlin_movieapp.utils.requestCallPhonePermission
+import com.example.kotlin_movieapp.utils.showAlertMessagePhoneCall
 
 class ContactsAdapter (
     private var contactsData: List<ContactsItem>,
@@ -71,36 +70,14 @@ class ContactsAdapter (
 
                        shouldShowRequestPermissionRationale(activity,
                            Manifest.permission.CALL_PHONE) -> {
-                           showAlertMessage(activity)
+                           itemView.showAlertMessagePhoneCall(activity)
                        }
                        else -> {
-                           requestPermission(activity)
+                           requestCallPhonePermission(activity)
                        }
                    }
                }
            }
-        }
-
-        private fun showAlertMessage(activity: FragmentActivity?) {
-            itemView.context.let {
-                AlertDialog.Builder(it)
-                    .setTitle("Доступ к звонкам")
-                    .setMessage("Для осуществления звонков необходимо предоставить доступ")
-                    .setPositiveButton("Предоставить доступ") { _, _ ->
-                        requestPermission(activity)
-                    }
-                    .setNegativeButton("Не надо") { dialog, _ -> dialog.dismiss() }
-                    .create()
-                    .show()
-            }
-        }
-
-        private fun requestPermission(activity: FragmentActivity?) {
-            activity?.let {
-                requestPermissions(it,
-                    arrayOf(Manifest.permission.CALL_PHONE),
-                    REQUEST_CODE)
-            }
         }
     }
 }

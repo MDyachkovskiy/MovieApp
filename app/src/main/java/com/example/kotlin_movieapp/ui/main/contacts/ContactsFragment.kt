@@ -1,7 +1,6 @@
 package com.example.kotlin_movieapp.ui.main.contacts
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -19,9 +18,10 @@ import com.example.kotlin_movieapp.databinding.FragmentContactsBinding
 import com.example.kotlin_movieapp.model.room.contacts.ContactsItem
 import com.example.kotlin_movieapp.ui.main.AppState.AppState
 import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
+import com.example.kotlin_movieapp.utils.CONTACTS_REQUEST_CODE
 import com.example.kotlin_movieapp.utils.init
-
-const val REQUEST_CODE = 42
+import com.example.kotlin_movieapp.utils.requestContactsPermission
+import com.example.kotlin_movieapp.utils.showAlertMessageContacts
 
 class ContactsFragment : Fragment() {
 
@@ -85,12 +85,11 @@ class ContactsFragment : Fragment() {
                         == PackageManager.PERMISSION_GRANTED -> {
                         getContacts()
                 }
-
                 shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
-                    showAlertMessage()
+                    binding.contactsFragment.showAlertMessageContacts(activity)
                 }
                 else -> {
-                    requestPermission()
+                    requestContactsPermission(activity)
                 }
             }
         }
@@ -143,40 +142,21 @@ class ContactsFragment : Fragment() {
         }
     }
 
-    private fun requestPermission(){
-        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_CODE)
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         when (requestCode) {
-            REQUEST_CODE -> {
+            CONTACTS_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     getContacts()
                 } else {
-                    showAlertMessage()
+                    binding.contactsFragment.showAlertMessageContacts(activity)
                 }
             }
         }
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    private fun showAlertMessage() {
-        context?.let {
-            AlertDialog.Builder(it)
-                .setTitle("Доступ к контактам")
-                .setMessage("Bla bla Объяснение зачем")
-                .setPositiveButton("Предоставить доступ") { _, _ ->
-                    requestPermission()
-                }
-                .setNegativeButton("Не надо") { dialog, _ -> dialog.dismiss() }
-                .create()
-                .show()
-        }
     }
 
     override fun onDestroyView() {

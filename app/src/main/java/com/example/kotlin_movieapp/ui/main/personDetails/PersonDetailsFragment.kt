@@ -88,9 +88,6 @@ class PersonDetailsFragment : Fragment() {
             is DetailsState.SuccessPerson -> {
                 person = appState.personDTO
                 displayPerson(appState.personDTO)
-                binding.personDetail.showSnackBar(
-                    getString(R.string.data_loading_success),
-                    0)
             }
             else -> return
         }

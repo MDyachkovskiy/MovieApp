@@ -115,9 +115,6 @@ class MovieDetailsFragment : Fragment() {
             is DetailsState.SuccessMovie -> {
                 movie = appState.movieDTO
                 displayMovie(appState.movieDTO)
-                binding.movieDetail.showSnackBar(
-                    getString(R.string.data_loading_success),
-                    0)
             }
             else -> return
         }
