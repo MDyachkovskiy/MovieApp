@@ -2,19 +2,15 @@ package com.example.kotlin_movieapp.adapters
 
 import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat.*
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.databinding.ItemContactsBinding
 import com.example.kotlin_movieapp.model.room.contacts.ContactsItem
-import com.example.kotlin_movieapp.utils.requestCallPhonePermission
-import com.example.kotlin_movieapp.utils.showAlertMessagePhoneCall
+import com.example.kotlin_movieapp.utils.checkPermission
 
 class ContactsAdapter (
     private var contactsData: List<ContactsItem>,
@@ -46,7 +42,9 @@ class ContactsAdapter (
                 contactPhoneNumber.text = contact.phoneNumber
 
                 call.setOnClickListener {
-                    checkPermission(contactPhoneNumber.text.toString(), activity)
+                    if (checkPermission(Manifest.permission.CALL_PHONE, activity, itemView)) {
+                        makePhoneCall(contactPhoneNumber.text.toString())
+                    }
                 }
             }
         }
@@ -57,27 +55,6 @@ class ContactsAdapter (
                 callIntent.data = Uri.parse("tel:$phoneNumber")
                 itemView.context.startActivity(callIntent)
             }
-        }
-
-        private fun checkPermission(phoneNumber : String, activity: FragmentActivity?) {
-           itemView.context?.let {
-               if (activity != null) {
-                   when {
-                       ContextCompat.checkSelfPermission(it, Manifest.permission.CALL_PHONE)
-                               == PackageManager.PERMISSION_GRANTED -> {
-                           makePhoneCall(phoneNumber)
-                       }
-
-                       shouldShowRequestPermissionRationale(activity,
-                           Manifest.permission.CALL_PHONE) -> {
-                           itemView.showAlertMessagePhoneCall(activity)
-                       }
-                       else -> {
-                           requestCallPhonePermission(activity)
-                       }
-                   }
-               }
-           }
         }
     }
 }

@@ -4,12 +4,16 @@ import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
+import com.example.kotlin_movieapp.ui.main.contacts.ContactsViewModel
 
 class ContactsGetter (
-    private val context : Context
+    private val context : Context?,
+    private val viewModel: ContactsViewModel,
     ) {
 
-    private fun getContacts() {
+    val contacts = mutableListOf<ContactsItem>()
+
+    fun getContacts() {
         context?.let{
 
             Thread {
@@ -50,10 +54,11 @@ class ContactsGetter (
                             val name = cursor.getString(columnNameIndex)
                             val phoneNumber = cursor.getString(columnPhoneNumberIndex)
                             val contact = ContactsItem(id, name, phoneNumber)
-                            viewModel.addContact(contact)
+                            contacts.add(contact)
                         }
                     }
                 }
+                viewModel.addAllContacts(contacts)
                 cursorWithContacts?.close()
             }.start()
         }
