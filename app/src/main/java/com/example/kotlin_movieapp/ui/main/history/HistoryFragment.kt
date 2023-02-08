@@ -19,7 +19,11 @@ class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
-    private val dataRenderer by lazy { AppStateRenderer(binding) }
+    private lateinit var parentView: View
+
+    private val dataRenderer by lazy {
+        AppStateRenderer(parentView){ viewModel.getAllHistory() }
+    }
 
     private val viewModel: HistoryViewModel by lazy {
         ViewModelProvider(this)[HistoryViewModel::class.java]
@@ -40,6 +44,8 @@ class HistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        parentView = binding.historyFragment
 
         binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
 

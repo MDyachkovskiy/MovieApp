@@ -28,7 +28,11 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var movieBundle : CollectionItem
     private lateinit var movie : MovieDTO
 
-    private val dataRenderer by lazy { AppStateRenderer(binding) }
+    private lateinit var parentView: View
+
+    private val dataRenderer by lazy {
+        AppStateRenderer(parentView) { viewModel.getMovieFromRemoteSource(movieBundle.kinopoiskId) }
+    }
 
     private val viewModel: MovieDetailsViewModel by lazy {
         ViewModelProvider(this)[MovieDetailsViewModel::class.java]
@@ -53,6 +57,8 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        parentView = binding.movieDetail
 
         binding.movieDetail.visibility = View.VISIBLE
         binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
@@ -103,15 +109,6 @@ class MovieDetailsFragment : Fragment() {
         dataRenderer.render(appState)
 
         when (appState) {
-            is DetailsState.Error -> {
-                binding.movieDetail.showSnackBar(
-                    getString(R.string.data_loading_error),
-                    getString(R.string.reload),
-                    {
-                        viewModel.getMovieFromRemoteSource(movieBundle.kinopoiskId)
-                    },
-                    0)
-            }
             is DetailsState.SuccessMovie -> {
                 movie = appState.movieDTO
                 displayMovie(appState.movieDTO)

@@ -17,7 +17,6 @@ import com.example.kotlin_movieapp.ui.main.map.MapsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.convert
 import com.example.kotlin_movieapp.utils.replaceFragment
-import com.example.kotlin_movieapp.utils.showSnackBar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -29,7 +28,11 @@ class PersonDetailsFragment : Fragment() {
     private lateinit var personBundle : Person
     private lateinit var person : PersonDTO
 
-    private val dataRenderer by lazy { AppStateRenderer(binding) }
+    private lateinit var parentView: View
+
+    private val dataRenderer by lazy {
+        AppStateRenderer(parentView){viewModel.getPersonDetailsFromRemoteSource(personBundle.id)}
+    }
 
     private val viewModel: PersonDetailsViewModel by lazy {
         ViewModelProvider(this)[PersonDetailsViewModel::class.java]
@@ -55,6 +58,8 @@ class PersonDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        parentView = binding.personDetail
+
         binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
 
         personBundle = arguments?.getParcelable(KEY_BUNDLE_PERSON)?: Person()
@@ -75,15 +80,6 @@ class PersonDetailsFragment : Fragment() {
         dataRenderer.render(appState)
 
         when (appState) {
-            is DetailsState.Error -> {
-                binding.personDetail.showSnackBar(
-                    getString(R.string.data_loading_error),
-                    getString(R.string.reload),
-                    {
-                        viewModel.getPersonDetailsFromRemoteSource(personBundle.id)
-                    },
-                    0)
-            }
 
             is DetailsState.SuccessPerson -> {
                 person = appState.personDTO

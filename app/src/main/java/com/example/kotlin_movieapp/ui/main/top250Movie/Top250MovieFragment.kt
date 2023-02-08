@@ -7,20 +7,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentTop250movieBinding
 import com.example.kotlin_movieapp.model.collectionResponse.Top250Response
 import com.example.kotlin_movieapp.ui.main.AppState.AppState
 import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
-import com.example.kotlin_movieapp.utils.showSnackBar
 
 class Top250MovieFragment : Fragment() {
 
     private var _binding: FragmentTop250movieBinding? = null
     private val binding get() = _binding!!
-    private val dataRenderer by lazy { AppStateRenderer(binding) }
+
+    private lateinit var parentView: View
+
+    private val dataRenderer by lazy {
+        AppStateRenderer(parentView) {viewModel.getTop250Collection()}
+    }
 
 
     companion object {
@@ -44,6 +47,8 @@ class Top250MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        parentView = binding.top250fragment
+
         viewModel.getData().observe(viewLifecycleOwner) {
             renderData(it)
         }
@@ -60,19 +65,11 @@ class Top250MovieFragment : Fragment() {
         dataRenderer.render(appState)
 
         when (appState) {
-            is AppState.Error -> {
-                binding.top250fragment.showSnackBar(
-                    getString(R.string.data_loading_error),
-                    0
-                )
-            }
 
             is AppState.SuccessMovie -> {
                 initRV(appState.movieData)
             }
-            else -> {
-                return
-            }
+            else -> { return }
         }
     }
 

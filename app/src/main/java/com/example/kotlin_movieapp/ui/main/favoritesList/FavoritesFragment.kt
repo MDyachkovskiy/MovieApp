@@ -19,7 +19,11 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private val dataRenderer by lazy { AppStateRenderer(binding) }
+    private lateinit var parentView: View
+
+    private val dataRenderer by lazy {
+        AppStateRenderer(parentView) {viewModel.getAllFavorites()}
+    }
 
     private val viewModel: FavoritesViewModel by lazy {
         ViewModelProvider (this)[FavoritesViewModel::class.java]
@@ -41,6 +45,8 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        parentView = binding.favoritesFragment
 
         binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
 

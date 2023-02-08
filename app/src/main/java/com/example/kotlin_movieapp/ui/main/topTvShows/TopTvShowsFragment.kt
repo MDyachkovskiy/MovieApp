@@ -7,21 +7,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.adapters.MovieAdapter
 import com.example.kotlin_movieapp.databinding.FragmentTvshowsBinding
 import com.example.kotlin_movieapp.model.collectionResponse.TopTvShowsResponse
 import com.example.kotlin_movieapp.ui.main.AppState.AppState
 import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
 import com.example.kotlin_movieapp.utils.init
-import com.example.kotlin_movieapp.utils.showSnackBar
 
 class TopTvShowsFragment : Fragment() {
 
     private var _binding: FragmentTvshowsBinding? = null
     private val binding get() = _binding!!
 
-    private val dataRenderer by lazy { AppStateRenderer(binding) }
+    private lateinit var parentView: View
+
+    private val dataRenderer by lazy {
+        AppStateRenderer(parentView) {viewModel.getTvShowsCollection()}
+    }
 
     companion object {
         fun newInstance() = TopTvShowsFragment()
@@ -45,6 +47,8 @@ class TopTvShowsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        parentView = binding.tvShowsFragment
+
         viewModel.getData().observe(viewLifecycleOwner) {
             renderData(it)
         }
@@ -61,11 +65,6 @@ class TopTvShowsFragment : Fragment() {
         dataRenderer.render(appState)
 
         when (appState) {
-            is AppState.Error -> {
-                binding.tvshowsfragment.showSnackBar(
-                    getString(R.string.data_loading_error),
-                    0)
-            }
 
             is AppState.SuccessTvShow -> {
                 initRV(appState.movieData)

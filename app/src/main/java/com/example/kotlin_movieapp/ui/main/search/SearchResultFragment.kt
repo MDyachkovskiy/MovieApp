@@ -19,7 +19,11 @@ class SearchResultFragment (
 
     private var _binding: FragmentSearchResultBinding? = null
     private val binding get() = _binding!!
-    private val dataRenderer by lazy { AppStateRenderer(binding) }
+
+    private lateinit var parentView: View
+
+    private val dataRenderer by lazy {
+        AppStateRenderer(parentView) {} }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +37,8 @@ class SearchResultFragment (
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        parentView = binding.searchResultFragment
 
         renderData(appState)
     }

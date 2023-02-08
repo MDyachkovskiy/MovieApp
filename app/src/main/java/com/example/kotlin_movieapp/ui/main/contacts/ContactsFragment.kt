@@ -22,7 +22,11 @@ class ContactsFragment : Fragment() {
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
 
-    private val dataRenderer by lazy { AppStateRenderer(binding) }
+    private lateinit var parentView: View
+
+    private val dataRenderer by lazy {
+        AppStateRenderer(parentView) {viewModel.getAllContacts()}
+    }
     private val contactsGetter by lazy {ContactsGetter(context, viewModel)}
 
     private val viewModel: ContactsViewModel by lazy {
@@ -44,6 +48,8 @@ class ContactsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        parentView = binding.contactsFragment
 
         viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
