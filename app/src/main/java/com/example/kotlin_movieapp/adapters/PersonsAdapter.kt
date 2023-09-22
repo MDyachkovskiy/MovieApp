@@ -1,16 +1,14 @@
 package com.example.kotlin_movieapp.adapters
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kotlin_movieapp.ui.main.MainActivity
-import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.ItemPersonsBinding
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
 import com.example.kotlin_movieapp.ui.main.personDetails.PersonDetailsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
+import com.example.kotlin_movieapp.utils.openDetailsFragment
 import com.squareup.picasso.Picasso
 
 class PersonsAdapter(
@@ -43,14 +41,11 @@ class PersonsAdapter(
                 personName.text = person.name
 
                 root.setOnClickListener {
-                    (itemView.context as MainActivity).supportFragmentManager
-                        .beginTransaction()
-                        .addToBackStack("tag")
-                        .add(R.id.main_container,
-                            PersonDetailsFragment.newInstance(Bundle().apply {
-                                putParcelable(KEY_BUNDLE_PERSON, person)
-                            }))
-                        .commit()
+                    it.openDetailsFragment(
+                        PersonDetailsFragment::class.java,
+                        KEY_BUNDLE_PERSON,
+                        person
+                    )
                 }
             }
         }

@@ -30,12 +30,16 @@ android {
         properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
         def apiKey = properties.getProperty("kinopoisk_api_key", "")
         it.buildConfigField "String", "KINOPOISK_API_KEY", apiKey
+
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            versionNameSuffix '-debug'
         }
     }
 
@@ -45,6 +49,17 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    flavorDimensions 'version'
+    productFlavors {
+        free {
+            dimension 'version'
+            versionNameSuffix 'freeConfig'
+        }
+        paid {
+            dimension 'version'
+            versionNameSuffix 'paidConfig'
+        }
     }
 }
 

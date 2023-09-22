@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentPersonBinding
 import com.example.kotlin_movieapp.model.movieDetailsResponse.Person
 import com.example.kotlin_movieapp.model.personDetailsResponse.PersonDTO
-import com.example.kotlin_movieapp.ui.main.DetailsState
+import com.example.kotlin_movieapp.ui.main.AppState.AppStateRenderer
+import com.example.kotlin_movieapp.ui.main.AppState.DetailsState
 import com.example.kotlin_movieapp.ui.main.map.MapsFragment
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.convert
-import com.example.kotlin_movieapp.utils.showSnackBar
+import com.example.kotlin_movieapp.utils.replaceFragment
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -28,8 +28,14 @@ class PersonDetailsFragment : Fragment() {
     private lateinit var personBundle : Person
     private lateinit var person : PersonDTO
 
+    private lateinit var parentView: View
+
+    private val dataRenderer by lazy {
+        AppStateRenderer(parentView){viewModel.getPersonDetailsFromRemoteSource(personBundle.id)}
+    }
+
     private val viewModel: PersonDetailsViewModel by lazy {
-        ViewModelProvider(this).get(PersonDetailsViewModel::class.java)
+        ViewModelProvider(this)[PersonDetailsViewModel::class.java]
     }
 
     companion object {
@@ -52,16 +58,17 @@ class PersonDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.movieDetail.visibility = View.VISIBLE
-        binding.loadingLayout.visibility = View.VISIBLE
+        parentView = binding.personDetail
+
+        binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
 
         personBundle = arguments?.getParcelable(KEY_BUNDLE_PERSON)?: Person()
 
         requestPersonDetail(personBundle.id)
 
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer{
-               renderData(it)
-        })
+        viewModel.getLiveData().observe(viewLifecycleOwner) {
+            renderData(it)
+        }
     }
 
     private fun requestPersonDetail(personId: Int?) {
@@ -69,30 +76,14 @@ class PersonDetailsFragment : Fragment() {
     }
 
     private fun renderData(appState: DetailsState) {
-        when (appState) {
-            is DetailsState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
-                binding.movieDetail.showSnackBar(
-                    getString(R.string.data_loading_error),
-                    getString(R.string.reload),
-                    {
-                        viewModel.getPersonDetailsFromRemoteSource(personBundle.id)
-                    },
-                    0)
-            }
 
-            is DetailsState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
+        dataRenderer.render(appState)
+
+        when (appState) {
 
             is DetailsState.SuccessPerson -> {
-                binding.movieDetail.visibility = View.VISIBLE
-                binding.loadingLayout.visibility = View.GONE
                 person = appState.personDTO
                 displayPerson(appState.personDTO)
-                binding.movieDetail.showSnackBar(
-                    getString(R.string.data_loading_success),
-                    0)
             }
             else -> return
         }
@@ -101,29 +92,26 @@ class PersonDetailsFragment : Fragment() {
     private fun displayPerson(personDTO : PersonDTO) {
 
         with(binding) {
-            movieDetail.visibility = View.VISIBLE
-            loadingLayout.visibility = View.GONE
 
             view?.let {
                 Glide.with(it).load(personDTO.photo).into(personPhoto) }
 
             personName.text = personDTO.name ?: ""
 
-            personProfession.text = personDTO.profession?.convert(){
+            personProfession.text = personDTO.profession?.convert {
                     profession -> profession.value}
 
             personAge.text = personDTO.age?.toString()
 
             personDateOfBirth.text = convertDate(personDTO.birthday)
 
-            val birthLocation = personDTO.birthPlace?.convert(){
+            val birthLocation = personDTO.birthPlace?.convert{
                     birthPlace ->  birthPlace.value }
             personPlaceOfBirth.text = birthLocation
 
-            childFragmentManager
-                .beginTransaction()
-                .replace(R.id.placeOfBirthMapContainer, MapsFragment(birthLocation))
-                .commit()
+            childFragmentManager.replaceFragment(
+                R.id.placeOfBirthMapContainer,
+                MapsFragment(birthLocation) )
         }
     }
 

@@ -11,7 +11,7 @@ import com.example.kotlin_movieapp.model.room.history.HistoryEntity
 import com.example.kotlin_movieapp.model.room.history.HistoryMovieItem
 
 
-fun convertListHistoryEntitytoMovie (entityList : List<HistoryEntity>) : List<HistoryMovieItem>{
+fun convertListHistoryEntityToMovie (entityList : List<HistoryEntity>) : List<HistoryMovieItem>{
     return entityList.map {
         HistoryMovieItem(
             it.kinopoiskId,
@@ -62,7 +62,7 @@ fun convertHistoryMovieItemToCollectionItem (movie: HistoryMovieItem) : Collecti
 )
 
 
-fun convertListFavoritesEntitytoMovie (entityList : List<FavoriteMovieEntity>) : List<FavoriteMovieItem>{
+fun convertListFavoritesEntityToMovie (entityList : List<FavoriteMovieEntity>) : List<FavoriteMovieItem>{
     return entityList.map {
         FavoriteMovieItem(
             it.kinopoiskId,
@@ -112,4 +112,4 @@ fun convertContactsItemToContactsEntity (contact: ContactsItem):
     )
 
 fun <T> List<T>.convert(getValue: (T) -> String?) = this.joinToString(", "){
-        it -> getValue(it) ?: "" }
+    getValue(it) ?: "" }
