@@ -15,6 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kotlin_MovieApp"
         tools:targetApi="31">
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+
+        </service>
+
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_baseline_local_movies_24" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
