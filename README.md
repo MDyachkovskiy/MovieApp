@@ -1,7 +1,9 @@
 <h1 align="center" id="title">Movie App</h1>
 
 <p id="description">
-  This project was completed as part of the educational course: "Android with Kotlin". The programming language used is Kotlin. The application utilizes an open unofficial Kinopoisk API and provides lists of movies as well as a search function for films. Upon clicking on a movie the user receives more detailed information about the film and the actors involved in its creation. P.S. Unfortunately the API that this application relied on has stopped working. And now the application serves as just a framework for a movie API.</p>
+  This project was completed as part of the educational course: "Android with Kotlin". The programming language used is Kotlin. The application utilizes an open unofficial Kinopoisk API and provides lists of movies as well as a search function for films. Upon clicking on a movie the user receives more detailed information about the film and the actors involved in its creation. 
+  
+  P.S. Unfortunately the API that this application relied on has stopped working. And now the application serves as just a framework for a movie API.</p>
 
 <h2>Project Screenshots:</h2>
 
