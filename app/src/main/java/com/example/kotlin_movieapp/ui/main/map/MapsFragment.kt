@@ -69,18 +69,18 @@ class MapsFragment (
     }
 
     private fun checkLocation (geocoder: Geocoder, location : String?): LatLng {
-        return if (location == "") {
+        return if (location.isNullOrEmpty()) {
             defaultCity
         } else {
-            val searchResult = checkGeoResult(geocoder, geocoder.getFromLocationName(location, 1))
+            val searchResult = checkGeoResult(geocoder, geocoder.getFromLocationName(location!!, 1))
             val lat = searchResult[0].latitude
             val long= searchResult[0].longitude
             LatLng(lat, long)
         }
     }
 
-    private fun checkGeoResult (geocoder: Geocoder, searchResult: List<Address>): List<Address> {
-        return searchResult ?: geocoder.getFromLocationName(defaultCityName, 1)
+    private fun checkGeoResult (geocoder: Geocoder, searchResult: List<Address>?): List<Address> {
+        return searchResult ?: geocoder.getFromLocationName(defaultCityName, 1).orEmpty()
     }
 
     override fun onDestroyView() {
