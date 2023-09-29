@@ -7,7 +7,6 @@ import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.SearchResponse
 import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
 import com.example.kotlin_movieapp.model.repository.search.SearchRepositoryImpl
-import com.example.kotlin_movieapp.utils.CORRUPTED_DATA
 import com.example.kotlin_movieapp.utils.REQUEST_ERROR
 import com.example.kotlin_movieapp.utils.SERVER_ERROR
 import retrofit2.Call
@@ -43,11 +42,7 @@ class SearchViewModel(
     }
 
         private fun checkResponse(serverResponse : SearchResponse) : AppState {
-            return if (serverResponse == null) {
-                AppState.Error(Throwable(CORRUPTED_DATA))
-            } else {
-                AppState.SuccessSearch(serverResponse)
-            }
+            return AppState.Success(serverResponse)
         }
 
     fun getAdultLatinSearchCollection(rating: Int?, name: String) {

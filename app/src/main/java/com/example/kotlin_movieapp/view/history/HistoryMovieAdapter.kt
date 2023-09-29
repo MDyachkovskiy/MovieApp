@@ -15,12 +15,14 @@ import java.util.*
 
 class HistoryMovieAdapter(
     private var movieData: List<HistoryMovieItem>
-    ) : RecyclerView.Adapter<HistoryMovieAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<HistoryMovieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemHistoryMovieBinding.inflate(LayoutInflater.from(parent.context),
+        val binding = ItemHistoryMovieBinding.inflate(
+            LayoutInflater.from(parent.context),
             parent,
-            false)
+            false
+        )
 
         return ViewHolder(binding.root)
     }
@@ -43,7 +45,7 @@ class HistoryMovieAdapter(
 
                 Picasso.get()?.load(movie.poster)?.into(poster)
 
-                val viewingDate =Date(movie.date)
+                val viewingDate = Date(movie.date)
                 date.text = viewingDate.toString()
 
                 userNote.text = movie.userNote
@@ -53,7 +55,8 @@ class HistoryMovieAdapter(
                         MovieDetailsFragment::class.java,
                         KEY_BUNDLE_MOVIE,
                         convertHistoryMovieItemToCollectionItem(movie)
-                    )}
+                    )
+                }
             }
         }
     }

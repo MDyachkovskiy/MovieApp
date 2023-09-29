@@ -15,6 +15,6 @@ class HistoryViewModel(
 
     fun getAllHistory() {
         historyLiveData.postValue(AppState.Loading)
-        historyLiveData.postValue(AppState.SuccessHistory(historyRepository.getAllHistory()))
+        historyLiveData.postValue(AppState.Success(historyRepository.getAllHistory()))
     }
 }

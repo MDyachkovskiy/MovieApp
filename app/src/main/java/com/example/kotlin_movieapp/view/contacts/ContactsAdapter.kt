@@ -12,15 +12,17 @@ import com.example.kotlin_movieapp.databinding.ItemContactsBinding
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
 import com.example.kotlin_movieapp.utils.checkPermission
 
-class ContactsAdapter (
+class ContactsAdapter(
     private var contactsData: List<ContactsItem>,
     private var activity: FragmentActivity?
-        ) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemContactsBinding.inflate(LayoutInflater.from(parent.context),
-        parent,
-        false)
+        val binding = ItemContactsBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
 
         return ViewHolder(
             binding.root
@@ -33,7 +35,7 @@ class ContactsAdapter (
 
     override fun getItemCount(): Int = contactsData.size
 
-    class ViewHolder (itemView: View):
+    class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
         fun bind(contact: ContactsItem, activity: FragmentActivity?) {
@@ -51,8 +53,8 @@ class ContactsAdapter (
             }
         }
 
-        private fun makePhoneCall(phoneNumber : String) {
-            if (phoneNumber.isNotEmpty()){
+        private fun makePhoneCall(phoneNumber: String) {
+            if (phoneNumber.isNotEmpty()) {
                 val callIntent = Intent(Intent.ACTION_CALL)
                 callIntent.data = Uri.parse("tel:$phoneNumber")
                 itemView.context.startActivity(callIntent)

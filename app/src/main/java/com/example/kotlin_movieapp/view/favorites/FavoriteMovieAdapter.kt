@@ -15,12 +15,14 @@ import java.util.*
 
 class FavoriteMovieAdapter(
     private var movieData: List<FavoriteMovieItem>
-    ) : RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemFavoriteMovieBinding.inflate(LayoutInflater.from(parent.context),
+        val binding = ItemFavoriteMovieBinding.inflate(
+            LayoutInflater.from(parent.context),
             parent,
-            false)
+            false
+        )
 
         return ViewHolder(binding.root)
     }
@@ -43,7 +45,7 @@ class FavoriteMovieAdapter(
 
                 Picasso.get()?.load(movie.poster)?.into(poster)
 
-                val viewingDate =Date(movie.date)
+                val viewingDate = Date(movie.date)
                 date.text = viewingDate.toString()
 
                 userNote.text = movie.userNote
@@ -53,7 +55,8 @@ class FavoriteMovieAdapter(
                         MovieDetailsFragment::class.java,
                         KEY_BUNDLE_MOVIE,
                         convertFavoriteMovieItemToCollectionItem(movie)
-                    )}
+                    )
+                }
             }
         }
     }

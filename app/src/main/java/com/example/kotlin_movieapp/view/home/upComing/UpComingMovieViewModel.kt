@@ -42,7 +42,7 @@ class UpComingMovieViewModel(
     }
 
         private fun checkResponse(serverResponse : UpComingResponse) : AppState {
-            return AppState.SuccessUpComing(serverResponse)
+            return AppState.Success(serverResponse)
         }
 
     fun getUpComingCollection() {

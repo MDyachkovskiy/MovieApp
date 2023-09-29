@@ -17,7 +17,7 @@ class ContactsViewModel(
 
     fun getAllContacts() {
         contactsLiveData.postValue(AppState.Loading)
-        contactsLiveData.postValue(AppState.SuccessContacts(contactsRepository.getAllContacts()))
+        contactsLiveData.postValue(AppState.Success(contactsRepository.getAllContacts()))
     }
 
     fun addAllContacts(contacts: MutableList<ContactsItem>){

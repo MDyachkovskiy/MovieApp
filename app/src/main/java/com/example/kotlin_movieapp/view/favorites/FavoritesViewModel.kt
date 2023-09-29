@@ -16,6 +16,6 @@ class FavoritesViewModel(
 
     fun getAllFavorites() {
         favoritesLiveData.postValue(AppState.Loading)
-        favoritesLiveData.postValue(AppState.SuccessFavorites(favoritesRepository.getAllFavorites()))
+        favoritesLiveData.postValue(AppState.Success(favoritesRepository.getAllFavorites()))
     }
 }

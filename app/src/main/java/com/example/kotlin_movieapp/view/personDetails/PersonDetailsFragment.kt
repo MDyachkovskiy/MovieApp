@@ -1,38 +1,27 @@
 package com.example.kotlin_movieapp.view.personDetails
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentPersonBinding
-import com.example.kotlin_movieapp.model.AppState.AppStateRenderer
-import com.example.kotlin_movieapp.model.AppState.DetailsState
+import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.Person
 import com.example.kotlin_movieapp.model.datasource.remote.personDetailsResponse.PersonDTO
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.convert
 import com.example.kotlin_movieapp.utils.replaceFragment
+import com.example.kotlin_movieapp.view.base.BaseFragment
 import com.example.kotlin_movieapp.view.map.MapsFragment
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class PersonDetailsFragment : Fragment() {
-
-    private var _binding: FragmentPersonBinding? = null
-    private val binding get() = _binding!!
+class PersonDetailsFragment : BaseFragment<AppState, PersonDTO, FragmentPersonBinding>(
+    FragmentPersonBinding::inflate
+) {
 
     private lateinit var personBundle : Person
-    private lateinit var person : PersonDTO
-
-    private lateinit var parentView: View
-
-    private val dataRenderer by lazy {
-        AppStateRenderer(parentView){viewModel.getPersonDetailsFromRemoteSource(personBundle.id)}
-    }
 
     private val viewModel: PersonDetailsViewModel by lazy {
         ViewModelProvider(this)[PersonDetailsViewModel::class.java]
@@ -46,21 +35,8 @@ class PersonDetailsFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentPersonBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        parentView = binding.personDetail
-
-        binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
 
         personBundle = arguments?.getParcelable(KEY_BUNDLE_PERSON)?: Person()
 
@@ -73,20 +49,6 @@ class PersonDetailsFragment : Fragment() {
 
     private fun requestPersonDetail(personId: Int?) {
         viewModel.getPersonDetailsFromRemoteSource(personId)
-    }
-
-    private fun renderData(appState: DetailsState) {
-
-        dataRenderer.render(appState)
-
-        when (appState) {
-
-            is DetailsState.SuccessPerson -> {
-                person = appState.personDTO
-                displayPerson(appState.personDTO)
-            }
-            else -> return
-        }
     }
 
     private fun displayPerson(personDTO : PersonDTO) {
@@ -126,8 +88,7 @@ class PersonDetailsFragment : Fragment() {
         } else ""
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun setupData(data: PersonDTO) {
+        displayPerson(data)
     }
 }

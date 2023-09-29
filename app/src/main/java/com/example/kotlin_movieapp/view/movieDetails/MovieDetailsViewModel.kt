@@ -4,7 +4,7 @@ import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlin_movieapp.app.App
-import com.example.kotlin_movieapp.model.AppState.DetailsState
+import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.model.repository.movieDetails.DetailsRepository
 import com.example.kotlin_movieapp.model.repository.movieDetails.DetailsRepositoryImpl
@@ -15,7 +15,7 @@ import com.example.kotlin_movieapp.utils.REQUEST_ERROR
 import com.example.kotlin_movieapp.utils.SERVER_ERROR
 
 class MovieDetailsViewModel(
-    private val liveData: MutableLiveData<DetailsState> = MutableLiveData(),
+    private val liveData: MutableLiveData<AppState> = MutableLiveData(),
     private val detailsRepository: DetailsRepository = DetailsRepositoryImpl(RemoteDataSource()),
     private val historyRepository: LocalRepositoryImpl = LocalRepositoryImpl(App.getHistoryDao()),
     private val favoriteRepository: FavoritesRepositoryImpl = FavoritesRepositoryImpl(App.getFavoriteDao())
@@ -24,7 +24,7 @@ class MovieDetailsViewModel(
     private val callback = object : retrofit2.Callback<MovieDTO> {
 
         override fun onFailure(call: retrofit2.Call<MovieDTO>, t: Throwable) {
-            liveData.postValue(DetailsState.Error(Throwable(t.message ?: REQUEST_ERROR)))
+            liveData.postValue(AppState.Error(Throwable(t.message ?: REQUEST_ERROR)))
         }
 
         override fun onResponse(
@@ -36,21 +36,20 @@ class MovieDetailsViewModel(
                 if (response.isSuccessful && serverResponse != null) {
                     checkResponse(serverResponse)
                 } else {
-                    DetailsState.Error(Throwable(SERVER_ERROR))
+                    AppState.Error(Throwable(SERVER_ERROR))
                 }
             )
         }
     }
 
-    private fun checkResponse (serverResponse: MovieDTO) : DetailsState {
-
-        return DetailsState.SuccessMovie(serverResponse)
+    private fun checkResponse (serverResponse: MovieDTO) : AppState {
+        return AppState.Success(serverResponse)
     }
 
     fun getLiveData() = liveData
 
     fun getMovieFromRemoteSource(movieId: Int?) {
-        liveData.value = DetailsState.Loading
+        liveData.value = AppState.Loading
         detailsRepository.getMovieDetailsFromServer(movieId, callback)
     }
 

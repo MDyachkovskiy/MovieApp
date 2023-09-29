@@ -42,7 +42,7 @@ class TopTvShowsViewModel(
     }
 
         private fun checkResponse(serverResponse : TopTvShowsResponse) : AppState {
-            return AppState.SuccessTvShow(serverResponse)
+            return AppState.Success(serverResponse)
         }
 
     fun getTvShowsCollection() {

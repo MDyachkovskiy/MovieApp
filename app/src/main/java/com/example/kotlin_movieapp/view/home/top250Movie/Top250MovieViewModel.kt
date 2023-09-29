@@ -44,7 +44,7 @@ class Top250MovieViewModel(
     }
 
         private fun checkResponse(serverResponse : Top250Response) : AppState {
-            return AppState.SuccessMovie(serverResponse)
+            return AppState.Success(serverResponse)
         }
 
     fun getTop250Collection() {

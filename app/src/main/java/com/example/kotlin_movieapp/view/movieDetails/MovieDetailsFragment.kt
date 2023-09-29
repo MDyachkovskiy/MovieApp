@@ -3,36 +3,30 @@ package com.example.kotlin_movieapp.view.movieDetails
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentMovieDetailBinding
-import com.example.kotlin_movieapp.model.AppState.AppStateRenderer
-import com.example.kotlin_movieapp.model.AppState.DetailsState
+import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.CollectionItem
 import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.Person
-import com.example.kotlin_movieapp.utils.*
+import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
+import com.example.kotlin_movieapp.utils.convert
+import com.example.kotlin_movieapp.utils.init
+import com.example.kotlin_movieapp.utils.showToast
+import com.example.kotlin_movieapp.view.base.BaseFragment
 import com.example.kotlin_movieapp.view.personDetails.PersonsAdapter
 
-class MovieDetailsFragment : Fragment() {
-
-    private var _binding: FragmentMovieDetailBinding? = null
-    private val binding get() = _binding!!
+class MovieDetailsFragment : BaseFragment<AppState, MovieDTO, FragmentMovieDetailBinding>(
+    FragmentMovieDetailBinding::inflate
+)
+{
 
     private lateinit var movieBundle : CollectionItem
     private lateinit var movie : MovieDTO
-
-    private lateinit var parentView: View
-
-    private val dataRenderer by lazy {
-        AppStateRenderer(parentView) { viewModel.getMovieFromRemoteSource(movieBundle.kinopoiskId) }
-    }
 
     private val viewModel: MovieDetailsViewModel by lazy {
         ViewModelProvider(this)[MovieDetailsViewModel::class.java]
@@ -46,22 +40,10 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        parentView = binding.movieDetail
-
         binding.movieDetail.visibility = View.VISIBLE
-        binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
 
         binding.userNote.addTextChangedListener (object : TextWatcher{
             override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -105,16 +87,8 @@ class MovieDetailsFragment : Fragment() {
         viewModel.getMovieFromRemoteSource(movieId)
     }
 
-    private fun renderData(appState: DetailsState) {
-        dataRenderer.render(appState)
-
-        when (appState) {
-            is DetailsState.SuccessMovie -> {
-                movie = appState.movieDTO
-                displayMovie(appState.movieDTO)
-            }
-            else -> return
-        }
+    override fun setupData(data: MovieDTO) {
+        displayMovie(data)
     }
 
     private fun displayMovie(movieDTO : MovieDTO) {
@@ -173,10 +147,5 @@ class MovieDetailsFragment : Fragment() {
 
     private fun addCommentToMovie(movieDTO: MovieDTO, text: Editable?){
         viewModel.addCommentToMovie(movieDTO, text)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

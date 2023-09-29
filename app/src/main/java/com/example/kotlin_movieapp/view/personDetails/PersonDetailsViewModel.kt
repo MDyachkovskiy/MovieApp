@@ -2,7 +2,7 @@ package com.example.kotlin_movieapp.view.personDetails
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kotlin_movieapp.model.AppState.DetailsState
+import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.remote.personDetailsResponse.PersonDTO
 import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
 import com.example.kotlin_movieapp.model.repository.personDetails.PersonDetailsRepository
@@ -13,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 class PersonDetailsViewModel (
-    private val liveData: MutableLiveData<DetailsState> = MutableLiveData(),
+    private val liveData: MutableLiveData<AppState> = MutableLiveData(),
     private val personRepository: PersonDetailsRepository =
             PersonDetailsRepositoryImpl(RemoteDataSource())
 ) : ViewModel() {
@@ -27,25 +27,24 @@ class PersonDetailsViewModel (
                 if (response.isSuccessful && serverResponse != null) {
                     checkResponse(serverResponse)
                 } else {
-                    DetailsState.Error(Throwable(SERVER_ERROR))
+                    AppState.Error(Throwable(SERVER_ERROR))
                 }
             )
         }
 
         override fun onFailure(call: Call<PersonDTO>, t: Throwable) {
-            liveData.postValue(DetailsState.Error(Throwable(t.message?: REQUEST_ERROR)))
+            liveData.postValue(AppState.Error(Throwable(t.message?: REQUEST_ERROR)))
         }
     }
 
-    private fun checkResponse(serverResponse: PersonDTO): DetailsState {
-        return DetailsState.SuccessPerson(serverResponse)
+    private fun checkResponse(serverResponse: PersonDTO): AppState {
+        return AppState.Success(serverResponse)
     }
 
     fun getLiveData() = liveData
 
     fun getPersonDetailsFromRemoteSource(personId: Int?) {
-        liveData.value = DetailsState.Loading
+        liveData.value = AppState.Loading
         personRepository.getPersonDetailsFromRemoteServer(personId, callback)
     }
-
 }
