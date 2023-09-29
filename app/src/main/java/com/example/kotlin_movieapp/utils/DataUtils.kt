@@ -1,14 +1,14 @@
 package com.example.kotlin_movieapp.utils
 
-import com.example.kotlin_movieapp.model.collectionResponse.CollectionItem
-import com.example.kotlin_movieapp.model.movieDetailsResponse.MovieDTO
-import com.example.kotlin_movieapp.model.movieDetailsResponse.Poster
-import com.example.kotlin_movieapp.model.room.contacts.ContactsEntity
-import com.example.kotlin_movieapp.model.room.contacts.ContactsItem
-import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieEntity
-import com.example.kotlin_movieapp.model.room.favorites.FavoriteMovieItem
-import com.example.kotlin_movieapp.model.room.history.HistoryEntity
-import com.example.kotlin_movieapp.model.room.history.HistoryMovieItem
+import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.CollectionItem
+import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.MovieDTO
+import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.Poster
+import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsEntity
+import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
+import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieEntity
+import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieItem
+import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryEntity
+import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryMovieItem
 
 
 fun convertListHistoryEntityToMovie (entityList : List<HistoryEntity>) : List<HistoryMovieItem>{
