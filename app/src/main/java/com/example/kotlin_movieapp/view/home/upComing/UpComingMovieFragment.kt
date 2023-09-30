@@ -2,7 +2,6 @@ package com.example.kotlin_movieapp.view.home.upComing
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentUpcomingBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
@@ -10,6 +9,8 @@ import com.example.kotlin_movieapp.model.datasource.domain.collection.Collection
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.view.base.BaseFragment
 import com.example.kotlin_movieapp.view.home.MovieAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class UpComingMovieFragment : BaseFragment<AppState, CollectionsResponse, FragmentUpcomingBinding>(
     FragmentUpcomingBinding::inflate
@@ -19,9 +20,7 @@ class UpComingMovieFragment : BaseFragment<AppState, CollectionsResponse, Fragme
         fun newInstance() = UpComingMovieFragment()
     }
 
-    private val viewModel: UpComingMovieViewModel by lazy {
-        ViewModelProvider(this)[UpComingMovieViewModel::class.java]
-    }
+    private val viewModel: UpComingMovieViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -2,16 +2,20 @@ package com.example.kotlin_movieapp.app
 
 import android.app.Application
 import androidx.room.Room
+import com.example.kotlin_movieapp.di.appModule
 import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryDao
 import com.example.kotlin_movieapp.model.datasource.local.room.HistoryDataBase
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsDao
 import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieDao
+import org.koin.core.context.startKoin
 
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        startKoin {
+            modules(appModule)
+        }
         appInstance = this
     }
 
