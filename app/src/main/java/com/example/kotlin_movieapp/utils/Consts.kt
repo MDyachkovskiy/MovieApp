@@ -11,7 +11,7 @@ const val MOVIE_END_POINT = "movie?$KINOPOISK_TOKEN&field=id"
 
 const val PERSON_END_POINT = "person?$KINOPOISK_TOKEN&field=id"
 
-const val TOP250_END_POINT = "v1.3/movie"
+const val TOP_COLLECTIONS_END_POINT = "v1.3/movie"
 
 const val KINOPOISK_RATING = "rating.kp"
 const val DENOMINATION_SORT = -1
@@ -20,22 +20,6 @@ const val MOVIE_TYPE = "movie"
 const val TV_SHOW_TYPE = "tv-series"
 const val COLLECTION_SELECTED_FIELDS = "id name poster"
 const val UPCOMING_YEAR = 2023
-
-
-const val TOP_TV_SHOWS_END_POINT =
-    "movie/?$KINOPOISK_TOKEN" +
-            "&field=top250" +
-            "&search=!null" +
-            "&sortField=top250" +
-            "&field=type" +
-            "&search=tv-series" +
-            "&selectFields=id name top250 poster type"
-
-const val POPULAR_NOW_END_POINT =
-    "collection/?$KINOPOISK_TOKEN" +
-            "&search=top_items_all" +
-            "&field=collectionId" +
-            "&selectFields=id name top250 poster type"
 
 const val SEARCH_END_POINT = "movie/?$KINOPOISK_TOKEN"
 

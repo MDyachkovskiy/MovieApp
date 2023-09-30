@@ -11,6 +11,7 @@ import com.example.kotlin_movieapp.utils.NAME_FIELD
 import com.example.kotlin_movieapp.utils.RATING_FIELD
 import com.example.kotlin_movieapp.utils.SORT_FIELD
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Callback
@@ -22,6 +23,7 @@ class RemoteDataSource {
     private val kinopoiskAPI = Retrofit.Builder()
         .baseUrl(KINOPOISK_DOMAIN)
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .client(createOkHttpClient())
         .build().create(KinopoiskAPI::class.java)
 
