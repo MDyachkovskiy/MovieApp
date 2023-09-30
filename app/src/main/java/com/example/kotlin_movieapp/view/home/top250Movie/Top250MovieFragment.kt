@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentTop250movieBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.Top250Response
+import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.view.base.BaseFragment
 import com.example.kotlin_movieapp.view.home.MovieAdapter
 
-class Top250MovieFragment : BaseFragment<AppState, Top250Response, FragmentTop250movieBinding>(
+class Top250MovieFragment : BaseFragment<AppState, CollectionsResponse, FragmentTop250movieBinding>(
     FragmentTop250movieBinding::inflate
 ) {
 
@@ -33,12 +33,12 @@ class Top250MovieFragment : BaseFragment<AppState, Top250Response, FragmentTop25
         viewModel.getTop250Collection()
     }
 
-    override fun setupData(data: Top250Response) {
+    override fun setupData(data: CollectionsResponse) {
         initRV(data)
     }
 
-    private fun initRV(data: Top250Response) {
-        val movieList = data.top250Movies
+    private fun initRV(data: CollectionsResponse) {
+        val movieList = data
         binding.RVTop250.init(MovieAdapter(movieList), LinearLayoutManager.HORIZONTAL)
     }
 }

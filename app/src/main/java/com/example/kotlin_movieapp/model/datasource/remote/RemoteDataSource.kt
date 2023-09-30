@@ -1,9 +1,7 @@
 package com.example.kotlin_movieapp.model.datasource.remote
 
+import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
 import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.SearchResponse
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.Top250Response
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.TopTvShowsResponse
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.UpComingResponse
 import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.model.datasource.remote.personDetailsResponse.PersonDTO
 import com.example.kotlin_movieapp.utils.AGE_RATING
@@ -12,7 +10,6 @@ import com.example.kotlin_movieapp.utils.KINOPOISK_DOMAIN
 import com.example.kotlin_movieapp.utils.NAME_FIELD
 import com.example.kotlin_movieapp.utils.RATING_FIELD
 import com.example.kotlin_movieapp.utils.SORT_FIELD
-
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -36,16 +33,16 @@ class RemoteDataSource {
         kinopoiskAPI.getPerson(personId).enqueue(callback)
     }
 
-    fun getTop250Collection(callback: Callback<Top250Response>){
-        kinopoiskAPI.getTop250Collection().enqueue(callback)
+    suspend fun getTop250Collection(): CollectionsResponse {
+        return kinopoiskAPI.getTop250CollectionAsync().await()
     }
 
-    fun getTopTvShowsCollection(callback: Callback<TopTvShowsResponse>){
-        kinopoiskAPI.getTopTvShowsCollection().enqueue(callback)
+    suspend fun getTopTvShowsCollection(): CollectionsResponse{
+        return kinopoiskAPI.getTopTvShowsCollectionAsync().await()
     }
 
-    fun getUpComingCollection(callback: Callback<UpComingResponse>){
-        kinopoiskAPI.getUpComingCollection().enqueue(callback)
+    suspend fun getUpComingCollection(): CollectionsResponse{
+        return kinopoiskAPI.getUpComingCollectionAsync().await()
     }
 
     fun getAdultCyrillicSearchCollection(rating: Int?, name: String,

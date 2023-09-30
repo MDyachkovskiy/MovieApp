@@ -1,19 +1,26 @@
 package com.example.kotlin_movieapp.model.datasource.remote
 
+import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
 import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.SearchResponse
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.Top250Response
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.TopTvShowsResponse
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.UpComingResponse
 import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.MovieDTO
 import com.example.kotlin_movieapp.model.datasource.remote.personDetailsResponse.PersonDTO
+import com.example.kotlin_movieapp.utils.COLLECTION_SELECTED_FIELDS
+import com.example.kotlin_movieapp.utils.DENOMINATION_SORT
+import com.example.kotlin_movieapp.utils.KINOPOISK_RATING
 import com.example.kotlin_movieapp.utils.MOVIE_END_POINT
+import com.example.kotlin_movieapp.utils.MOVIE_TYPE
 import com.example.kotlin_movieapp.utils.PERSON_END_POINT
 import com.example.kotlin_movieapp.utils.POPULAR_NOW_END_POINT
+import com.example.kotlin_movieapp.utils.RESPONSE_QUANTITY
 import com.example.kotlin_movieapp.utils.SEARCH_END_POINT
 import com.example.kotlin_movieapp.utils.TOP250_END_POINT
 import com.example.kotlin_movieapp.utils.TOP_TV_SHOWS_END_POINT
+import com.example.kotlin_movieapp.utils.TV_SHOW_TYPE
+import com.example.kotlin_movieapp.utils.UPCOMING_YEAR
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface KinopoiskAPI {
@@ -28,16 +35,37 @@ interface KinopoiskAPI {
     ) : Call<PersonDTO>
 
     @GET(TOP250_END_POINT)
-    fun getTop250Collection(
-    ) : Call<Top250Response>
+    @Headers("X_API_KEY: ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB")
+    fun getTop250CollectionAsync(
+        @Query("sortFields") sort: String? = KINOPOISK_RATING,
+        @Query("sortType") sortType: Int? = DENOMINATION_SORT,
+        @Query("page") page: Int? = 1,
+        @Query("limit") limit: Int? = RESPONSE_QUANTITY,
+        @Query("type") type: String? = MOVIE_TYPE,
+        @Query("top250") top250: String? = "!null",
+        @Query("selectFields") selectedFields: String? = COLLECTION_SELECTED_FIELDS
+    ) : Deferred<CollectionsResponse>
 
     @GET(TOP_TV_SHOWS_END_POINT)
-    fun getTopTvShowsCollection(
-    ) : Call<TopTvShowsResponse>
+    @Headers("X_API_KEY: ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB")
+    fun getTopTvShowsCollectionAsync(
+        @Query("sortFields") sort: String? = KINOPOISK_RATING,
+        @Query("sortType") sortType: Int? = DENOMINATION_SORT,
+        @Query("page") page: Int? = 1,
+        @Query("limit") limit: Int? = RESPONSE_QUANTITY,
+        @Query("type") type: String? = TV_SHOW_TYPE,
+        @Query("top250") top250: String? = "!null",
+        @Query("selectFields") selectedFields: String? = COLLECTION_SELECTED_FIELDS
+    ) : Deferred<CollectionsResponse>
 
     @GET(POPULAR_NOW_END_POINT)
-    fun getUpComingCollection(
-    ) : Call<UpComingResponse>
+    fun getUpComingCollectionAsync(
+        @Query("page") page: Int? = 1,
+        @Query("limit") limit: Int? = RESPONSE_QUANTITY,
+        @Query("movie") movie: String? = "!null",
+        @Query("year") year: Int? = UPCOMING_YEAR,
+        @Query("selectFields") selectedFields: String? = COLLECTION_SELECTED_FIELDS
+    ) : Deferred<CollectionsResponse>
 
     @GET(SEARCH_END_POINT)
     fun getAdultCyrillicSearchCollection(

@@ -1,25 +1,29 @@
 package com.example.kotlin_movieapp.model.repository.collections
 
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.Top250Response
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.TopTvShowsResponse
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.UpComingResponse
+import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
-import retrofit2.Callback
+import com.example.kotlin_movieapp.utils.REQUEST_ERROR
 
 class CollectionsRepositoryImpl(
     private val remoteDataSource: RemoteDataSource
 ) : CollectionsRepository {
 
-    override fun getTop250CollectionFromServer(callback: Callback<Top250Response>) {
-        remoteDataSource.getTop250Collection(callback)
-
+    override suspend fun getTop250CollectionFromServer(): AppState {
+        return parseApiCall { remoteDataSource.getTop250Collection() }
     }
 
-    override fun getTopTvShowsCollectionFromServer(callback: Callback<TopTvShowsResponse>) {
-        remoteDataSource.getTopTvShowsCollection(callback)
+    override suspend fun getTopTvShowsCollectionFromServer(): AppState {
+        return parseApiCall { remoteDataSource.getTopTvShowsCollection() }
     }
 
-    override fun getUpComingCollectionFromServer(callback: Callback<UpComingResponse>) {
-        remoteDataSource.getUpComingCollection(callback)
+    override suspend fun getUpComingCollectionFromServer(): AppState {
+       return parseApiCall { remoteDataSource.getUpComingCollection() }
+    }
+    private suspend fun <T> parseApiCall(apiCall: suspend() -> T): AppState {
+        return try {
+            AppState.Success(apiCall.invoke())
+        } catch(e: Throwable) {
+            AppState.Error(Throwable(e.message ?: REQUEST_ERROR))
+        }
     }
 }

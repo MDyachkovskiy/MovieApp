@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentUpcomingBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.UpComingResponse
+import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.view.base.BaseFragment
 import com.example.kotlin_movieapp.view.home.MovieAdapter
 
-class UpComingMovieFragment : BaseFragment<AppState, UpComingResponse, FragmentUpcomingBinding>(
+class UpComingMovieFragment : BaseFragment<AppState, CollectionsResponse, FragmentUpcomingBinding>(
     FragmentUpcomingBinding::inflate
 ) {
 
@@ -33,12 +33,11 @@ class UpComingMovieFragment : BaseFragment<AppState, UpComingResponse, FragmentU
         viewModel.getUpComingCollection()
     }
 
-    override fun setupData(data: UpComingResponse) {
+    override fun setupData(data: CollectionsResponse) {
         initRV(data)
     }
 
-    private fun initRV(data: UpComingResponse) {
-        val movieList = data.UpComingMovies
-        binding.RVUpComing.init(MovieAdapter(movieList), LinearLayoutManager.HORIZONTAL)
+    private fun initRV(data:CollectionsResponse) {
+        binding.RVUpComing.init(MovieAdapter(data), LinearLayoutManager.HORIZONTAL)
     }
 }

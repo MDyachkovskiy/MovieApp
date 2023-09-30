@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentTvshowsBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.TopTvShowsResponse
+import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.view.base.BaseFragment
 import com.example.kotlin_movieapp.view.home.MovieAdapter
 
-class TopTvShowsFragment : BaseFragment<AppState, TopTvShowsResponse, FragmentTvshowsBinding>(
+class TopTvShowsFragment : BaseFragment<AppState, CollectionsResponse, FragmentTvshowsBinding>(
     FragmentTvshowsBinding::inflate
 ) {
 
@@ -34,12 +34,11 @@ class TopTvShowsFragment : BaseFragment<AppState, TopTvShowsResponse, FragmentTv
     }
 
 
-    override fun setupData(data: TopTvShowsResponse) {
+    override fun setupData(data: CollectionsResponse) {
         initRV(data)
     }
 
-    private fun initRV(data: TopTvShowsResponse) {
-        val movieList = data.topTvShows
-        binding.RVTvShows.init(MovieAdapter(movieList), LinearLayoutManager.HORIZONTAL)
+    private fun initRV(data: CollectionsResponse) {
+        binding.RVTvShows.init(MovieAdapter(data), LinearLayoutManager.HORIZONTAL)
     }
 }
