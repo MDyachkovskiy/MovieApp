@@ -16,5 +16,4 @@ class ContactsRepositoryImpl (
         val contactEntity = convertContactsItemToContactsEntity(contact)
         localDataSource.insert(contactEntity)
     }
-
 }

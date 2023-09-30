@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
@@ -19,18 +18,17 @@ import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.utils.showToast
 import com.example.kotlin_movieapp.view.base.BaseFragment
 import com.example.kotlin_movieapp.view.personDetails.PersonsAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class MovieDetailsFragment : BaseFragment<AppState, MovieDTO, FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate
 )
 {
-
     private lateinit var movieBundle : CollectionItem
     private lateinit var movie : MovieDTO
 
-    private val viewModel: MovieDetailsViewModel by lazy {
-        ViewModelProvider(this)[MovieDetailsViewModel::class.java]
-    }
+    private val viewModel: MovieDetailsViewModel by viewModel()
 
     companion object {
         fun newInstance(bundle: Bundle) : MovieDetailsFragment {

@@ -17,7 +17,7 @@ import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryEn
     ContactsEntity ::class
     ]
 )
-abstract class HistoryDataBase : RoomDatabase() {
+abstract class MovieAppDataBase : RoomDatabase() {
     abstract fun historyDao() : HistoryDao
     abstract fun favoriteDao() : FavoriteMovieDao
     abstract fun contactsDao() : ContactsDao

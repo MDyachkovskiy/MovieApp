@@ -2,7 +2,6 @@ package com.example.kotlin_movieapp.view.personDetails
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentPersonBinding
@@ -16,6 +15,8 @@ import com.example.kotlin_movieapp.view.base.BaseFragment
 import com.example.kotlin_movieapp.view.map.MapsFragment
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class PersonDetailsFragment : BaseFragment<AppState, PersonDTO, FragmentPersonBinding>(
     FragmentPersonBinding::inflate
@@ -23,9 +24,7 @@ class PersonDetailsFragment : BaseFragment<AppState, PersonDTO, FragmentPersonBi
 
     private lateinit var personBundle : Person
 
-    private val viewModel: PersonDetailsViewModel by lazy {
-        ViewModelProvider(this)[PersonDetailsViewModel::class.java]
-    }
+    private val viewModel: PersonDetailsViewModel by viewModel()
 
     companion object {
         fun newInstance(bundle: Bundle) : PersonDetailsFragment {

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.SearchResponse
-import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
 import com.example.kotlin_movieapp.model.repository.search.SearchRepositoryImpl
 import com.example.kotlin_movieapp.utils.REQUEST_ERROR
 import com.example.kotlin_movieapp.utils.SERVER_ERROR
@@ -14,9 +13,10 @@ import retrofit2.Response
 
 
 class SearchViewModel(
-    private val liveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val repository: SearchRepositoryImpl = SearchRepositoryImpl(RemoteDataSource()),
+    private val repository: SearchRepositoryImpl
 ) : ViewModel() {
+
+    private val liveData: MutableLiveData<AppState> = MutableLiveData()
 
     fun getData(): LiveData<AppState> {
         return liveData

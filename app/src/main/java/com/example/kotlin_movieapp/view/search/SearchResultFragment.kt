@@ -10,14 +10,13 @@ import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.view.base.BaseFragment
 
 class SearchResultFragment(
-    val appState: AppState
+    private val appState: AppState
 ) : BaseFragment<AppState, SearchResponse, FragmentSearchResultBinding>(
     FragmentSearchResultBinding::inflate
 ) {
     override fun setupData(data: SearchResponse) {
         initRV(data)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         renderData(appState)

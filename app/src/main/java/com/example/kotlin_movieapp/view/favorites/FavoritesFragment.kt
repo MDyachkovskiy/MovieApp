@@ -2,22 +2,19 @@ package com.example.kotlin_movieapp.view.favorites
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentFavoritesBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.view.base.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoritesFragment : BaseFragment<AppState,List<FavoriteMovieItem>, FragmentFavoritesBinding>(
     FragmentFavoritesBinding::inflate
-)
- {
+) {
 
-    private val viewModel: FavoritesViewModel by lazy {
-        ViewModelProvider (this)[FavoritesViewModel::class.java]
-    }
+    private val viewModel: FavoritesViewModel by viewModel()
 
     companion object {
         fun newInstance() = FavoritesFragment()

@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentContactsBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
@@ -15,6 +14,8 @@ import com.example.kotlin_movieapp.utils.checkPermission
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.utils.showAlertMessage
 import com.example.kotlin_movieapp.view.base.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class ContactsFragment : BaseFragment<AppState, List<ContactsItem>, FragmentContactsBinding>(
     FragmentContactsBinding::inflate
@@ -22,9 +23,7 @@ class ContactsFragment : BaseFragment<AppState, List<ContactsItem>, FragmentCont
 
     private val contactsGetter by lazy { ContactsGetter(context, viewModel) }
 
-    private val viewModel: ContactsViewModel by lazy {
-        ViewModelProvider(this)[ContactsViewModel::class.java]
-    }
+    private val viewModel: ContactsViewModel by viewModel()
 
     companion object {
         fun newInstance() = ContactsFragment()

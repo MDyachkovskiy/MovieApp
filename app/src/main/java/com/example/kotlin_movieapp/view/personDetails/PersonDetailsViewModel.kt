@@ -4,19 +4,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.remote.personDetailsResponse.PersonDTO
-import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
 import com.example.kotlin_movieapp.model.repository.personDetails.PersonDetailsRepository
-import com.example.kotlin_movieapp.model.repository.personDetails.PersonDetailsRepositoryImpl
 import com.example.kotlin_movieapp.utils.REQUEST_ERROR
 import com.example.kotlin_movieapp.utils.SERVER_ERROR
 import retrofit2.Call
 import retrofit2.Response
 
 class PersonDetailsViewModel (
-    private val liveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val personRepository: PersonDetailsRepository =
-            PersonDetailsRepositoryImpl(RemoteDataSource())
+    private val personRepository: PersonDetailsRepository
 ) : ViewModel() {
+
+    private val liveData: MutableLiveData<AppState> = MutableLiveData()
 
     private val callback = object: retrofit2.Callback<PersonDTO> {
         override fun onResponse(

@@ -8,13 +8,14 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentSearchBinding
 import com.example.kotlin_movieapp.utils.replaceFragment
 import com.example.kotlin_movieapp.view.history.HistoryFragment
 import java.util.regex.Pattern
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class SearchFragment : Fragment() {
 
@@ -37,9 +38,7 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
-    private val viewModel: SearchViewModel by lazy {
-        ViewModelProvider(this)[SearchViewModel::class.java]
-    }
+    private val viewModel: SearchViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
