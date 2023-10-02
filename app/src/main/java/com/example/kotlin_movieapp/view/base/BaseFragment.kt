@@ -3,6 +3,7 @@ package com.example.kotlin_movieapp.view.base
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,8 +66,10 @@ abstract class BaseFragment<T : AppState, I, VB : ViewBinding>(
         when (appState) {
             is AppState.Success<*> -> {
                 showWorkingView()
-                val data = appState.data as I
-                setupData(data)
+                Log.e("@@@", "Data type: ${appState.data?.javaClass}")
+                val data = appState.data as? I
+                if (data != null) setupData(data)
+                else Log.e("@@@", "Unexpected data type: ${appState.data?.javaClass}")
             }
 
             is AppState.Loading -> {

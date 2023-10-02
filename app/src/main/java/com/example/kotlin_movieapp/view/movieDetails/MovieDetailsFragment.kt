@@ -9,9 +9,9 @@ import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentMovieDetailBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.CollectionItem
-import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.MovieDTO
-import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.Person
+import com.example.kotlin_movieapp.model.datasource.domain.collection.Doc
+import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
+import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Person
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.convert
 import com.example.kotlin_movieapp.utils.init
@@ -21,12 +21,12 @@ import com.example.kotlin_movieapp.view.personDetails.PersonsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MovieDetailsFragment : BaseFragment<AppState, MovieDTO, FragmentMovieDetailBinding>(
+class MovieDetailsFragment : BaseFragment<AppState, MovieDetailsResponse, FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate
 )
 {
-    private lateinit var movieBundle : CollectionItem
-    private lateinit var movie : MovieDTO
+    private lateinit var movieBundle : Doc
+    private lateinit var movie : MovieDetailsResponse
 
     private val viewModel: MovieDetailsViewModel by viewModel()
 
@@ -72,24 +72,24 @@ class MovieDetailsFragment : BaseFragment<AppState, MovieDTO, FragmentMovieDetai
             }
         }
 
-        movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: CollectionItem()
+        movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: Doc()
 
         viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
 
-        requestMovieDetail(movieBundle.kinopoiskId)
+        requestMovieDetail(movieBundle.id)
     }
 
     private fun requestMovieDetail(movieId: Int?) {
         viewModel.getMovieFromRemoteSource(movieId)
     }
 
-    override fun setupData(data: MovieDTO) {
+    override fun setupData(data: MovieDetailsResponse) {
         displayMovie(data)
     }
 
-    private fun displayMovie(movieDTO : MovieDTO) {
+    private fun displayMovie(movieDTO : MovieDetailsResponse) {
 
         Thread{
             val date = System.currentTimeMillis()
@@ -131,19 +131,19 @@ class MovieDetailsFragment : BaseFragment<AppState, MovieDTO, FragmentMovieDetai
         binding.movieStaffRV.init(PersonsAdapter(movieStaff), LinearLayoutManager.HORIZONTAL)
     }
 
-    private fun saveMovie(movieDTO: MovieDTO, date: Long) {
+    private fun saveMovie(movieDTO: MovieDetailsResponse, date: Long) {
         viewModel.saveMovieToDB(movieDTO, date)
     }
 
-    private fun saveFavoriteMovie (movieDTO: MovieDTO) {
+    private fun saveFavoriteMovie (movieDTO: MovieDetailsResponse) {
         viewModel.saveFavoriteMovieToDB(movieDTO)
     }
 
-    private fun deleteFavoriteMovie (movieDTO: MovieDTO) {
+    private fun deleteFavoriteMovie (movieDTO: MovieDetailsResponse) {
         viewModel.saveFavoriteMovieToDB(movieDTO)
     }
 
-    private fun addCommentToMovie(movieDTO: MovieDTO, text: Editable?){
+    private fun addCommentToMovie(movieDTO: MovieDetailsResponse, text: Editable?){
         viewModel.addCommentToMovie(movieDTO, text)
     }
 }

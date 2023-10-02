@@ -1,7 +1,7 @@
 package com.example.kotlin_movieapp.model.repository.movieDetails
 
-import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.MovieDTO
+import com.example.kotlin_movieapp.model.AppState.AppState
 
 interface DetailsRepository {
-    fun getMovieDetailsFromServer(movieId: Int?, callback: retrofit2.Callback<MovieDTO>)
+    suspend fun getMovieDetailsFromServer(movieId: Int?): AppState
 }

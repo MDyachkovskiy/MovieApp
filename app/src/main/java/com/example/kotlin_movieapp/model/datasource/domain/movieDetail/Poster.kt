@@ -1,11 +1,10 @@
-package com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse
+package com.example.kotlin_movieapp.model.datasource.domain.movieDetail
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Poster(
-    val _id: String? = "",
     val previewUrl: String? = "",
     val url: String? = ""
 ) : Parcelable

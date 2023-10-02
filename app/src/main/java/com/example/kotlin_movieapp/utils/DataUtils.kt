@@ -1,8 +1,8 @@
 package com.example.kotlin_movieapp.utils
 
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.CollectionItem
-import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.MovieDTO
-import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.Poster
+import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
+import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Poster
+import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionItem
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsEntity
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
 import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieEntity
@@ -25,7 +25,7 @@ fun convertListHistoryEntityToMovie (entityList : List<HistoryEntity>) : List<Hi
 
 fun convertMovieToEntity (movie: HistoryMovieItem) : HistoryEntity {
     return HistoryEntity(
-        movie.kinopoiskId,
+        movie.kinopoiskId ?: 0,
         movie.name,
         movie.description,
         movie.poster,
@@ -43,7 +43,7 @@ fun convertHistoryEntityToMovie(historyEntity: HistoryEntity) : HistoryMovieItem
         userNote = historyEntity.userNote
 )
 
-fun convertMovieDTOToHistoryMovieItem(movie: MovieDTO) : HistoryMovieItem =
+fun convertMovieDTOToHistoryMovieItem(movie: MovieDetailsResponse) : HistoryMovieItem =
     HistoryMovieItem (
         kinopoiskId = movie.id,
         name = movie.name,
@@ -54,7 +54,7 @@ fun convertMovieDTOToHistoryMovieItem(movie: MovieDTO) : HistoryMovieItem =
 )
 
 fun convertHistoryMovieItemToCollectionItem (movie: HistoryMovieItem) : CollectionItem =
-    CollectionItem (
+    CollectionItem(
         kinopoiskId = movie.kinopoiskId,
         name = movie.name,
         description = movie.description,
@@ -75,7 +75,7 @@ fun convertListFavoritesEntityToMovie (entityList : List<FavoriteMovieEntity>) :
     }
 }
 
-fun convertMovieDTOtoFavoriteMovieEntity (movie : MovieDTO) : FavoriteMovieEntity =
+fun convertMovieDTOtoFavoriteMovieEntity (movie : MovieDetailsResponse) : FavoriteMovieEntity =
     FavoriteMovieEntity(
         kinopoiskId = movie.id,
         name = movie.name,

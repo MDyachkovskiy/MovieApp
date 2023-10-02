@@ -1,70 +1,44 @@
 package com.example.kotlin_movieapp.view.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentSearchBinding
+import com.example.kotlin_movieapp.model.AppState.AppState
+import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
 import com.example.kotlin_movieapp.utils.replaceFragment
+import com.example.kotlin_movieapp.view.base.BaseFragment
 import com.example.kotlin_movieapp.view.history.HistoryFragment
-import java.util.regex.Pattern
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class SearchFragment : Fragment() {
-
-    private var _binding: FragmentSearchBinding? = null
-    private val binding get() = _binding!!
-
+class SearchFragment : BaseFragment<AppState, CollectionsResponse, FragmentSearchBinding>(
+    FragmentSearchBinding::inflate
+) {
     companion object {
         fun newInstance() = SearchFragment()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-
-        setHasOptionsMenu(true)
-
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
-
     private val viewModel: SearchViewModel by viewModel()
+    override fun setupData(data: CollectionsResponse) {
+        childFragmentManager.replaceFragment(R.id.container, SearchResultFragment(data))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getData().observe(viewLifecycleOwner) {
-            childFragmentManager.replaceFragment(R.id.container, SearchResultFragment(it))
+            renderData(it)
         }
 
         binding.searchView.setOnQueryTextListener(object
             : androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
-            override fun onQueryTextSubmit(query: String?): Boolean {
-
-                val sp = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }
-                val adult = sp?.getBoolean("adult_content", true)
-                val rating = sp?.getInt("searching_ratings", 5)
-
-                if (query != null && adult == true && checkLanguage(query)) {
-                    viewModel.getAdultCyrillicSearchCollection(rating, query)
-                } else if (query != null && adult == true && !checkLanguage(query)) {
-                    viewModel.getAdultLatinSearchCollection(rating, query)
-                } else if (query != null && adult == false && checkLanguage(query)) {
-                    viewModel.getCyrillicSearchCollection(rating, query)
-                } else if (query != null && adult == false && !checkLanguage(query)) {
-                    viewModel.getLatinSearchCollection(rating, query)
-                }
+            override fun onQueryTextSubmit(query: String): Boolean {
+                viewModel.getSearchCollection(query)
                 return true
             }
 
@@ -91,14 +65,5 @@ class SearchFragment : Fragment() {
                 super.onOptionsItemSelected(item)
             }
         }
-    }
-
-    private fun checkLanguage(query: String): Boolean {
-        return Pattern.matches(".*\\p{InCyrillic}.*", query)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

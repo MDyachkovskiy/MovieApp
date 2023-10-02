@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentPersonBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
-import com.example.kotlin_movieapp.model.datasource.remote.movieDetailsResponse.Person
+import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Person
 import com.example.kotlin_movieapp.model.datasource.remote.personDetailsResponse.PersonDTO
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.convert

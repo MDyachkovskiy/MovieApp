@@ -5,14 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.databinding.ItemSearchMovieBinding
-import com.example.kotlin_movieapp.model.datasource.remote.collectionResponse.CollectionItem
+import com.example.kotlin_movieapp.model.datasource.domain.collection.Doc
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.openDetailsFragment
 import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsFragment
 import com.squareup.picasso.Picasso
 
 class SearchMovieAdapter(
-    private var movieData: List<CollectionItem>
+    private var movieData: List<Doc>
     ) : RecyclerView.Adapter<SearchMovieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,7 +31,7 @@ class SearchMovieAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(movie: CollectionItem) {
+        fun bind(movie: Doc) {
             val binding = ItemSearchMovieBinding.bind(itemView)
             with(binding) {
 
@@ -39,7 +39,7 @@ class SearchMovieAdapter(
 
                 movieDescription.text = movie.description
 
-                Picasso.get()?.load(movie.poster?.previewUrl)?.into(poster)
+                Picasso.get()?.load(movie.poster.previewUrl)?.into(poster)
 
                 root.setOnClickListener {
                     it.openDetailsFragment(

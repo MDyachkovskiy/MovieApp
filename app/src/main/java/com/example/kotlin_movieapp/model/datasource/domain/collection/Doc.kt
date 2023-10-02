@@ -7,5 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class Doc(
     val id: Int = 0,
     val name: String = "",
-    val poster: Poster = Poster()
+    val poster: Poster = Poster(),
+    val description: String? = ""
 ): Parcelable
