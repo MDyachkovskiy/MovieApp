@@ -17,7 +17,6 @@ import com.example.kotlin_movieapp.utils.convert
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.utils.showToast
 import com.example.kotlin_movieapp.view.base.BaseFragment
-import com.example.kotlin_movieapp.view.personDetails.PersonsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

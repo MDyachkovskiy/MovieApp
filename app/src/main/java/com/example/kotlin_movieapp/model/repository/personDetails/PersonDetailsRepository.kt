@@ -1,7 +1,7 @@
 package com.example.kotlin_movieapp.model.repository.personDetails
 
-import com.example.kotlin_movieapp.model.datasource.remote.personDetailsResponse.PersonDTO
+import com.example.kotlin_movieapp.model.AppState.AppState
 
 interface PersonDetailsRepository {
-    fun getPersonDetailsFromRemoteServer (personId : Int?, callback: retrofit2.Callback<PersonDTO>)
+    suspend fun getPersonDetailsFromRemoteServer (personId : Int?): AppState
 }

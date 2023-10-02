@@ -2,7 +2,7 @@ package com.example.kotlin_movieapp.model.datasource.remote
 
 import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
 import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
-import com.example.kotlin_movieapp.model.datasource.remote.personDetailsResponse.PersonDTO
+import com.example.kotlin_movieapp.model.datasource.domain.personDetail.PersonDetailsResponse
 import com.example.kotlin_movieapp.utils.COLLECTION_SELECTED_FIELDS
 import com.example.kotlin_movieapp.utils.DENOMINATION_SORT
 import com.example.kotlin_movieapp.utils.KINOPOISK_RATING
@@ -10,12 +10,12 @@ import com.example.kotlin_movieapp.utils.MOVIE_DETAILS
 import com.example.kotlin_movieapp.utils.MOVIE_SEARCH
 import com.example.kotlin_movieapp.utils.MOVIE_TYPE
 import com.example.kotlin_movieapp.utils.PERSON_END_POINT
+import com.example.kotlin_movieapp.utils.PERSON_SELECTED_FIELDS
 import com.example.kotlin_movieapp.utils.RESPONSE_QUANTITY
 import com.example.kotlin_movieapp.utils.TOP_COLLECTIONS_END_POINT
 import com.example.kotlin_movieapp.utils.TV_SHOW_TYPE
 import com.example.kotlin_movieapp.utils.UPCOMING_YEAR
 import kotlinx.coroutines.Deferred
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
@@ -29,9 +29,11 @@ interface KinopoiskAPI {
     ) : Deferred<MovieDetailsResponse>
 
     @GET(PERSON_END_POINT)
-    fun getPerson (
-        @Query("search") id : Int?
-    ) : Call<PersonDTO>
+    fun getPersonAsync (
+        @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
+        @Query("id") id : Int?,
+        @Query("selectFields") selectedFields: String? = PERSON_SELECTED_FIELDS
+    ) : Deferred<PersonDetailsResponse>
 
     @GET(TOP_COLLECTIONS_END_POINT)
     fun getTop250CollectionAsync(

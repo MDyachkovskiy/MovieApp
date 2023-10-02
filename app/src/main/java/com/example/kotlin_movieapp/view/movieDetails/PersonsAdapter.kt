@@ -1,4 +1,4 @@
-package com.example.kotlin_movieapp.view.personDetails
+package com.example.kotlin_movieapp.view.movieDetails
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import com.example.kotlin_movieapp.databinding.ItemPersonsBinding
 import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Person
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.openDetailsFragment
+import com.example.kotlin_movieapp.view.personDetails.PersonDetailsFragment
 import com.squareup.picasso.Picasso
 
 class PersonsAdapter(

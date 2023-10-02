@@ -1,13 +1,14 @@
 package com.example.kotlin_movieapp.view.personDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentPersonBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Person
-import com.example.kotlin_movieapp.model.datasource.remote.personDetailsResponse.PersonDTO
+import com.example.kotlin_movieapp.model.datasource.domain.personDetail.PersonDetailsResponse
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.convert
 import com.example.kotlin_movieapp.utils.replaceFragment
@@ -18,7 +19,7 @@ import java.time.format.DateTimeFormatter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class PersonDetailsFragment : BaseFragment<AppState, PersonDTO, FragmentPersonBinding>(
+class PersonDetailsFragment : BaseFragment<AppState, PersonDetailsResponse, FragmentPersonBinding>(
     FragmentPersonBinding::inflate
 ) {
 
@@ -42,6 +43,9 @@ class PersonDetailsFragment : BaseFragment<AppState, PersonDTO, FragmentPersonBi
         requestPersonDetail(personBundle.id)
 
         viewModel.getLiveData().observe(viewLifecycleOwner) {
+            if (it is AppState.Success<*>) {
+                Log.d("@@@", "fragment received data class: ${it.data?.javaClass}")
+            }
             renderData(it)
         }
     }
@@ -50,23 +54,25 @@ class PersonDetailsFragment : BaseFragment<AppState, PersonDTO, FragmentPersonBi
         viewModel.getPersonDetailsFromRemoteSource(personId)
     }
 
-    private fun displayPerson(personDTO : PersonDTO) {
+    private fun displayPerson(person : PersonDetailsResponse) {
 
         with(binding) {
+
+            val personDTO = person.docs[0]
 
             view?.let {
                 Glide.with(it).load(personDTO.photo).into(personPhoto) }
 
             personName.text = personDTO.name ?: ""
 
-            personProfession.text = personDTO.profession?.convert {
+            personProfession.text = personDTO.profession.convert {
                     profession -> profession.value}
 
-            personAge.text = personDTO.age?.toString()
+            personAge.text = personDTO.age.toString()
 
             personDateOfBirth.text = convertDate(personDTO.birthday)
 
-            val birthLocation = personDTO.birthPlace?.convert{
+            val birthLocation = personDTO.birthPlace.convert{
                     birthPlace ->  birthPlace.value }
             personPlaceOfBirth.text = birthLocation
 
@@ -87,7 +93,7 @@ class PersonDetailsFragment : BaseFragment<AppState, PersonDTO, FragmentPersonBi
         } else ""
     }
 
-    override fun setupData(data: PersonDTO) {
+    override fun setupData(data: PersonDetailsResponse) {
         displayPerson(data)
     }
 }
