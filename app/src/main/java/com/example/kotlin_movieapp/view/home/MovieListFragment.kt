@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentMovieListBinding
-import com.example.kotlin_movieapp.view.home.top250Movie.Top250MovieFragmentWithAppState
+import com.example.kotlin_movieapp.view.home.top250Movie.Top250MovieFragment
 import com.example.kotlin_movieapp.view.home.topTvShows.TopTvShowsFragmentWithAppState
 import com.example.kotlin_movieapp.view.home.upComing.UpComingMovieFragmentWithAppState
 
@@ -41,7 +41,7 @@ class MovieListFragment : Fragment() {
         childFragmentManager
             .beginTransaction()
             .replace(R.id.container_UpComing, UpComingMovieFragmentWithAppState.newInstance())
-            .replace(R.id.container_Top250, Top250MovieFragmentWithAppState.newInstance())
+            .replace(R.id.container_Top250, Top250MovieFragment.newInstance())
             .replace(R.id.container_TvShows, TopTvShowsFragmentWithAppState.newInstance())
             .commit()
     }

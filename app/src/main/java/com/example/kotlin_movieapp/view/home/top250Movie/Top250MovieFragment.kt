@@ -1,6 +1,7 @@
 package com.example.kotlin_movieapp.view.home.top250Movie
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentTop250movieBinding
@@ -9,11 +10,11 @@ import com.example.kotlin_movieapp.view.base.BaseFragment
 import com.example.kotlin_movieapp.view.home.adapter.MovieCollectionAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class Top250MovieFragmentWithAppState : BaseFragment<FragmentTop250movieBinding>(
+class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
     FragmentTop250movieBinding::inflate
 ) {
     companion object {
-        fun newInstance() = Top250MovieFragmentWithAppState()
+        fun newInstance() = Top250MovieFragment()
     }
 
     private val viewModel: Top250MovieViewModel by viewModel()
@@ -24,12 +25,13 @@ class Top250MovieFragmentWithAppState : BaseFragment<FragmentTop250movieBinding>
         initRV()
 
         viewModel.top250LiveData.observe(viewLifecycleOwner){ pagingData ->
+            Log.d("@@@", "Fragment observed new data: $pagingData")
             movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
     }
 
     private fun initRV() {
         movieAdapter = MovieCollectionAdapter()
-        binding.RVTop250.init(MovieCollectionAdapter(), LinearLayoutManager.HORIZONTAL)
+        binding.RVTop250.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
     }
 }

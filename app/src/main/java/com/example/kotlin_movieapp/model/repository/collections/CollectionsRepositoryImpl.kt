@@ -1,5 +1,6 @@
 package com.example.kotlin_movieapp.model.repository.collections
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -15,6 +16,7 @@ class CollectionsRepositoryImpl(
 ) : CollectionsRepository {
 
     override fun getTop250CollectionFromServer(): Flow<PagingData<Doc>> {
+        Log.d("@@@", "getTop250CollectionFromServer called from repository")
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = {Top250PagingSource(remoteDataSource.getKinopoiskAPI())}

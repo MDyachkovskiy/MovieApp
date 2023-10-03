@@ -1,5 +1,6 @@
 package com.example.kotlin_movieapp.view.home.top250Movie
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,12 +21,13 @@ class Top250MovieViewModel(
     private val _top250LiveData = MutableLiveData<PagingData<Doc>>()
     val top250LiveData: LiveData<PagingData<Doc>> get() = _top250LiveData
 
-    val myPagingDataFlow: Flow<PagingData<Doc>> = repository.getTop250CollectionFromServer()
+    private val myPagingDataFlow: Flow<PagingData<Doc>> = repository.getTop250CollectionFromServer()
         .cachedIn(viewModelScope)
 
     init {
         viewModelScope.launch {
             myPagingDataFlow.collectLatest { pagingData ->
+                Log.d("@@@", "Received pagingData with size: $pagingData")
                 _top250LiveData.value = pagingData
             }
         }
