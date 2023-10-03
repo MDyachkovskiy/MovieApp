@@ -2,12 +2,12 @@
 
 <p id="description">
   This project was completed as part of the educational course: "Android with Kotlin". The programming language used is Kotlin. The application utilizes an open unofficial Kinopoisk API and provides lists of movies as well as a search function for films. Upon clicking on a movie the user receives more detailed information about the film and the actors involved in its creation. 
-  
-  P.S. Unfortunately the API that this application relied on has stopped working. And now the application serves as just a framework for a movie API.</p>
+</p>
 
 <h2>Project Screenshots:</h2>
 
-<img src="https://i.ibb.co.com/P6BXpwX/IMG-20230924-194552.jpg" alt="project-screenshot" width="200" height="400/"> <img src="https://i.ibb.co.com/c3nyZYj/IMG-20230924-194530.jpg" alt="project-screenshot" width="200" height="400/"> <img src="https://i.ibb.co.com/9qpp8VX/IMG-20230924-194501.jpg" alt="project-screenshot" width="200" height="400/">
+<img src="https://i.ibb.co.com/gZyYqtw/IMG-20231004-013304.jpg" alt="project-screenshot" width="200" height="400/"> <img src="https://i.ibb.co.com/QJLHmXy/IMG-20231004-013634.jpg" alt="project-screenshot" width="200" height="400/"> <img src="https://i.ibb.co.com/qnFPwYG/IMG-20231004-013552.jpg" alt="project-screenshot" width="200" height="400/"> 
+<img src="https://i.ibb.co.com/T8VCywJ/IMG-20231004-013408.jpg" alt="project-screenshot" width="200" height="400/"> <img src="https://i.ibb.co.com/Cw2FdW6/IMG-20231004-013530.jpg" alt="project-screenshot" width="200" height="400/"> <img src="https://i.ibb.co.com/9qpp8VX/IMG-20230924-194501.jpg" alt="project-screenshot" width="200" height="400/">
 
   
   
@@ -22,4 +22,5 @@ Within the scope of this educational course the following knowledge and technolo
 *   Room SQLite
 *   Push-notification
 *   BroadcastReciever
-*   RxJava
+*   Coroutines
+*   Paging 3 Compose
