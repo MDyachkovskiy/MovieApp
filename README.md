@@ -17,6 +17,7 @@ Within the scope of this educational course the following knowledge and technolo
 
 *   MVVM
 *   Build Types
+*   Google Map
 *   Geolocation
 *   Retrofit
 *   Room SQLite
