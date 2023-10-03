@@ -16,11 +16,11 @@ import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.convert
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.utils.showToast
-import com.example.kotlin_movieapp.view.base.BaseFragment
+import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MovieDetailsFragment : BaseFragment<AppState, MovieDetailsResponse, FragmentMovieDetailBinding>(
+class MovieDetailsFragmentWithAppState : BaseFragmentWithAppState<AppState, MovieDetailsResponse, FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate
 )
 {
@@ -30,8 +30,8 @@ class MovieDetailsFragment : BaseFragment<AppState, MovieDetailsResponse, Fragme
     private val viewModel: MovieDetailsViewModel by viewModel()
 
     companion object {
-        fun newInstance(bundle: Bundle) : MovieDetailsFragment {
-            val fragment = MovieDetailsFragment()
+        fun newInstance(bundle: Bundle) : MovieDetailsFragmentWithAppState {
+            val fragment = MovieDetailsFragmentWithAppState()
             fragment.arguments = bundle
             return fragment
         }

@@ -8,7 +8,7 @@ import com.example.kotlin_movieapp.databinding.ItemPersonsBinding
 import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Person
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.openDetailsFragment
-import com.example.kotlin_movieapp.view.personDetails.PersonDetailsFragment
+import com.example.kotlin_movieapp.view.personDetails.PersonDetailsFragmentWithAppState
 import com.squareup.picasso.Picasso
 
 class PersonsAdapter(
@@ -42,7 +42,7 @@ class PersonsAdapter(
 
                 root.setOnClickListener {
                     it.openDetailsFragment(
-                        PersonDetailsFragment::class.java,
+                        PersonDetailsFragmentWithAppState::class.java,
                         KEY_BUNDLE_PERSON,
                         person
                     )

@@ -4,31 +4,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.kotlin_movieapp.model.AppState.AppState
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.kotlin_movieapp.model.datasource.domain.collection.Doc
 import com.example.kotlin_movieapp.model.repository.collections.CollectionsRepository
-import com.example.kotlin_movieapp.utils.REQUEST_ERROR
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
 class Top250MovieViewModel(
-    private val repository: CollectionsRepository
+    repository: CollectionsRepository
 ) : ViewModel() {
 
-    private val liveData: MutableLiveData<AppState> = MutableLiveData()
+    private val _top250LiveData = MutableLiveData<PagingData<Doc>>()
+    val top250LiveData: LiveData<PagingData<Doc>> get() = _top250LiveData
 
-    fun getData(): LiveData<AppState> {
-        return liveData
-    }
+    val myPagingDataFlow: Flow<PagingData<Doc>> = repository.getTop250CollectionFromServer()
+        .cachedIn(viewModelScope)
 
-    fun getTop250Collection() {
-        liveData.value = AppState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val response = repository.getTop250CollectionFromServer()
-                liveData.postValue(response)
-            } catch(e: Throwable) {
-                liveData.postValue(AppState.Error(Throwable(e.message ?: REQUEST_ERROR)))
+    init {
+        viewModelScope.launch {
+            myPagingDataFlow.collectLatest { pagingData ->
+                _top250LiveData.value = pagingData
             }
         }
     }

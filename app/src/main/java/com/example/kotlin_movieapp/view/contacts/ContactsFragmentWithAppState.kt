@@ -13,11 +13,11 @@ import com.example.kotlin_movieapp.utils.CONTACTS_REQUEST_CODE
 import com.example.kotlin_movieapp.utils.checkPermission
 import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.utils.showAlertMessage
-import com.example.kotlin_movieapp.view.base.BaseFragment
+import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ContactsFragment : BaseFragment<AppState, List<ContactsItem>, FragmentContactsBinding>(
+class ContactsFragmentWithAppState : BaseFragmentWithAppState<AppState, List<ContactsItem>, FragmentContactsBinding>(
     FragmentContactsBinding::inflate
 ) {
 
@@ -26,7 +26,7 @@ class ContactsFragment : BaseFragment<AppState, List<ContactsItem>, FragmentCont
     private val viewModel: ContactsViewModel by viewModel()
 
     companion object {
-        fun newInstance() = ContactsFragment()
+        fun newInstance() = ContactsFragmentWithAppState()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

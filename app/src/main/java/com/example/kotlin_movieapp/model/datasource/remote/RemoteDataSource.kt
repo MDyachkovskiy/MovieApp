@@ -44,6 +44,10 @@ class RemoteDataSource {
         return kinopoiskAPI.getSearchMovieAsync(query = name).await()
     }
 
+    fun getKinopoiskAPI(): KinopoiskAPI {
+        return kinopoiskAPI
+    }
+
     private fun createOkHttpClient (): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

@@ -12,14 +12,14 @@ import com.example.kotlin_movieapp.model.datasource.domain.personDetail.PersonDe
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.convert
 import com.example.kotlin_movieapp.utils.replaceFragment
-import com.example.kotlin_movieapp.view.base.BaseFragment
+import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
 import com.example.kotlin_movieapp.view.map.MapsFragment
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class PersonDetailsFragment : BaseFragment<AppState, PersonDetailsResponse, FragmentPersonBinding>(
+class PersonDetailsFragmentWithAppState : BaseFragmentWithAppState<AppState, PersonDetailsResponse, FragmentPersonBinding>(
     FragmentPersonBinding::inflate
 ) {
 
@@ -28,8 +28,8 @@ class PersonDetailsFragment : BaseFragment<AppState, PersonDetailsResponse, Frag
     private val viewModel: PersonDetailsViewModel by viewModel()
 
     companion object {
-        fun newInstance(bundle: Bundle) : PersonDetailsFragment {
-            val fragment = PersonDetailsFragment()
+        fun newInstance(bundle: Bundle) : PersonDetailsFragmentWithAppState {
+            val fragment = PersonDetailsFragmentWithAppState()
             fragment.arguments = bundle
             return fragment
         }

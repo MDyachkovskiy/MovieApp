@@ -9,7 +9,7 @@ import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryMo
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.convertHistoryMovieItemToCollectionItem
 import com.example.kotlin_movieapp.utils.openDetailsFragment
-import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsFragment
+import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsFragmentWithAppState
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -52,7 +52,7 @@ class HistoryMovieAdapter(
 
                 root.setOnClickListener {
                     it.openDetailsFragment(
-                        MovieDetailsFragment::class.java,
+                        MovieDetailsFragmentWithAppState::class.java,
                         KEY_BUNDLE_MOVIE,
                         convertHistoryMovieItemToCollectionItem(movie)
                     )

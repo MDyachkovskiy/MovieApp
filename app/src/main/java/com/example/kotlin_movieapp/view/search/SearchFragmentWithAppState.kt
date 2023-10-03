@@ -10,16 +10,16 @@ import com.example.kotlin_movieapp.databinding.FragmentSearchBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
 import com.example.kotlin_movieapp.utils.replaceFragment
-import com.example.kotlin_movieapp.view.base.BaseFragment
-import com.example.kotlin_movieapp.view.history.HistoryFragment
+import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
+import com.example.kotlin_movieapp.view.history.HistoryFragmentWithAppState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class SearchFragment : BaseFragment<AppState, CollectionsResponse, FragmentSearchBinding>(
+class SearchFragmentWithAppState : BaseFragmentWithAppState<AppState, CollectionsResponse, FragmentSearchBinding>(
     FragmentSearchBinding::inflate
 ) {
     companion object {
-        fun newInstance() = SearchFragment()
+        fun newInstance() = SearchFragmentWithAppState()
     }
 
     private val viewModel: SearchViewModel by viewModel()
@@ -57,7 +57,7 @@ class SearchFragment : BaseFragment<AppState, CollectionsResponse, FragmentSearc
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_history -> {
-                childFragmentManager.replaceFragment(R.id.container, HistoryFragment.newInstance())
+                childFragmentManager.replaceFragment(R.id.container, HistoryFragmentWithAppState.newInstance())
                 true
             }
 

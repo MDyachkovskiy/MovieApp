@@ -7,18 +7,18 @@ import com.example.kotlin_movieapp.databinding.FragmentHistoryBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryMovieItem
 import com.example.kotlin_movieapp.utils.init
-import com.example.kotlin_movieapp.view.base.BaseFragment
+import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class HistoryFragment : BaseFragment<AppState, List<HistoryMovieItem>, FragmentHistoryBinding>(
+class HistoryFragmentWithAppState : BaseFragmentWithAppState<AppState, List<HistoryMovieItem>, FragmentHistoryBinding>(
     FragmentHistoryBinding::inflate
 ) {
 
     private val viewModel: HistoryViewModel by viewModel()
 
     companion object {
-        fun newInstance() = HistoryFragment()
+        fun newInstance() = HistoryFragmentWithAppState()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

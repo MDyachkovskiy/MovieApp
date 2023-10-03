@@ -7,17 +7,17 @@ import com.example.kotlin_movieapp.databinding.FragmentFavoritesBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.utils.init
-import com.example.kotlin_movieapp.view.base.BaseFragment
+import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoritesFragment : BaseFragment<AppState,List<FavoriteMovieItem>, FragmentFavoritesBinding>(
+class FavoritesFragmentWithAppState : BaseFragmentWithAppState<AppState,List<FavoriteMovieItem>, FragmentFavoritesBinding>(
     FragmentFavoritesBinding::inflate
 ) {
 
     private val viewModel: FavoritesViewModel by viewModel()
 
     companion object {
-        fun newInstance() = FavoritesFragment()
+        fun newInstance() = FavoritesFragmentWithAppState()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

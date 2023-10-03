@@ -1,4 +1,4 @@
-package com.example.kotlin_movieapp.view.home
+package com.example.kotlin_movieapp.view.home.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import com.example.kotlin_movieapp.model.datasource.domain.collection.Collection
 import com.example.kotlin_movieapp.model.datasource.domain.collection.Doc
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.openDetailsFragment
-import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsFragment
+import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsFragmentWithAppState
 import com.squareup.picasso.Picasso
 
 class MovieAdapter(
@@ -41,7 +41,7 @@ class MovieAdapter(
 
                 root.setOnClickListener {
                     it.openDetailsFragment(
-                        MovieDetailsFragment::class.java,
+                        MovieDetailsFragmentWithAppState::class.java,
                         KEY_BUNDLE_MOVIE,
                         movie
                     )}
