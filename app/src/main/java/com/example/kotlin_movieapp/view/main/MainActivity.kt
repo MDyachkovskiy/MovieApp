@@ -10,7 +10,7 @@ import com.example.kotlin_movieapp.databinding.ActivityMainBinding
 import com.example.kotlin_movieapp.service.ConnectivityReceiver
 import com.example.kotlin_movieapp.view.favorites.FavoritesFragmentWithAppState
 import com.example.kotlin_movieapp.view.home.MovieListFragment
-import com.example.kotlin_movieapp.view.search.SearchFragmentWithAppState
+import com.example.kotlin_movieapp.view.search.SearchFragment
 import com.example.kotlin_movieapp.view.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.nav_collections -> replaceFragment(MovieListFragment())
                 R.id.nav_favorites -> replaceFragment(FavoritesFragmentWithAppState())
-                R.id.nav_search -> replaceFragment(SearchFragmentWithAppState())
+                R.id.nav_search -> replaceFragment(SearchFragment())
                 R.id.nav_settings -> replaceFragment(SettingsFragment())
 
                 else -> {}

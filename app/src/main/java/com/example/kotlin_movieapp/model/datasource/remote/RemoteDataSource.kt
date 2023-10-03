@@ -1,6 +1,5 @@
 package com.example.kotlin_movieapp.model.datasource.remote
 
-import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
 import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
 import com.example.kotlin_movieapp.model.datasource.domain.personDetail.PersonDetailsResponse
 import com.example.kotlin_movieapp.utils.KINOPOISK_DOMAIN
@@ -26,10 +25,6 @@ class RemoteDataSource {
 
     suspend fun getPersonDetails(personId: Int?): PersonDetailsResponse {
         return kinopoiskAPI.getPersonAsync(id = personId).await()
-    }
-
-    suspend fun getSearchCollection(name: String): CollectionsResponse{
-        return kinopoiskAPI.getSearchMovieAsync(query = name).await()
     }
 
     fun getKinopoiskAPI(): KinopoiskAPI {

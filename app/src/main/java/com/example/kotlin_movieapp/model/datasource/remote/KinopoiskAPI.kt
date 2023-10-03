@@ -3,6 +3,7 @@ package com.example.kotlin_movieapp.model.datasource.remote
 import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
 import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
 import com.example.kotlin_movieapp.model.datasource.domain.personDetail.PersonDetailsResponse
+import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.SearchResponse
 import com.example.kotlin_movieapp.utils.COLLECTION_SELECTED_FIELDS
 import com.example.kotlin_movieapp.utils.DENOMINATION_SORT
 import com.example.kotlin_movieapp.utils.KINOPOISK_RATING
@@ -71,6 +72,8 @@ interface KinopoiskAPI {
 
     @GET(MOVIE_SEARCH)
     fun getSearchMovieAsync(
+        @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Query("query") query : String,
-    ) : Deferred<CollectionsResponse>
+        @Query("page") page: Int? = 1
+    ) : Deferred<SearchResponse>
 }

@@ -1,19 +1,23 @@
 package com.example.kotlin_movieapp.model.repository.search
 
-import com.example.kotlin_movieapp.model.AppState.AppState
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.Doc
 import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
-import com.example.kotlin_movieapp.utils.REQUEST_ERROR
+import com.example.kotlin_movieapp.view.search.SearchMoviePagingSource
+import kotlinx.coroutines.flow.Flow
 
 
 class SearchRepositoryImpl (
     private val remoteDataSource: RemoteDataSource
 ) : SearchRepository {
 
-    override suspend fun getSearchCollection(name: String): AppState {
-        return try {
-            AppState.Success(remoteDataSource.getSearchCollection(name))
-        } catch (e: Throwable) {
-            AppState.Error(Throwable(e.message ?: REQUEST_ERROR))
-        }
+    override fun getSearchCollection(name: String): Flow<PagingData<Doc>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = { SearchMoviePagingSource(remoteDataSource.getKinopoiskAPI(),
+            name)}
+        ).flow
     }
 }

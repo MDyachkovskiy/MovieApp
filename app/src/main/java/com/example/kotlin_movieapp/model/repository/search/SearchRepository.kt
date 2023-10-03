@@ -1,7 +1,9 @@
 package com.example.kotlin_movieapp.model.repository.search
 
-import com.example.kotlin_movieapp.model.AppState.AppState
+import androidx.paging.PagingData
+import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.Doc
+import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
-    suspend fun getSearchCollection(name: String): AppState
+    fun getSearchCollection(name: String): Flow<PagingData<Doc>>
 }

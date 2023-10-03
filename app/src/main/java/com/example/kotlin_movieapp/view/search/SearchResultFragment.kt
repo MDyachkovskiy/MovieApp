@@ -1,39 +1,32 @@
 package com.example.kotlin_movieapp.view.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentSearchResultBinding
-import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
+import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.Doc
 import com.example.kotlin_movieapp.utils.init
+import com.example.kotlin_movieapp.view.base.BaseFragment
+import com.example.kotlin_movieapp.view.search.adapter.SearchMovieAdapter
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-class SearchResultFragment(
-    private val data: CollectionsResponse
-) : Fragment() {
+class SearchResultFragment: BaseFragment<FragmentSearchResultBinding>(
+    FragmentSearchResultBinding::inflate
+) {
+    private lateinit var movieAdapter: SearchMovieAdapter
+    private val viewModel: SearchViewModel by activityViewModel()
 
-    private var _binding: FragmentSearchResultBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSearchResultBinding.inflate(inflater, container, false)
-        initRV(data)
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.searchResultLiveData.observe(viewLifecycleOwner) { pagingData ->
+            initRV(pagingData)
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun initRV(movieData: CollectionsResponse) {
-        val movieList = movieData.docs
-        binding.searchRecyclerView.init(SearchMovieAdapter(movieList), LinearLayoutManager.VERTICAL)
+    private fun initRV(movieData: PagingData<Doc>) {
+        movieAdapter = SearchMovieAdapter()
+        movieAdapter.submitData(viewLifecycleOwner.lifecycle, movieData)
+        binding.searchRecyclerView.init(movieAdapter, LinearLayoutManager.VERTICAL)
     }
 }
