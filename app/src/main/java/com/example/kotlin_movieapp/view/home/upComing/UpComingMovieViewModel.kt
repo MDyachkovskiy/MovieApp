@@ -4,29 +4,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.kotlin_movieapp.model.AppState.AppState
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.kotlin_movieapp.model.datasource.domain.collection.Doc
 import com.example.kotlin_movieapp.model.repository.collections.CollectionsRepository
-import com.example.kotlin_movieapp.utils.REQUEST_ERROR
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class UpComingMovieViewModel(
-    private val repository: CollectionsRepository
+    repository: CollectionsRepository
 ) : ViewModel() {
 
-    private val liveData: MutableLiveData<AppState> = MutableLiveData()
-    fun getData(): LiveData<AppState> {
-        return liveData
-    }
+    private val _upComingLiveData = MutableLiveData<PagingData<Doc>>()
+    val upComingLiveData: LiveData<PagingData<Doc>> get() = _upComingLiveData
 
-    fun getUpComingCollection() {
-        liveData.value = AppState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val response = repository.getUpComingCollectionFromServer()
-                liveData.postValue(response)
-            } catch(e: Throwable) {
-                liveData.postValue(AppState.Error(Throwable(e.message ?: REQUEST_ERROR)))
+    private val myPagingDataFlow: Flow<PagingData<Doc>> = repository
+        .getUpComingCollectionFromServer()
+        .cachedIn(viewModelScope)
+
+    init {
+        viewModelScope.launch {
+            myPagingDataFlow.collectLatest { pagingData ->
+                _upComingLiveData.value = pagingData
             }
         }
     }

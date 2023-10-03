@@ -28,18 +28,6 @@ class RemoteDataSource {
         return kinopoiskAPI.getPersonAsync(id = personId).await()
     }
 
-    suspend fun getTop250Collection(): CollectionsResponse {
-        return kinopoiskAPI.getTop250CollectionAsync().await()
-    }
-
-    suspend fun getTopTvShowsCollection(): CollectionsResponse{
-        return kinopoiskAPI.getTopTvShowsCollectionAsync().await()
-    }
-
-    suspend fun getUpComingCollection(): CollectionsResponse{
-        return kinopoiskAPI.getUpComingCollectionAsync().await()
-    }
-
     suspend fun getSearchCollection(name: String): CollectionsResponse{
         return kinopoiskAPI.getSearchMovieAsync(query = name).await()
     }
