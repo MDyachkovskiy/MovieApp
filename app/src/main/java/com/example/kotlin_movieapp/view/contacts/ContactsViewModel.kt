@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlin_movieapp.model.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
-import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepositoryImpl
+import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepository
 
 class ContactsViewModel(
-    private val contactsRepository: ContactsRepositoryImpl
+    private val contactsRepository: ContactsRepository
 ) : ViewModel() {
 
     private val contactsLiveData: MutableLiveData<AppState> = MutableLiveData()

@@ -10,14 +10,14 @@ import com.example.kotlin_movieapp.utils.init
 import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoritesFragmentWithAppState : BaseFragmentWithAppState<AppState,List<FavoriteMovieItem>, FragmentFavoritesBinding>(
+class FavoritesFragment : BaseFragmentWithAppState<AppState,List<FavoriteMovieItem>, FragmentFavoritesBinding>(
     FragmentFavoritesBinding::inflate
 ) {
 
     private val viewModel: FavoritesViewModel by viewModel()
 
     companion object {
-        fun newInstance() = FavoritesFragmentWithAppState()
+        fun newInstance() = FavoritesFragment()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

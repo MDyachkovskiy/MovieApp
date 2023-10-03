@@ -1,7 +1,6 @@
 package com.example.kotlin_movieapp.view.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -31,8 +30,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
                 childFragmentManager.replaceFragment(R.id.container, SearchResultFragment())
             }
         }
-
-        Log.d("@@@", "ViewModel in SearchFragment: ${viewModel.hashCode()}")
 
         binding.searchView.setOnQueryTextListener(object
             : androidx.appcompat.widget.SearchView.OnQueryTextListener {

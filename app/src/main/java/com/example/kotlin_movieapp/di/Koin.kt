@@ -18,6 +18,7 @@ import com.example.kotlin_movieapp.model.repository.personDetails.PersonDetailsR
 import com.example.kotlin_movieapp.model.repository.search.SearchRepository
 import com.example.kotlin_movieapp.model.repository.search.SearchRepositoryImpl
 import com.example.kotlin_movieapp.view.contacts.ContactsViewModel
+import com.example.kotlin_movieapp.view.favorites.FavoritesViewModel
 import com.example.kotlin_movieapp.view.history.HistoryViewModel
 import com.example.kotlin_movieapp.view.home.top250Movie.Top250MovieViewModel
 import com.example.kotlin_movieapp.view.home.topTvShows.TopTvShowsViewModel
@@ -35,6 +36,7 @@ val appModule = module {
     viewModel { TopTvShowsViewModel(get()) }
     viewModel { UpComingMovieViewModel(get()) }
     viewModel { ContactsViewModel(get()) }
+    viewModel { FavoritesViewModel(get()) }
     viewModel { HistoryViewModel(get()) }
     viewModel { MovieDetailsViewModel(get(), get(), get()) }
     viewModel { PersonDetailsViewModel(get()) }
@@ -60,5 +62,5 @@ val repositoryModule = module {
     single<LocalRepository> { LocalRepositoryImpl(get()) }
     single<DetailsRepository> { DetailsRepositoryImpl(get()) }
     single<PersonDetailsRepository> { PersonDetailsRepositoryImpl(get()) }
-    single<SearchRepository> {SearchRepositoryImpl(get())}
+    single<SearchRepository> { SearchRepositoryImpl(get()) }
 }

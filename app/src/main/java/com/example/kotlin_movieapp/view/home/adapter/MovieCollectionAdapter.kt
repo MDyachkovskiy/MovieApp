@@ -1,6 +1,5 @@
 package com.example.kotlin_movieapp.view.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -29,7 +28,6 @@ class MovieCollectionAdapter :
         private val binding: ItemMovieBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Doc) {
-            Log.d("@@@", "Binding data: $movie")
             with(binding) {
                 Picasso.get()?.load(movie.poster.previewUrl)?.into(moviePoster)
 
