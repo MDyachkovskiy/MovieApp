@@ -5,7 +5,7 @@ import android.os.Parcelable
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.kotlin_movieapp.R
-import com.example.kotlin_movieapp.ui.main.MainActivity
+import com.example.kotlin_movieapp.view.main.MainActivity
 
 fun View.openDetailsFragment (
     fragmentClass: Class<out Fragment>,

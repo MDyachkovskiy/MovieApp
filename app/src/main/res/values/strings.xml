@@ -20,6 +20,7 @@
     <string name="movie_IMDB_rating">Оценка IMDB:</string>
     <string name="actors">Актеры</string>
     <string name="movieStaff">Съемочная группа</string>
+
     <!-- MovieDetailsFragment Titles -->
     <string name="userNoteTitle">Добавьте свой комментарий</string>
     <string name="userCommentHint">Оставьте здесь свой комментарий по фильму</string>
@@ -61,6 +62,9 @@
 
     <!-- SearchFragment Menu -->
     <string name="get_contacts">Получить контакты</string>
+
+    <!-- HomeFragment Menu -->
+    <string name="error_message">Произошла непредвиденная ошибка</string>
 
     <!-- ContentDescription -->
     <string name="moviePoster">Постер к фильму</string>
