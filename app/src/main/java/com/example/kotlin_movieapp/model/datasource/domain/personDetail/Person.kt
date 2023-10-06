@@ -1,6 +1,6 @@
 package com.example.kotlin_movieapp.model.datasource.domain.personDetail
 
-data class Doc(
+data class Person(
     val age: Int = 0,
     val birthPlace: List<BirthPlace> = listOf(),
     val birthday: String = "",

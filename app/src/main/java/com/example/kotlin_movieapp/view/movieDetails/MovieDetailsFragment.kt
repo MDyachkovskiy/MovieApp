@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentMovieDetailBinding
 import com.example.kotlin_movieapp.model.AppState.AppState
-import com.example.kotlin_movieapp.model.datasource.domain.collection.Doc
+import com.example.kotlin_movieapp.model.datasource.domain.collection.Movie
 import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
 import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Person
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
@@ -20,18 +20,18 @@ import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MovieDetailsFragmentWithAppState : BaseFragmentWithAppState<AppState, MovieDetailsResponse, FragmentMovieDetailBinding>(
+class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetailsResponse, FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate
 )
 {
-    private lateinit var movieBundle : Doc
+    private lateinit var movieBundle : Movie
     private lateinit var movie : MovieDetailsResponse
 
     private val viewModel: MovieDetailsViewModel by viewModel()
 
     companion object {
-        fun newInstance(bundle: Bundle) : MovieDetailsFragmentWithAppState {
-            val fragment = MovieDetailsFragmentWithAppState()
+        fun newInstance(bundle: Bundle) : MovieDetailsFragment {
+            val fragment = MovieDetailsFragment()
             fragment.arguments = bundle
             return fragment
         }
@@ -71,7 +71,7 @@ class MovieDetailsFragmentWithAppState : BaseFragmentWithAppState<AppState, Movi
             }
         }
 
-        movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: Doc()
+        movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: Movie()
 
         viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
@@ -85,6 +85,7 @@ class MovieDetailsFragmentWithAppState : BaseFragmentWithAppState<AppState, Movi
     }
 
     override fun setupData(data: MovieDetailsResponse) {
+        movie = data
         displayMovie(data)
     }
 
@@ -139,7 +140,7 @@ class MovieDetailsFragmentWithAppState : BaseFragmentWithAppState<AppState, Movi
     }
 
     private fun deleteFavoriteMovie (movieDTO: MovieDetailsResponse) {
-        viewModel.saveFavoriteMovieToDB(movieDTO)
+        viewModel.deleteFavoriteMovieFromDB(movieDTO)
     }
 
     private fun addCommentToMovie(movieDTO: MovieDetailsResponse, text: Editable?){

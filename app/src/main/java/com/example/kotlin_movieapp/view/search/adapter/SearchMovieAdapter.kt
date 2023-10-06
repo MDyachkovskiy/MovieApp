@@ -5,18 +5,18 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.databinding.ItemSearchMovieBinding
-import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.Doc
+import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.Movie
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.openDetailsFragment
-import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsFragmentWithAppState
+import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsFragment
 import com.squareup.picasso.Picasso
 
 class SearchMovieAdapter :
-    PagingDataAdapter<Doc, SearchMovieAdapter.ViewHolder>(SearchCollectionDiffCallback()) {
+    PagingDataAdapter<Movie, SearchMovieAdapter.ViewHolder>(SearchCollectionDiffCallback()) {
     class ViewHolder(
         binding: ItemSearchMovieBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Doc) {
+        fun bind(movie: Movie) {
             val binding = ItemSearchMovieBinding.bind(itemView)
             with(binding) {
 
@@ -28,7 +28,7 @@ class SearchMovieAdapter :
 
                 root.setOnClickListener {
                     it.openDetailsFragment(
-                        MovieDetailsFragmentWithAppState::class.java,
+                        MovieDetailsFragment::class.java,
                         KEY_BUNDLE_MOVIE,
                         movie)}
             }

@@ -1,8 +1,8 @@
 package com.example.kotlin_movieapp.utils
 
 import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
-import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Poster
-import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionItem
+import com.example.kotlin_movieapp.model.datasource.domain.collection.Movie
+import com.example.kotlin_movieapp.model.datasource.domain.collection.Poster
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsEntity
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
 import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieEntity
@@ -25,7 +25,7 @@ fun convertListHistoryEntityToMovie (entityList : List<HistoryEntity>) : List<Hi
 
 fun convertMovieToEntity (movie: HistoryMovieItem) : HistoryEntity {
     return HistoryEntity(
-        movie.kinopoiskId ?: 0,
+        movie.kinopoiskId,
         movie.name,
         movie.description,
         movie.poster,
@@ -53,13 +53,13 @@ fun convertMovieDTOToHistoryMovieItem(movie: MovieDetailsResponse) : HistoryMovi
         userNote = ""
 )
 
-fun convertHistoryMovieItemToCollectionItem (movie: HistoryMovieItem) : CollectionItem =
-    CollectionItem(
-        kinopoiskId = movie.kinopoiskId,
-        name = movie.name,
+fun convertHistoryMovieItemToMovie (movie: HistoryMovieItem) : Movie =
+    Movie(
+        id = movie.kinopoiskId,
+        name = movie.name ?: "",
         description = movie.description,
-        poster = Poster(previewUrl = movie.poster),
-)
+        poster = Poster(previewUrl = movie.poster ?: ""),
+    )
 
 
 fun convertListFavoritesEntityToMovie (entityList : List<FavoriteMovieEntity>) : List<FavoriteMovieItem>{
@@ -86,12 +86,12 @@ fun convertMovieDTOtoFavoriteMovieEntity (movie : MovieDetailsResponse) : Favori
         isFavorite = true
     )
 
-fun convertFavoriteMovieItemToCollectionItem (movie: FavoriteMovieItem) : CollectionItem =
-    CollectionItem (
-        kinopoiskId = movie.kinopoiskId,
-        name = movie.name,
+fun convertFavoriteMovieItemToMovie (movie: FavoriteMovieItem) : Movie =
+    Movie (
+        id = movie.kinopoiskId,
+        name = movie.name ?: "",
         description = movie.description,
-        poster = Poster(previewUrl = movie.poster),
+        poster = Poster(previewUrl = movie.poster ?: ""),
     )
 
 fun convertListContactsEntityToContactsItem (entityList : List<ContactsEntity>) : List<ContactsItem>

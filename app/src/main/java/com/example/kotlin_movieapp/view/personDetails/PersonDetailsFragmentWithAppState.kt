@@ -58,12 +58,12 @@ class PersonDetailsFragmentWithAppState : BaseFragmentWithAppState<AppState, Per
 
         with(binding) {
 
-            val personDTO = person.docs[0]
+            val personDTO = person.person[0]
 
             view?.let {
                 Glide.with(it).load(personDTO.photo).into(personPhoto) }
 
-            personName.text = personDTO.name ?: ""
+            personName.text = personDTO.name
 
             personProfession.text = personDTO.profession.convert {
                     profession -> profession.value}

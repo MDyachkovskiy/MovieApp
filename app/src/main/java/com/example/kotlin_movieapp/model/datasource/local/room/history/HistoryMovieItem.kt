@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class HistoryMovieItem (
-    var kinopoiskId: Int? = 0,
+    var kinopoiskId: Int = 0,
     var name: String? = "",
     var description: String? = "",
     var poster: String? = "",

@@ -1,7 +1,10 @@
 package com.example.kotlin_movieapp.model.datasource.domain.personDetail
 
+import com.google.gson.annotations.SerializedName
+
 data class PersonDetailsResponse(
-    val docs: List<Doc> = listOf(),
+    @SerializedName("docs")
+    val person: List<Person> = listOf(),
     val limit: Int = 0,
     val page: Int = 0,
     val pages: Int = 0,
