@@ -22,15 +22,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetailsResponse, FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate
-)
-{
-    private lateinit var movieBundle : Movie
-    private lateinit var movie : MovieDetailsResponse
+) {
+    private lateinit var movieBundle: Movie
+    private lateinit var movie: MovieDetailsResponse
 
     private val viewModel: MovieDetailsViewModel by viewModel()
 
     companion object {
-        fun newInstance(bundle: Bundle) : MovieDetailsFragment {
+        fun newInstance(bundle: Bundle): MovieDetailsFragment {
             val fragment = MovieDetailsFragment()
             fragment.arguments = bundle
             return fragment
@@ -42,7 +41,9 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetailsResp
 
         binding.movieDetail.visibility = View.VISIBLE
 
-        binding.userNote.addTextChangedListener (object : TextWatcher{
+
+
+        binding.userNote.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -50,34 +51,26 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetailsResp
             }
 
             override fun afterTextChanged(text: Editable?) {
-              Thread{
-                  addCommentToMovie(movie, text)
-              }.start()
-
+                addCommentToMovie(movie, text)
             }
         })
-
-        binding.favorite.setOnCheckedChangeListener{ _, isChecked ->
-            if (isChecked) {
-                Thread {
-                    saveFavoriteMovie(movie)
-                }.start()
-                binding.movieDetail.showToast(getString(R.string.addMovieToFavorite))
-            } else {
-                Thread {
-                    deleteFavoriteMovie(movie)
-                }.start()
-                binding.movieDetail.showToast(getString(R.string.deleteMovieFromFavorite))
-            }
-        }
 
         movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: Movie()
 
         viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
-
         requestMovieDetail(movieBundle.id)
+        initFavoritesCheckBox(movieBundle.id)
+    }
+
+    private fun initFavoritesCheckBox(movieId: Int) {
+        viewModel.checkFavoriteMovie(movieId)
+        viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
+            binding.favorite.setOnCheckedChangeListener(null)
+            binding.favorite.isChecked = isFavorite
+            setCheckBoxListener()
+        }
     }
 
     private fun requestMovieDetail(movieId: Int?) {
@@ -89,12 +82,9 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetailsResp
         displayMovie(data)
     }
 
-    private fun displayMovie(movieDTO : MovieDetailsResponse) {
-
-        Thread{
-            val date = System.currentTimeMillis()
-            saveMovie(movieDTO, date)
-        }.start()
+    private fun displayMovie(movieDTO: MovieDetailsResponse) {
+        val date = System.currentTimeMillis()
+        saveMovie(movieDTO, date)
 
         with(binding) {
 
@@ -102,28 +92,31 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetailsResp
             movieTitle.text = movieDTO.name
 
             view?.let {
-                Glide.with(it).load(movieDTO.poster?.url).into(moviePoster) }
+                Glide.with(it).load(movieDTO.poster?.url).into(moviePoster)
+            }
 
             initPersonsRecyclerView(movieDTO.persons)
 
             movieReleaseDate.text = movieDTO.year.toString()
             movieLength.text = getString(R.string.movieLength, movieDTO.movieLength.toString())
-            movieBudget.text = getString(R.string.movieBudget,
-                movieDTO.budget?.value?.toString(), movieDTO.budget?.currency)
+            movieBudget.text = getString(
+                R.string.movieBudget,
+                movieDTO.budget?.value?.toString(), movieDTO.budget?.currency
+            )
             movieKpRating.text = movieDTO.rating?.kp.toString()
             movieImdbRating.text = movieDTO.rating?.imdb.toString()
 
             movieGenres.text = movieDTO.genres?.convert { genre -> genre.name }
 
-            movieCountry.text = movieDTO.countries?.convert {country -> country.name}
+            movieCountry.text = movieDTO.countries?.convert { country -> country.name }
         }
     }
 
-    private fun initPersonsRecyclerView (persons: List <Person>) {
+    private fun initPersonsRecyclerView(persons: List<Person>) {
         val actors = persons.filter {
             it.enProfession == "actor"
         }
-        val movieStaff = persons.filter{
+        val movieStaff = persons.filter {
             it.enProfession != "actor"
         }
 
@@ -135,15 +128,27 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetailsResp
         viewModel.saveMovieToDB(movieDTO, date)
     }
 
-    private fun saveFavoriteMovie (movieDTO: MovieDetailsResponse) {
+    private fun saveFavoriteMovie(movieDTO: MovieDetailsResponse) {
         viewModel.saveFavoriteMovieToDB(movieDTO)
     }
 
-    private fun deleteFavoriteMovie (movieDTO: MovieDetailsResponse) {
+    private fun deleteFavoriteMovie(movieDTO: MovieDetailsResponse) {
         viewModel.deleteFavoriteMovieFromDB(movieDTO)
     }
 
-    private fun addCommentToMovie(movieDTO: MovieDetailsResponse, text: Editable?){
+    private fun addCommentToMovie(movieDTO: MovieDetailsResponse, text: Editable?) {
         viewModel.addCommentToMovie(movieDTO, text)
+    }
+
+    private fun setCheckBoxListener() {
+        binding.favorite.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                saveFavoriteMovie(movie)
+                binding.movieDetail.showToast(getString(R.string.addMovieToFavorite))
+            } else {
+                deleteFavoriteMovie(movie)
+                binding.movieDetail.showToast(getString(R.string.deleteMovieFromFavorite))
+            }
+        }
     }
 }

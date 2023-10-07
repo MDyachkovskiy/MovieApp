@@ -22,11 +22,7 @@ class FavoritesFragment : BaseFragmentWithAppState<AppState,List<FavoriteMovieIt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Thread {
-            viewModel.getAllFavorites()
-        }.start()
-
+        viewModel.getAllFavorites()
         viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }

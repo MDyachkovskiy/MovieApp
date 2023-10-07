@@ -16,4 +16,7 @@ interface FavoriteMovieDao {
 
     @Query ("DELETE FROM FavoriteMovieEntity WHERE kinopoiskId = :id")
     fun deleteById(id: Int?)
+
+    @Query ("SELECT EXISTS(SELECT 1 FROM FavoriteMovieEntity WHERE kinopoiskId = :id)")
+    suspend fun checkExists(id: Int): Boolean
 }

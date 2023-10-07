@@ -9,16 +9,20 @@ class FavoritesRepositoryImpl (
     private val localDataSource : FavoriteMovieDao
         ) : FavoritesRepository {
 
-    override fun getAllFavorites(): List<FavoriteMovieItem> {
+    override suspend fun getAllFavorites(): List<FavoriteMovieItem> {
         return convertListFavoritesEntityToMovie(localDataSource.all())
     }
 
-    override fun saveEntity(movie: MovieDetailsResponse) {
+    override suspend fun saveEntity(movie: MovieDetailsResponse) {
         val favoriteEntity = convertMovieDTOtoFavoriteMovieEntity(movie)
         localDataSource.insert(favoriteEntity)
     }
 
-    override fun deleteEntity(movie: MovieDetailsResponse) {
+    override suspend fun deleteEntity(movie: MovieDetailsResponse) {
         localDataSource.deleteById(movie.id)
+    }
+
+    override suspend fun checkExistenceInDB(id: Int): Boolean {
+        return localDataSource.checkExists(id)
     }
 }

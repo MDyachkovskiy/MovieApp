@@ -5,7 +5,7 @@ import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDeta
 import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryMovieItem
 
 interface LocalRepository {
-    fun getAllHistory() : List<HistoryMovieItem>
-    fun saveEntity(movie : MovieDetailsResponse, date: Long)
-    fun addUserComment(movie : MovieDetailsResponse, text: Editable?)
+    suspend fun getAllHistory() : List<HistoryMovieItem>
+    suspend fun saveEntity(movie : MovieDetailsResponse, date: Long)
+    suspend fun addUserComment(movie : MovieDetailsResponse, text: Editable?)
 }

@@ -4,7 +4,9 @@ import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDeta
 import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieItem
 
 interface FavoritesRepository {
-    fun getAllFavorites() : List<FavoriteMovieItem>
-    fun saveEntity(movie : MovieDetailsResponse)
-    fun deleteEntity(movie : MovieDetailsResponse)
+    suspend fun getAllFavorites() : List<FavoriteMovieItem>
+    suspend fun saveEntity(movie : MovieDetailsResponse)
+    suspend fun deleteEntity(movie : MovieDetailsResponse)
+
+    suspend fun checkExistenceInDB(id: Int): Boolean
 }
