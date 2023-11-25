@@ -1,14 +1,9 @@
 <resources>
     <string name="app_name">Kotlin_MovieApp</string>
-    <string name="tv_movieName">Название фильма</string>
-    <string name="tv_Top250movies">Топ 250 лучших фильмов</string>
-    <string name="tv_UpComing">Новинки кино</string>
-    <string name="tv_TopTvShows">Лучшие сериалы</string>
+
     <string name="movie_title">Название фильма</string>
     <string name="movie_description">Описание фильма</string>
     <string name="search_bar">Поиск фильма</string>
-    <string name="data_loading_error">Ошибка загрузки данных</string>
-    <string name="data_loading_success">Данные успешно загружены</string>
 
     <!-- MovieDetailsFragment -->
     <string name="releaseDate">Год выхода: </string>
@@ -28,11 +23,8 @@
     <!-- Объединение строк в коде -->
     <string name="movieBudget"> %1$s %2$s</string>
     <string name="movieLength"> %1$s мин</string>
-    <string name="concDate"> %1$s %2$s</string>
 
     <!-- Отображения текста в приложении -->
-    <string name="critical_error">Произошла непредвиденная ошибка</string>
-    <string name="reload">Повторить попытку</string>
     <string name="notFoundBirthCityGeoposition">Не удалось отобразить точное место рождения</string>
 
     <!-- Меню навигация -->
@@ -60,12 +52,6 @@
     <string name="addMovieToFavorite">Фильм добавлен в Понравившиеся</string>
     <string name="deleteMovieFromFavorite">Фильм удален с Понравившихся</string>
 
-    <!-- SearchFragment Menu -->
-    <string name="get_contacts">Получить контакты</string>
-
-    <!-- HomeFragment Menu -->
-    <string name="error_message">Произошла непредвиденная ошибка</string>
-
     <!-- ContentDescription -->
     <string name="moviePoster">Постер к фильму</string>
     <string name="actorPhoto">Фото актера</string>
@@ -79,8 +65,6 @@
     <!-- Сервис пуш-уведомлений -->
     <string name="lowPriorChannelName">Канал низкого приоритета</string>
     <string name="lowPriorChannelDesc">канал для отправки сообщений с низким приоритетом</string>
-    <string name="highPriorChannelName">Канал высокого приоритета</string>
-    <string name="highPriorChannelDesc">канал для отправки сообщений с высоким приоритетом</string>
 
 
 </resources>

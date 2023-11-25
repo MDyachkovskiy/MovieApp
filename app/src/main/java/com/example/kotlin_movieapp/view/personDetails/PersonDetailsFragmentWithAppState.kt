@@ -6,20 +6,20 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentPersonBinding
-import com.example.kotlin_movieapp.model.AppState.AppState
-import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Person
-import com.example.kotlin_movieapp.model.datasource.domain.personDetail.PersonDetailsResponse
+import com.test.application.core.utils.AppState.AppState
+import com.test.application.core.domain.movieDetail.Person
+import com.test.application.core.domain.personDetail.PersonDetailsResponse
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.convert
 import com.example.kotlin_movieapp.utils.replaceFragment
-import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
+import com.test.application.core.view.BaseFragmentWithAppState
 import com.example.kotlin_movieapp.view.map.MapsFragment
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class PersonDetailsFragmentWithAppState : BaseFragmentWithAppState<AppState, PersonDetailsResponse, FragmentPersonBinding>(
+class PersonDetailsFragmentWithAppState : com.test.application.core.view.BaseFragmentWithAppState<AppState, PersonDetailsResponse, FragmentPersonBinding>(
     FragmentPersonBinding::inflate
 ) {
 

@@ -7,8 +7,8 @@ import com.example.kotlin_movieapp.model.repository.collections.CollectionsRepos
 import com.example.kotlin_movieapp.model.repository.collections.CollectionsRepositoryImpl
 import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepository
 import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepositoryImpl
-import com.example.kotlin_movieapp.model.repository.favorites.FavoritesRepository
-import com.example.kotlin_movieapp.model.repository.favorites.FavoritesRepositoryImpl
+import com.test.application.core.repository.favorites.FavoritesRepository
+import com.test.application.core.repository.favorites.FavoritesRepositoryImpl
 import com.example.kotlin_movieapp.model.repository.history.LocalRepository
 import com.example.kotlin_movieapp.model.repository.history.LocalRepositoryImpl
 import com.example.kotlin_movieapp.model.repository.movieDetails.DetailsRepository
@@ -18,23 +18,20 @@ import com.example.kotlin_movieapp.model.repository.personDetails.PersonDetailsR
 import com.example.kotlin_movieapp.model.repository.search.SearchRepository
 import com.example.kotlin_movieapp.model.repository.search.SearchRepositoryImpl
 import com.example.kotlin_movieapp.view.contacts.ContactsViewModel
-import com.example.kotlin_movieapp.view.favorites.FavoritesViewModel
+import com.test.application.favorites.FavoritesViewModel
 import com.example.kotlin_movieapp.view.history.HistoryViewModel
-import com.example.kotlin_movieapp.view.home.top250Movie.Top250MovieViewModel
-import com.example.kotlin_movieapp.view.home.topTvShows.TopTvShowsViewModel
-import com.example.kotlin_movieapp.view.home.upComing.UpComingMovieViewModel
 import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsViewModel
 import com.example.kotlin_movieapp.view.personDetails.PersonDetailsViewModel
-import com.example.kotlin_movieapp.view.search.SearchViewModel
+import com.test.application.search.SearchViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
     single<CollectionsRepository> { CollectionsRepositoryImpl(get()) }
     single { RemoteDataSource() }
-    viewModel { Top250MovieViewModel(get()) }
-    viewModel { TopTvShowsViewModel(get()) }
-    viewModel { UpComingMovieViewModel(get()) }
+    viewModel { com.test.application.home.top250Movie.Top250MovieViewModel(get()) }
+    viewModel { com.test.application.home.topTvShows.TopTvShowsViewModel(get()) }
+    viewModel { com.test.application.home.upComing.UpComingMovieViewModel(get()) }
     viewModel { ContactsViewModel(get()) }
     viewModel { FavoritesViewModel(get()) }
     viewModel { HistoryViewModel(get()) }

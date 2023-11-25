@@ -3,9 +3,9 @@ package com.example.kotlin_movieapp.model.repository.search
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.Movie
+import com.test.application.core.domain.searchCollection.Movie
 import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
-import com.example.kotlin_movieapp.view.search.SearchMoviePagingSource
+import com.test.application.search.SearchMoviePagingSource
 import kotlinx.coroutines.flow.Flow
 
 
@@ -17,7 +17,8 @@ class SearchRepositoryImpl (
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { SearchMoviePagingSource(remoteDataSource.getKinopoiskAPI(),
-            name)}
+            name)
+            }
         ).flow
     }
 }

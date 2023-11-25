@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.kotlin_movieapp.model.AppState.AppState
-import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
-import com.example.kotlin_movieapp.model.repository.favorites.FavoritesRepository
+import com.test.application.core.utils.AppState.AppState
+import com.test.application.core.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.repository.favorites.FavoritesRepository
 import com.example.kotlin_movieapp.model.repository.history.LocalRepository
 import com.example.kotlin_movieapp.model.repository.movieDetails.DetailsRepository
 import kotlinx.coroutines.Dispatchers

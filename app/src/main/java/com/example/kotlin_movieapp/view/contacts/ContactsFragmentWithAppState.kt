@@ -6,18 +6,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentContactsBinding
-import com.example.kotlin_movieapp.model.AppState.AppState
+import com.test.application.core.utils.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsGetter
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
 import com.example.kotlin_movieapp.utils.CONTACTS_REQUEST_CODE
 import com.example.kotlin_movieapp.utils.checkPermission
-import com.example.kotlin_movieapp.utils.init
+import com.test.application.core.utils.init
 import com.example.kotlin_movieapp.utils.showAlertMessage
-import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ContactsFragmentWithAppState : BaseFragmentWithAppState<AppState, List<ContactsItem>, FragmentContactsBinding>(
+class ContactsFragmentWithAppState : com.test.application.core.view.BaseFragmentWithAppState<AppState, List<ContactsItem>, FragmentContactsBinding>(
     FragmentContactsBinding::inflate
 ) {
 

@@ -8,7 +8,7 @@ import com.example.kotlin_movieapp.databinding.ItemHistoryMovieBinding
 import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryMovieItem
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.convertHistoryMovieItemToMovie
-import com.example.kotlin_movieapp.utils.openDetailsFragment
+import com.test.application.core.utils.openDetailsFragment
 import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsFragment
 import com.squareup.picasso.Picasso
 import java.util.*

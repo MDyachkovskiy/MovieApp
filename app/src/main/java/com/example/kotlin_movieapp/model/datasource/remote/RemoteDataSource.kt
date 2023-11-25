@@ -1,7 +1,7 @@
 package com.example.kotlin_movieapp.model.datasource.remote
 
-import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
-import com.example.kotlin_movieapp.model.datasource.domain.personDetail.PersonDetailsResponse
+import com.test.application.core.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.domain.personDetail.PersonDetailsResponse
 import com.example.kotlin_movieapp.utils.KINOPOISK_DOMAIN
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory

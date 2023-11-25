@@ -14,3 +14,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Kotlin_MovieApp"
 include ':app'
+include ':core'
+include ':home'
+include ':remote_data'
+include ':local_data'
+include ':favorites'
+include ':search'
+include ':settings'

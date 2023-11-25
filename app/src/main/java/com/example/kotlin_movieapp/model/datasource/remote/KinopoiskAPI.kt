@@ -1,9 +1,9 @@
 package com.example.kotlin_movieapp.model.datasource.remote
 
-import com.example.kotlin_movieapp.model.datasource.domain.collection.CollectionsResponse
-import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
-import com.example.kotlin_movieapp.model.datasource.domain.personDetail.PersonDetailsResponse
-import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.SearchResponse
+import com.test.application.core.domain.collection.CollectionsResponse
+import com.test.application.core.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.domain.personDetail.PersonDetailsResponse
+import com.test.application.core.domain.searchCollection.SearchResponse
 import com.example.kotlin_movieapp.utils.COLLECTION_SELECTED_FIELDS
 import com.example.kotlin_movieapp.utils.DENOMINATION_SORT
 import com.example.kotlin_movieapp.utils.KINOPOISK_RATING

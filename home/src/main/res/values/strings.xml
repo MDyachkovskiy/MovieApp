@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tv_Top250movies">Топ 250 лучших фильмов</string>
+    <string name="tv_UpComing">Новинки кино</string>
+    <string name="tv_TopTvShows">Лучшие сериалы</string>
+</resources>

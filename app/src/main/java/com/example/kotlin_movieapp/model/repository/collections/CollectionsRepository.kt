@@ -1,7 +1,7 @@
 package com.example.kotlin_movieapp.model.repository.collections
 
 import androidx.paging.PagingData
-import com.example.kotlin_movieapp.model.datasource.domain.collection.Movie
+import com.test.application.core.domain.collection.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface CollectionsRepository {

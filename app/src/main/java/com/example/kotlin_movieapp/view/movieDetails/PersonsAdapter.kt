@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.databinding.ItemPersonsBinding
-import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Person
+import com.test.application.core.domain.movieDetail.Person
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_PERSON
-import com.example.kotlin_movieapp.utils.openDetailsFragment
+import com.test.application.core.utils.openDetailsFragment
 import com.example.kotlin_movieapp.view.personDetails.PersonDetailsFragmentWithAppState
 import com.squareup.picasso.Picasso
 

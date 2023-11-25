@@ -8,19 +8,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentMovieDetailBinding
-import com.example.kotlin_movieapp.model.AppState.AppState
-import com.example.kotlin_movieapp.model.datasource.domain.collection.Movie
-import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
-import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.Person
+import com.test.application.core.utils.AppState.AppState
+import com.test.application.core.domain.collection.Movie
+import com.test.application.core.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.domain.movieDetail.Person
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.convert
-import com.example.kotlin_movieapp.utils.init
+import com.test.application.core.utils.init
 import com.example.kotlin_movieapp.utils.showToast
-import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetailsResponse, FragmentMovieDetailBinding>(
+class MovieDetailsFragment : com.test.application.core.view.BaseFragmentWithAppState<AppState, MovieDetailsResponse, FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate
 ) {
     private lateinit var movieBundle: Movie

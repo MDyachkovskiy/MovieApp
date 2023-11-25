@@ -2,7 +2,7 @@ package com.example.kotlin_movieapp.view.contacts
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kotlin_movieapp.model.AppState.AppState
+import com.test.application.core.utils.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
 import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepository
 

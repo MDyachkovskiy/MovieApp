@@ -1,7 +1,7 @@
 package com.example.kotlin_movieapp.model.repository.personDetails
 
 import android.util.Log
-import com.example.kotlin_movieapp.model.AppState.AppState
+import com.test.application.core.utils.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
 import com.example.kotlin_movieapp.utils.REQUEST_ERROR
 

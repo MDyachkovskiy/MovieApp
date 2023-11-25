@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentHistoryBinding
-import com.example.kotlin_movieapp.model.AppState.AppState
+import com.test.application.core.utils.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryMovieItem
-import com.example.kotlin_movieapp.utils.init
-import com.example.kotlin_movieapp.view.base.BaseFragmentWithAppState
+import com.test.application.core.utils.init
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class HistoryFragmentWithAppState : BaseFragmentWithAppState<AppState, List<HistoryMovieItem>, FragmentHistoryBinding>(
+class HistoryFragmentWithAppState : com.test.application.core.view.BaseFragmentWithAppState<AppState, List<HistoryMovieItem>, FragmentHistoryBinding>(
     FragmentHistoryBinding::inflate
 ) {
 

@@ -1,12 +1,12 @@
 package com.example.kotlin_movieapp.utils
 
-import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
-import com.example.kotlin_movieapp.model.datasource.domain.collection.Movie
-import com.example.kotlin_movieapp.model.datasource.domain.collection.Poster
+import com.test.application.core.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.domain.collection.Movie
+import com.test.application.core.domain.collection.Poster
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsEntity
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
 import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieEntity
-import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieItem
+import com.test.application.core.domain.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryEntity
 import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryMovieItem
 

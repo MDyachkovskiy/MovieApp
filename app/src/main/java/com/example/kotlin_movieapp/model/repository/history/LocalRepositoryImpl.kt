@@ -1,7 +1,7 @@
 package com.example.kotlin_movieapp.model.repository.history
 
 import android.text.Editable
-import com.example.kotlin_movieapp.model.datasource.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.domain.movieDetail.MovieDetailsResponse
 import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryDao
 import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryMovieItem
 import com.example.kotlin_movieapp.utils.*
