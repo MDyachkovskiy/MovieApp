@@ -1,4 +1,4 @@
-package com.test.application.remote_data.dto
+package com.test.application.remote_data.dto.movieDetails
 
 data class Rating(
     val await: Any = Any(),

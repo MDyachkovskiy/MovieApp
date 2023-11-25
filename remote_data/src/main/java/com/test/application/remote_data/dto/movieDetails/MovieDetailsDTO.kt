@@ -1,6 +1,6 @@
-package com.test.application.remote_data.dto
+package com.test.application.remote_data.dto.movieDetails
 
-data class MovieDetailsResponse(
+data class MovieDetailsDTO(
     val budget: Budget? = Budget(),
     val countries: List<Country>? = listOf(),
     val description: String? = "",

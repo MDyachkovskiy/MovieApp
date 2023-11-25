@@ -3,6 +3,8 @@ package com.example.kotlin_movieapp.app
 import android.app.Application
 import com.example.kotlin_movieapp.di.appModule
 import com.example.kotlin_movieapp.di.databaseModule
+import com.example.kotlin_movieapp.di.interactorModule
+import com.example.kotlin_movieapp.di.networkModule
 import com.example.kotlin_movieapp.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -13,7 +15,7 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(listOf(appModule, databaseModule, repositoryModule))
+            modules(listOf(appModule, databaseModule, networkModule, repositoryModule, interactorModule))
         }
     }
 }

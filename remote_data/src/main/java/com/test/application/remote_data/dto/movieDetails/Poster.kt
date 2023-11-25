@@ -1,4 +1,4 @@
-package com.test.application.remote_data.dto
+package com.test.application.remote_data.dto.movieDetails
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,40 +1,28 @@
-package com.example.kotlin_movieapp.model.datasource.remote
+package com.test.application.remote_data.api
 
-import com.test.application.core.domain.collection.CollectionsResponse
-import com.test.application.core.domain.movieDetail.MovieDetails
-import com.test.application.core.domain.personDetail.PersonDetailsResponse
-import com.test.application.core.domain.searchCollection.SearchResponse
-import com.example.kotlin_movieapp.utils.COLLECTION_SELECTED_FIELDS
-import com.example.kotlin_movieapp.utils.DENOMINATION_SORT
-import com.example.kotlin_movieapp.utils.KINOPOISK_RATING
-import com.example.kotlin_movieapp.utils.MOVIE_DETAILS
-import com.example.kotlin_movieapp.utils.MOVIE_SEARCH
-import com.example.kotlin_movieapp.utils.MOVIE_TYPE
-import com.example.kotlin_movieapp.utils.PERSON_END_POINT
-import com.example.kotlin_movieapp.utils.PERSON_SELECTED_FIELDS
-import com.example.kotlin_movieapp.utils.RESPONSE_QUANTITY
-import com.example.kotlin_movieapp.utils.TOP_COLLECTIONS_END_POINT
-import com.example.kotlin_movieapp.utils.TV_SHOW_TYPE
-import com.example.kotlin_movieapp.utils.UPCOMING_YEAR
+import com.test.application.remote_data.dto.collection.CollectionsDTO
+import com.test.application.remote_data.dto.movieDetails.MovieDetailsDTO
+import com.test.application.remote_data.dto.personDetailsDTO.PersonDetailsDTO
+import com.test.application.remote_data.dto.search.SearchDTO
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface KinopoiskAPI {
+interface KinopoiskService {
     @GET("$MOVIE_DETAILS/{movieId}")
     fun getMovieAsync(
         @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Path("movieId") id : Int?
-    ) : Deferred<MovieDetails>
+    ) : Deferred<MovieDetailsDTO>
 
     @GET(PERSON_END_POINT)
     fun getPersonAsync (
         @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Query("id") id : Int?,
         @Query("selectFields") selectedFields: String? = PERSON_SELECTED_FIELDS
-    ) : Deferred<PersonDetailsResponse>
+    ) : Deferred<PersonDetailsDTO>
 
     @GET(TOP_COLLECTIONS_END_POINT)
     fun getTop250CollectionAsync(
@@ -46,7 +34,7 @@ interface KinopoiskAPI {
         @Query("type") type: String? = MOVIE_TYPE,
         @Query("top250") top250: String? = "!null",
         @Query("selectFields") selectedFields: String? = COLLECTION_SELECTED_FIELDS
-    ) : Deferred<CollectionsResponse>
+    ) : Deferred<CollectionsDTO>
 
     @GET(TOP_COLLECTIONS_END_POINT)
     fun getTopTvShowsCollectionAsync(
@@ -58,7 +46,7 @@ interface KinopoiskAPI {
         @Query("type") type: String? = TV_SHOW_TYPE,
         @Query("top250") top250: String? = "!null",
         @Query("selectFields") selectedFields: String? = COLLECTION_SELECTED_FIELDS
-    ) : Deferred<CollectionsResponse>
+    ) : Deferred<CollectionsDTO>
 
     @GET(TOP_COLLECTIONS_END_POINT)
     fun getUpComingCollectionAsync(
@@ -68,12 +56,12 @@ interface KinopoiskAPI {
         @Query("movie") movie: String? = "!null",
         @Query("year") year: Int? = UPCOMING_YEAR,
         @Query("selectFields") selectedFields: String? = COLLECTION_SELECTED_FIELDS
-    ) : Deferred<CollectionsResponse>
+    ) : Deferred<CollectionsDTO>
 
     @GET(MOVIE_SEARCH)
     fun getSearchMovieAsync(
         @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Query("query") query : String,
         @Query("page") page: Int? = 1
-    ) : Deferred<SearchResponse>
+    ) : Deferred<SearchDTO>
 }

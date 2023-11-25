@@ -3,7 +3,7 @@ package com.example.kotlin_movieapp.model.repository.personDetails
 import android.util.Log
 import com.test.application.core.utils.AppState.AppState
 import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
-import com.example.kotlin_movieapp.utils.REQUEST_ERROR
+import com.test.application.core.utils.REQUEST_ERROR
 
 class PersonDetailsRepositoryImpl (
     private val remoteDataSource: RemoteDataSource

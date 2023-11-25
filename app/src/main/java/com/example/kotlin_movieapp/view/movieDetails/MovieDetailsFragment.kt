@@ -12,7 +12,7 @@ import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.domain.collection.Movie
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.movieDetail.Person
-import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
+import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.convert
 import com.test.application.core.utils.init
 import com.example.kotlin_movieapp.utils.showToast

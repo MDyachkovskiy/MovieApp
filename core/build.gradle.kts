@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -23,6 +25,14 @@ android {
                 "proguard-rules.pro"
             )
         }
+        forEach { buildType ->
+            val properties = Properties()
+            val apiKeyFile = project.rootProject.file("apikey.properties")
+            apiKeyFile.inputStream().use { properties.load(it) }
+            val apiKey = properties.getProperty("kinopoisk_api_key", "")
+
+            buildType.buildConfigField("String", "KINOPOISK_API_KEY", "\"$apiKey\"")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -40,7 +50,8 @@ dependencies {
 
     //Modules
     implementation (project(":home"))
-    implementation (project(":app"))
+    implementation (project(":remote_data"))
+    implementation (project(":local_data"))
 
     //Kotlin
     implementation("androidx.core:core-ktx:1.12.0")
