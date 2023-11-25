@@ -1,25 +1,25 @@
 package com.test.application.core.repository.favorites
 
-import com.test.application.core.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.domain.movieDetail.MovieDetails
 import com.example.kotlin_movieapp.model.datasource.local.room.favorites.FavoriteMovieDao
 import com.test.application.core.domain.favorites.FavoriteMovieItem
 import com.example.kotlin_movieapp.utils.*
-import com.test.application.core.repository.favorites.FavoritesRepository
+import com.test.application.remote_data.repository.FavoritesRepository
 
 class FavoritesRepositoryImpl (
     private val localDataSource : FavoriteMovieDao
-        ) : FavoritesRepository {
+        ) : com.test.application.remote_data.repository.FavoritesRepository {
 
     override suspend fun getAllFavorites(): List<FavoriteMovieItem> {
         return convertListFavoritesEntityToMovie(localDataSource.all())
     }
 
-    override suspend fun saveEntity(movie: MovieDetailsResponse) {
+    override suspend fun saveEntity(movie: MovieDetails) {
         val favoriteEntity = convertMovieDTOtoFavoriteMovieEntity(movie)
         localDataSource.insert(favoriteEntity)
     }
 
-    override suspend fun deleteEntity(movie: MovieDetailsResponse) {
+    override suspend fun deleteEntity(movie: MovieDetails) {
         localDataSource.deleteById(movie.id)
     }
 

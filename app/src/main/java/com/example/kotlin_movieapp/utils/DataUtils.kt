@@ -1,6 +1,6 @@
 package com.example.kotlin_movieapp.utils
 
-import com.test.application.core.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.collection.Movie
 import com.test.application.core.domain.collection.Poster
 import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsEntity
@@ -43,7 +43,7 @@ fun convertHistoryEntityToMovie(historyEntity: HistoryEntity) : HistoryMovieItem
         userNote = historyEntity.userNote
 )
 
-fun convertMovieDTOToHistoryMovieItem(movie: MovieDetailsResponse) : HistoryMovieItem =
+fun convertMovieDTOToHistoryMovieItem(movie: MovieDetails) : HistoryMovieItem =
     HistoryMovieItem (
         kinopoiskId = movie.id,
         name = movie.name,
@@ -75,7 +75,7 @@ fun convertListFavoritesEntityToMovie (entityList : List<FavoriteMovieEntity>) :
     }
 }
 
-fun convertMovieDTOtoFavoriteMovieEntity (movie : MovieDetailsResponse) : FavoriteMovieEntity =
+fun convertMovieDTOtoFavoriteMovieEntity (movie : MovieDetails) : FavoriteMovieEntity =
     FavoriteMovieEntity(
         kinopoiskId = movie.id,
         name = movie.name,

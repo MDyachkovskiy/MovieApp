@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.kotlin_movieapp.model.datasource.domain.collection.Movie
 import com.example.kotlin_movieapp.model.datasource.remote.KinopoiskAPI
+import com.test.application.core.domain.collection.Movie
 
 class TopTvShowsPagingSource(
     private val apiService: KinopoiskAPI

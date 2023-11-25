@@ -3,10 +3,10 @@ package com.test.application.home.top250Movie
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlin_movieapp.databinding.FragmentTop250movieBinding
-import com.example.kotlin_movieapp.utils.init
-import com.example.kotlin_movieapp.view.base.BaseFragment
+import com.test.application.core.utils.init
+import com.test.application.core.view.BaseFragment
 import com.test.application.home.adapter.MovieCollectionAdapter
+import com.test.application.home.databinding.FragmentTop250movieBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(

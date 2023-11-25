@@ -1,6 +1,6 @@
 package com.example.kotlin_movieapp.model.datasource.remote
 
-import com.test.application.core.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.personDetail.PersonDetailsResponse
 import com.example.kotlin_movieapp.utils.KINOPOISK_DOMAIN
 import com.google.gson.GsonBuilder
@@ -19,7 +19,7 @@ class RemoteDataSource {
         .client(createOkHttpClient())
         .build().create(KinopoiskAPI::class.java)
 
-    suspend fun getMovieDetails(movieId: Int?): MovieDetailsResponse {
+    suspend fun getMovieDetails(movieId: Int?): MovieDetails {
         return kinopoiskAPI.getMovieAsync(id = movieId).await()
     }
 

@@ -51,4 +51,7 @@ dependencies {
 
     //Design
     implementation("com.google.android.material:material:1.10.0")
+
+    //Pagination
+    implementation ("androidx.paging:paging-runtime:3.2.1")
 }

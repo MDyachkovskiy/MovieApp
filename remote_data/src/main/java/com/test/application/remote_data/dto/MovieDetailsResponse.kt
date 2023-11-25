@@ -1,4 +1,4 @@
-package com.test.application.core.domain.movieDetail
+package com.test.application.remote_data.dto
 
 data class MovieDetailsResponse(
     val budget: Budget? = Budget(),

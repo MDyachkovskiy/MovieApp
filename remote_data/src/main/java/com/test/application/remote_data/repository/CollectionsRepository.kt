@@ -1,4 +1,4 @@
-package com.example.kotlin_movieapp.model.repository.collections
+package com.test.application.remote_data.repository
 
 import androidx.paging.PagingData
 import com.test.application.core.domain.collection.Movie

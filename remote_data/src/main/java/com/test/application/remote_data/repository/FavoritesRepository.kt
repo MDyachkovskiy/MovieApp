@@ -1,7 +1,8 @@
-package com.test.application.core.repository.favorites
+package com.test.application.remote_data.repository
 
 import com.test.application.core.domain.movieDetail.MovieDetailsResponse
 import com.test.application.core.domain.favorites.FavoriteMovieItem
+import com.test.application.remote_data.dto.MovieDetailsResponse
 
 interface FavoritesRepository {
     suspend fun getAllFavorites() : List<FavoriteMovieItem>

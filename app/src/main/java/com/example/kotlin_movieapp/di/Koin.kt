@@ -3,11 +3,11 @@ package com.example.kotlin_movieapp.di
 import androidx.room.Room
 import com.example.kotlin_movieapp.model.datasource.local.room.MovieAppDataBase
 import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
-import com.example.kotlin_movieapp.model.repository.collections.CollectionsRepository
-import com.example.kotlin_movieapp.model.repository.collections.CollectionsRepositoryImpl
+import com.test.application.remote_data.repository.CollectionsRepository
+import com.test.application.core.repository.collections.CollectionsRepositoryImpl
 import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepository
 import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepositoryImpl
-import com.test.application.core.repository.favorites.FavoritesRepository
+import com.test.application.remote_data.repository.FavoritesRepository
 import com.test.application.core.repository.favorites.FavoritesRepositoryImpl
 import com.example.kotlin_movieapp.model.repository.history.LocalRepository
 import com.example.kotlin_movieapp.model.repository.history.LocalRepositoryImpl
@@ -27,7 +27,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    single<CollectionsRepository> { CollectionsRepositoryImpl(get()) }
+    single<com.test.application.remote_data.repository.CollectionsRepository> { CollectionsRepositoryImpl(get()) }
     single { RemoteDataSource() }
     viewModel { com.test.application.home.top250Movie.Top250MovieViewModel(get()) }
     viewModel { com.test.application.home.topTvShows.TopTvShowsViewModel(get()) }
@@ -55,7 +55,7 @@ val databaseModule = module {
 
 val repositoryModule = module {
     single<ContactsRepository> { ContactsRepositoryImpl(get()) }
-    single<FavoritesRepository> { FavoritesRepositoryImpl(get()) }
+    single<com.test.application.remote_data.repository.FavoritesRepository> { FavoritesRepositoryImpl(get()) }
     single<LocalRepository> { LocalRepositoryImpl(get()) }
     single<DetailsRepository> { DetailsRepositoryImpl(get()) }
     single<PersonDetailsRepository> { PersonDetailsRepositoryImpl(get()) }

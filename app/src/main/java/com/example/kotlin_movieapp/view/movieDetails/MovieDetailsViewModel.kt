@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.test.application.core.utils.AppState.AppState
-import com.test.application.core.domain.movieDetail.MovieDetailsResponse
-import com.test.application.core.repository.favorites.FavoritesRepository
+import com.test.application.core.domain.movieDetail.MovieDetails
+import com.test.application.remote_data.repository.FavoritesRepository
 import com.example.kotlin_movieapp.model.repository.history.LocalRepository
 import com.example.kotlin_movieapp.model.repository.movieDetails.DetailsRepository
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class MovieDetailsViewModel(
     private val detailsRepository: DetailsRepository,
     private val historyRepository: LocalRepository,
-    private val favoriteRepository: FavoritesRepository
+    private val favoriteRepository: com.test.application.remote_data.repository.FavoritesRepository
 ) : ViewModel() {
 
     private val liveData: MutableLiveData<AppState> = MutableLiveData()
@@ -33,25 +33,25 @@ class MovieDetailsViewModel(
         }
     }
 
-    fun saveMovieToDB (movieDTO: MovieDetailsResponse, date: Long) {
+    fun saveMovieToDB (movieDTO: MovieDetails, date: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             historyRepository.saveEntity(movieDTO, date)
         }
     }
 
-    fun saveFavoriteMovieToDB (movieDTO: MovieDetailsResponse) {
+    fun saveFavoriteMovieToDB (movieDTO: MovieDetails) {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteRepository.saveEntity(movieDTO)
         }
     }
 
-    fun deleteFavoriteMovieFromDB (movieDTO: MovieDetailsResponse) {
+    fun deleteFavoriteMovieFromDB (movieDTO: MovieDetails) {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteRepository.deleteEntity(movieDTO)
         }
     }
 
-    fun addCommentToMovie (movieDTO: MovieDetailsResponse, text: Editable?) {
+    fun addCommentToMovie (movieDTO: MovieDetails, text: Editable?) {
         viewModelScope.launch(Dispatchers.IO) {
             historyRepository.addUserComment(movieDTO,text)
         }

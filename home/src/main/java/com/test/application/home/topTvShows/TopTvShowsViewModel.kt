@@ -8,6 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.kotlin_movieapp.model.datasource.domain.collection.Movie
 import com.example.kotlin_movieapp.model.repository.collections.CollectionsRepository
+import com.test.application.core.domain.collection.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

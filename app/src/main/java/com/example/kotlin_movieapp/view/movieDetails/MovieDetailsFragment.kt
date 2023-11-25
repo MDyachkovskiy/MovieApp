@@ -10,7 +10,7 @@ import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.FragmentMovieDetailBinding
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.domain.collection.Movie
-import com.test.application.core.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.movieDetail.Person
 import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.convert
@@ -19,11 +19,11 @@ import com.example.kotlin_movieapp.utils.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MovieDetailsFragment : com.test.application.core.view.BaseFragmentWithAppState<AppState, MovieDetailsResponse, FragmentMovieDetailBinding>(
+class MovieDetailsFragment : com.test.application.core.view.BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate
 ) {
     private lateinit var movieBundle: Movie
-    private lateinit var movie: MovieDetailsResponse
+    private lateinit var movie: MovieDetails
 
     private val viewModel: MovieDetailsViewModel by viewModel()
 
@@ -76,12 +76,12 @@ class MovieDetailsFragment : com.test.application.core.view.BaseFragmentWithAppS
         viewModel.getMovieFromRemoteSource(movieId)
     }
 
-    override fun setupData(data: MovieDetailsResponse) {
+    override fun setupData(data: MovieDetails) {
         movie = data
         displayMovie(data)
     }
 
-    private fun displayMovie(movieDTO: MovieDetailsResponse) {
+    private fun displayMovie(movieDTO: MovieDetails) {
         val date = System.currentTimeMillis()
         saveMovie(movieDTO, date)
 
@@ -123,19 +123,19 @@ class MovieDetailsFragment : com.test.application.core.view.BaseFragmentWithAppS
         binding.movieStaffRV.init(PersonsAdapter(movieStaff), LinearLayoutManager.HORIZONTAL)
     }
 
-    private fun saveMovie(movieDTO: MovieDetailsResponse, date: Long) {
+    private fun saveMovie(movieDTO: MovieDetails, date: Long) {
         viewModel.saveMovieToDB(movieDTO, date)
     }
 
-    private fun saveFavoriteMovie(movieDTO: MovieDetailsResponse) {
+    private fun saveFavoriteMovie(movieDTO: MovieDetails) {
         viewModel.saveFavoriteMovieToDB(movieDTO)
     }
 
-    private fun deleteFavoriteMovie(movieDTO: MovieDetailsResponse) {
+    private fun deleteFavoriteMovie(movieDTO: MovieDetails) {
         viewModel.deleteFavoriteMovieFromDB(movieDTO)
     }
 
-    private fun addCommentToMovie(movieDTO: MovieDetailsResponse, text: Editable?) {
+    private fun addCommentToMovie(movieDTO: MovieDetails, text: Editable?) {
         viewModel.addCommentToMovie(movieDTO, text)
     }
 

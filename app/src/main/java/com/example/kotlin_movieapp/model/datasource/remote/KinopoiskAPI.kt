@@ -1,7 +1,7 @@
 package com.example.kotlin_movieapp.model.datasource.remote
 
 import com.test.application.core.domain.collection.CollectionsResponse
-import com.test.application.core.domain.movieDetail.MovieDetailsResponse
+import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.personDetail.PersonDetailsResponse
 import com.test.application.core.domain.searchCollection.SearchResponse
 import com.example.kotlin_movieapp.utils.COLLECTION_SELECTED_FIELDS
@@ -27,7 +27,7 @@ interface KinopoiskAPI {
     fun getMovieAsync(
         @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Path("movieId") id : Int?
-    ) : Deferred<MovieDetailsResponse>
+    ) : Deferred<MovieDetails>
 
     @GET(PERSON_END_POINT)
     fun getPersonAsync (

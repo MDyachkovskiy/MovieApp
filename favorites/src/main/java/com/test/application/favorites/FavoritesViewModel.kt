@@ -3,13 +3,13 @@ package com.test.application.favorites
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.test.application.core.repository.favorites.FavoritesRepository
+import com.test.application.remote_data.repository.FavoritesRepository
 import com.test.application.core.utils.AppState.AppState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FavoritesViewModel(
-    private val favoritesRepository: FavoritesRepository
+    private val favoritesRepository: com.test.application.remote_data.repository.FavoritesRepository
 ) : ViewModel() {
 
     private val favoritesLiveData: MutableLiveData<AppState> = MutableLiveData()
