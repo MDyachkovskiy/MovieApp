@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.test.application.core.domain.searchCollection.Movie
 import com.example.kotlin_movieapp.model.datasource.remote.RemoteDataSource
-import com.test.application.search.SearchMoviePagingSource
+import com.test.application.remote_data.paging_source.SearchMoviePagingSource
 import kotlinx.coroutines.flow.Flow
 
 

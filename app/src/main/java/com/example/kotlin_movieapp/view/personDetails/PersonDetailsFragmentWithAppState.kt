@@ -11,7 +11,7 @@ import com.test.application.core.domain.movieDetail.Person
 import com.test.application.core.domain.personDetail.PersonDetailsResponse
 import com.test.application.core.utils.KEY_BUNDLE_PERSON
 import com.example.kotlin_movieapp.utils.convert
-import com.example.kotlin_movieapp.utils.replaceFragment
+import com.test.application.core.utils.replaceFragment
 import com.example.kotlin_movieapp.view.map.MapsFragment
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

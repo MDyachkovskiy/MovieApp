@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class CollectionsDTO(
     @SerializedName("docs")
-    val movie: List<Movie> = listOf(),
+    val movie: List<MovieDTO> = listOf(),
     val limit: Int = 0,
     val page: Int = 0,
     val pages: Int = 0,

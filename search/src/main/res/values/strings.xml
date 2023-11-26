@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_bar">Поиск фильма</string>
+    <string name="your_search_result">Мы нашли следующие фильмы по вашему запросу</string>
+    <string name="history">История ваших просмотров</string>
+</resources>

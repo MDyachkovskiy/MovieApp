@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
     //Kotlin
     implementation("androidx.core:core-ktx:1.12.0")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))

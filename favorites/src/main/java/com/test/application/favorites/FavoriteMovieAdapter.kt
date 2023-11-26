@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.test.application.core.domain.favorites.FavoriteMovieItem
-import com.test.application.core.navigation.Navigator
 import com.test.application.favorites.databinding.ItemFavoriteMovieBinding
 import java.util.*
 

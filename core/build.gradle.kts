@@ -47,12 +47,6 @@ android {
 }
 
 dependencies {
-
-    //Modules
-    implementation (project(":home"))
-    implementation (project(":remote_data"))
-    implementation (project(":local_data"))
-
     //Kotlin
     implementation("androidx.core:core-ktx:1.12.0")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))

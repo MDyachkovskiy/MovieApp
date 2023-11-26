@@ -44,6 +44,7 @@ dependencies {
     //AndroidX
     implementation("androidx.appcompat:appcompat:1.6.1")
 
-    //Design
-    implementation("com.google.android.material:material:1.10.0")
+    //SharedPreference
+    implementation("androidx.preference:preference:1.2.1")
+    implementation("androidx.preference:preference-ktx:1.2.1")
 }

@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":core"))
     //Kotlin
     implementation("androidx.core:core-ktx:1.12.0")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
@@ -46,4 +46,12 @@ dependencies {
 
     //Design
     implementation("com.google.android.material:material:1.10.0")
+    implementation("com.makeramen:roundedimageview:2.3.0")
+    implementation("io.coil-kt:coil:2.4.0")
+
+    //Koin
+    implementation ("io.insert-koin:koin-androidx-compose:3.4.0")
+
+    //Pagination
+    implementation ("androidx.paging:paging-runtime:3.2.1")
 }

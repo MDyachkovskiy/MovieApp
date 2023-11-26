@@ -1,8 +1,8 @@
 package com.example.kotlin_movieapp.model.repository.contacts
 
-import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
+import com.test.application.local_data.contacts.ContactsItem
 
 interface ContactsRepository {
-    fun getAllContacts() : List<ContactsItem>
-    fun saveEntity(contact: ContactsItem)
+    fun getAllContacts() : List<com.test.application.local_data.contacts.ContactsItem>
+    fun saveEntity(contact: com.test.application.local_data.contacts.ContactsItem)
 }

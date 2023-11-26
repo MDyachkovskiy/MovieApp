@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.databinding.ItemHistoryMovieBinding
-import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryMovieItem
+import com.test.application.local_data.history.HistoryMovieItem
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.convertHistoryMovieItemToMovie
 import com.test.application.core.utils.openDetailsFragment
@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso
 import java.util.*
 
 class HistoryMovieAdapter(
-    private var movieData: List<HistoryMovieItem>
+    private var movieData: List<com.test.application.local_data.history.HistoryMovieItem>
 ) : RecyclerView.Adapter<HistoryMovieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,7 +35,7 @@ class HistoryMovieAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(movie: HistoryMovieItem) {
+        fun bind(movie: com.test.application.local_data.history.HistoryMovieItem) {
             val binding = ItemHistoryMovieBinding.bind(itemView)
             with(binding) {
 

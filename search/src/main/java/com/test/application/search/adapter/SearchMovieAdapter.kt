@@ -4,19 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kotlin_movieapp.databinding.ItemSearchMovieBinding
-import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.Movie
-import com.example.kotlin_movieapp.utils.KEY_BUNDLE_MOVIE
-import com.test.application.core.utils.openDetailsFragment
-import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsFragment
-import com.squareup.picasso.Picasso
+import coil.load
+import com.test.application.core.domain.searchCollection.SearchMovie
+import com.test.application.search.databinding.ItemSearchMovieBinding
 
 class SearchMovieAdapter :
-    PagingDataAdapter<Movie, SearchMovieAdapter.ViewHolder>(SearchCollectionDiffCallback()) {
-    class ViewHolder(
+    PagingDataAdapter<SearchMovie, SearchMovieAdapter.ViewHolder>(SearchCollectionDiffCallback()) {
+
+    var listener: (() -> Unit)? = null
+    inner class ViewHolder(
         binding: ItemSearchMovieBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie) {
+        fun bind(movie: SearchMovie) {
             val binding = ItemSearchMovieBinding.bind(itemView)
             with(binding) {
 
@@ -24,13 +23,14 @@ class SearchMovieAdapter :
 
                 movieDescription.text = movie.description
 
-                Picasso.get()?.load(movie.poster)?.into(poster)
+                poster.load(movie.poster) {
+                    crossfade(true)
+                    placeholder(com.test.application.core.R.drawable.default_placeholder)
+                }
 
                 root.setOnClickListener {
-                    it.openDetailsFragment(
-                        MovieDetailsFragment::class.java,
-                        KEY_BUNDLE_MOVIE,
-                        movie)}
+                    listener?.invoke()
+                }
             }
         }
     }
@@ -46,3 +46,10 @@ class SearchMovieAdapter :
         return ViewHolder(binding)
     }
 }
+
+/*
+it.openDetailsFragment(
+                        MovieDetailsFragment::class.java,
+                        KEY_BUNDLE_MOVIE,
+                        movie)
+ */

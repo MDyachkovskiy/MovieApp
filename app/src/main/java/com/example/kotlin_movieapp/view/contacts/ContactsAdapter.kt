@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.databinding.ItemContactsBinding
-import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
+import com.test.application.local_data.contacts.ContactsItem
 import com.example.kotlin_movieapp.utils.checkPermission
 
 class ContactsAdapter(
-    private var contactsData: List<ContactsItem>,
+    private var contactsData: List<com.test.application.local_data.contacts.ContactsItem>,
     private var activity: FragmentActivity?
 ) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
 
@@ -38,7 +38,7 @@ class ContactsAdapter(
     class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
-        fun bind(contact: ContactsItem, activity: FragmentActivity?) {
+        fun bind(contact: com.test.application.local_data.contacts.ContactsItem, activity: FragmentActivity?) {
             val binding = ItemContactsBinding.bind(itemView)
 
             with(binding) {

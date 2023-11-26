@@ -3,6 +3,7 @@ package com.test.application.home.top250Movie
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
 import com.test.application.home.adapter.MovieCollectionAdapter
@@ -30,6 +31,9 @@ class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
 
     private fun initRV() {
         movieAdapter = MovieCollectionAdapter()
+        movieAdapter.listener = {
+            (activity as? Navigator)?.navigateFromFavoritesToMovieDetails()
+        }
         binding.RVTop250.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
     }
 }

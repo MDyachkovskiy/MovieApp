@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Preference Titles -->
+    <string name="searching_parameters">Настройки поиска фильмов</string>
+    <string name="adult_off">Запрещен поиск фильмов, содержащих сцены, предназначенные для взрослых</string>
+    <string name="adult_on">Разрешен поиск фильмов, содержащих сцены, предназначенные для взрослых</string>
+    <string name="adult_content">Взрослый контент</string>
+    <string name="searching_rating">Минимальный рейтинг фильма</string>
+
+</resources>

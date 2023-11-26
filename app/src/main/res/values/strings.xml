@@ -3,7 +3,7 @@
 
     <string name="movie_title">Название фильма</string>
     <string name="movie_description">Описание фильма</string>
-    <string name="search_bar">Поиск фильма</string>
+
 
     <!-- MovieDetailsFragment -->
     <string name="releaseDate">Год выхода: </string>
@@ -33,16 +33,10 @@
     <string name="search">Поиск</string>
     <string name="settings">Настройки</string>
 
-    <!-- Preference Titles -->
-    <string name="searching_parameters">Настройки поиска фильмов</string>
-    <string name="adult_off">Запрещен поиск фильмов, содержащих сцены, предназначенные для взрослых</string>
-    <string name="adult_on">Разрешен поиск фильмов, содержащих сцены, предназначенные для взрослых</string>
-    <string name="adult_content">Взрослый контент</string>
-    <string name="searching_rating">Минимальный рейтинг фильма</string>
+
 
     <!-- SearchChildFragments Titles -->
-    <string name="your_search_result">Мы нашли следующие фильмы по вашему запросу</string>
-    <string name="history">История ваших просмотров</string>
+
 
     <!-- HistoryFragment -->
     <string name="userComments">Ваши комментарии по фильму:</string>

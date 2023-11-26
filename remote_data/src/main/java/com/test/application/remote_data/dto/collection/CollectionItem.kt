@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 data class CollectionItem(
     @SerializedName("id")
     val kinopoiskId: Int? = 0,
-    var poster: Poster = Poster(),
+    var poster: PosterDTO = PosterDTO(),
     val name: String? = "",
     val description: String? = ""
 )

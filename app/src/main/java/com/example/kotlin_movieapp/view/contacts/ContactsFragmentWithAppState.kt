@@ -7,8 +7,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_movieapp.databinding.FragmentContactsBinding
 import com.test.application.core.utils.AppState.AppState
-import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsGetter
-import com.example.kotlin_movieapp.model.datasource.local.room.contacts.ContactsItem
+import com.test.application.local_data.contacts.ContactsGetter
+import com.test.application.local_data.contacts.ContactsItem
 import com.example.kotlin_movieapp.utils.CONTACTS_REQUEST_CODE
 import com.example.kotlin_movieapp.utils.checkPermission
 import com.test.application.core.utils.init
@@ -16,11 +16,16 @@ import com.example.kotlin_movieapp.utils.showAlertMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ContactsFragmentWithAppState : com.test.application.core.view.BaseFragmentWithAppState<AppState, List<ContactsItem>, FragmentContactsBinding>(
+class ContactsFragmentWithAppState : com.test.application.core.view.BaseFragmentWithAppState<AppState, List<com.test.application.local_data.contacts.ContactsItem>, FragmentContactsBinding>(
     FragmentContactsBinding::inflate
 ) {
 
-    private val contactsGetter by lazy { ContactsGetter(context, viewModel) }
+    private val contactsGetter by lazy {
+        com.test.application.local_data.contacts.ContactsGetter(
+            context,
+            viewModel
+        )
+    }
 
     private val viewModel: ContactsViewModel by viewModel()
 
@@ -45,11 +50,11 @@ class ContactsFragmentWithAppState : com.test.application.core.view.BaseFragment
         }.start()
     }
 
-    override fun setupData(data: List<ContactsItem>) {
+    override fun setupData(data: List<com.test.application.local_data.contacts.ContactsItem>) {
         initRV(data)
     }
 
-    private fun initRV(contactsData: List<ContactsItem>) {
+    private fun initRV(contactsData: List<com.test.application.local_data.contacts.ContactsItem>) {
         binding.contactsRecyclerView.init(
             ContactsAdapter(
                 contactsData,

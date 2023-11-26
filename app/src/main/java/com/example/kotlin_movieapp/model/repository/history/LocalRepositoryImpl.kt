@@ -2,15 +2,15 @@ package com.example.kotlin_movieapp.model.repository.history
 
 import android.text.Editable
 import com.test.application.core.domain.movieDetail.MovieDetails
-import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryDao
-import com.example.kotlin_movieapp.model.datasource.local.room.history.HistoryMovieItem
+import com.test.application.local_data.history.HistoryDao
+import com.test.application.local_data.history.HistoryMovieItem
 import com.example.kotlin_movieapp.utils.*
 
 class LocalRepositoryImpl (
-    private val localDataSource : HistoryDao
+    private val localDataSource : com.test.application.local_data.history.HistoryDao
         ) : LocalRepository {
 
-    override suspend fun getAllHistory(): List<HistoryMovieItem> {
+    override suspend fun getAllHistory(): List<com.test.application.local_data.history.HistoryMovieItem> {
         return convertListHistoryEntityToMovie(localDataSource.all())
     }
 

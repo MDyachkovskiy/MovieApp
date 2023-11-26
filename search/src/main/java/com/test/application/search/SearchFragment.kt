@@ -5,14 +5,13 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import com.example.kotlin_movieapp.databinding.FragmentSearchBinding
-import com.example.kotlin_movieapp.utils.replaceFragment
+import com.test.application.core.utils.replaceFragment
 import com.test.application.core.view.BaseFragment
-import com.example.kotlin_movieapp.view.history.HistoryFragmentWithAppState
+import com.test.application.search.databinding.FragmentSearchBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 
-class SearchFragment : com.test.application.core.view.BaseFragment<FragmentSearchBinding>(
+class SearchFragment : BaseFragment<FragmentSearchBinding>(
     FragmentSearchBinding::inflate
 ) {
     companion object {
@@ -52,7 +51,8 @@ class SearchFragment : com.test.application.core.view.BaseFragment<FragmentSearc
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_history -> {
-                childFragmentManager.replaceFragment(R.id.container, HistoryFragmentWithAppState.newInstance())
+                childFragmentManager.replaceFragment(R.id.container,
+                    HistoryFragmentWithAppState.newInstance())
                 true
             }
 

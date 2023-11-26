@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlin_movieapp.databinding.FragmentSearchResultBinding
-import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.Movie
-import com.example.kotlin_movieapp.utils.init
+import com.test.application.core.domain.searchCollection.SearchMovie
+import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
 import com.test.application.search.adapter.SearchMovieAdapter
+import com.test.application.search.databinding.FragmentSearchResultBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-class SearchResultFragment: com.test.application.core.view.BaseFragment<FragmentSearchResultBinding>(
+class SearchResultFragment: BaseFragment<FragmentSearchResultBinding>(
     FragmentSearchResultBinding::inflate
 ) {
     private lateinit var movieAdapter: SearchMovieAdapter
@@ -24,7 +24,7 @@ class SearchResultFragment: com.test.application.core.view.BaseFragment<Fragment
         }
     }
 
-    private fun initRV(movieData: PagingData<Movie>) {
+    private fun initRV(movieData: PagingData<SearchMovie>) {
         movieAdapter = SearchMovieAdapter()
         movieAdapter.submitData(viewLifecycleOwner.lifecycle, movieData)
         binding.searchRecyclerView.init(movieAdapter, LinearLayoutManager.VERTICAL)
