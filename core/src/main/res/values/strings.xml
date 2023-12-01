@@ -2,4 +2,7 @@
 <resources>
     <string name="error_message">Произошла непредвиденная ошибка</string>
 
+    <!-- Favorites -->
+    <string name="add_movie_to_favorite">Фильм добавлен в Понравившиеся</string>
+    <string name="delete_movie_from_favorite">Фильм удален с Понравившихся</string>
 </resources>

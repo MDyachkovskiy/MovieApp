@@ -1,15 +1,15 @@
 package com.example.kotlin_movieapp.di
 
 import androidx.room.Room
-import com.test.application.core.repository.collections.CollectionsRepository
+import com.test.application.core.repository.CollectionsRepository
 import com.test.application.remote_data.repository.CollectionsRepositoryImpl
 import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepository
 import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepositoryImpl
 import com.test.application.local_data.repository.FavoritesRepositoryImpl
-import com.example.kotlin_movieapp.model.repository.history.LocalRepository
-import com.example.kotlin_movieapp.model.repository.history.LocalRepositoryImpl
-import com.example.kotlin_movieapp.model.repository.movieDetails.DetailsRepository
-import com.example.kotlin_movieapp.model.repository.movieDetails.DetailsRepositoryImpl
+import com.test.application.core.repository.HistoryRepository
+import com.test.application.local_data.repository.HistoryRepositoryImpl
+import com.test.application.core.repository.MovieDetailsRepository
+import com.test.application.remote_data.repository.DetailsRepositoryImpl
 import com.example.kotlin_movieapp.model.repository.personDetails.PersonDetailsRepository
 import com.example.kotlin_movieapp.model.repository.personDetails.PersonDetailsRepositoryImpl
 import com.example.kotlin_movieapp.model.repository.search.SearchRepository
@@ -17,13 +17,13 @@ import com.example.kotlin_movieapp.model.repository.search.SearchRepositoryImpl
 import com.example.kotlin_movieapp.view.contacts.ContactsViewModel
 import com.test.application.favorites.FavoritesViewModel
 import com.example.kotlin_movieapp.view.history.HistoryViewModel
-import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsViewModel
-import com.example.kotlin_movieapp.view.personDetails.PersonDetailsViewModel
+import com.test.application.movie_details.MovieDetailsViewModel
+import com.test.application.person_details.PersonDetailsViewModel
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.test.application.core.domain.collection.Movie
 import com.test.application.core.interactor.HomeScreenInteractor
-import com.test.application.core.repository.favorites.FavoritesRepository
+import com.test.application.core.repository.FavoritesRepository
 import com.test.application.remote_data.interactor.HomeScreenInteractorImpl
 import com.test.application.core.utils.KINOPOISK_DOMAIN
 import com.test.application.home.top250Movie.Top250MovieViewModel
@@ -89,8 +89,8 @@ val repositoryModule = module {
     single<CollectionsRepository<Movie>> { CollectionsRepositoryImpl(get()) }
     single<ContactsRepository> { ContactsRepositoryImpl(get()) }
     single<FavoritesRepository> { FavoritesRepositoryImpl(get()) }
-    single<LocalRepository> { LocalRepositoryImpl(get()) }
-    single<DetailsRepository> { DetailsRepositoryImpl(get()) }
+    single<HistoryRepository> { HistoryRepositoryImpl(get()) }
+    single<MovieDetailsRepository> { DetailsRepositoryImpl(get()) }
     single<PersonDetailsRepository> { PersonDetailsRepositoryImpl(get()) }
     single<SearchRepository> { SearchRepositoryImpl(get()) }
 }

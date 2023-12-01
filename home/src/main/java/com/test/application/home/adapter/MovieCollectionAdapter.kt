@@ -12,6 +12,7 @@ class MovieCollectionAdapter :
     PagingDataAdapter<Movie, MovieCollectionAdapter.ViewHolder>(MovieCollectionDiffCallback()) {
 
     var listener: (() -> Unit)? = null
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = getItem(position)
         if (movie != null) holder.bind(movie)

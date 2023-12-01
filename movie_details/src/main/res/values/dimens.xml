@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="poster_view_height">500dp</dimen>
+    <dimen name="comments_zone_height">150dp</dimen>
+
+    <dimen name="persons_item_height">180dp</dimen>
+    <dimen name="persons_item_width">100dp</dimen>
+
+</resources>

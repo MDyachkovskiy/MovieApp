@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.test.application.core.domain.collection.Movie
-import com.test.application.core.repository.collections.CollectionsRepository
+import com.test.application.core.repository.CollectionsRepository
 import com.test.application.remote_data.api.KinopoiskService
 import com.test.application.remote_data.paging_source.Top250PagingSource
 import com.test.application.remote_data.paging_source.TopTvShowsPagingSource

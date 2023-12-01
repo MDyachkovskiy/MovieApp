@@ -74,17 +74,18 @@ dependencies {
     implementation (project(":home"))
     implementation (project(":favorites"))
     implementation (project(":search"))
+    implementation (project(":settings"))
+    implementation (project(":movie_details"))
+    implementation (project(":person_details"))
     implementation (project(":remote_data"))
     implementation (project(":local_data"))
-    implementation (project(":settings"))
+
 
     //Kotlin
     implementation 'androidx.core:core-ktx:1.12.0'
 
     //AndroidX
     implementation 'androidx.appcompat:appcompat:1.6.1'
-
-
 
     //GoogleMap
     implementation 'com.google.android.gms:play-services-maps:18.1.0'

@@ -2,7 +2,7 @@ package com.test.application.local_data.repository
 
 import com.test.application.core.domain.favorites.FavoriteMovieItem
 import com.test.application.core.domain.movieDetail.MovieDetails
-import com.test.application.core.repository.favorites.FavoritesRepository
+import com.test.application.core.repository.FavoritesRepository
 import com.test.application.local_data.favorites.FavoriteMovieDao
 import com.test.application.local_data.mapper.convertListFavoritesEntityToMovie
 import com.test.application.local_data.mapper.convertMovieDetailsToFavoriteMovieEntity

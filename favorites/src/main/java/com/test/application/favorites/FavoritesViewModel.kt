@@ -3,7 +3,7 @@ package com.test.application.favorites
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.test.application.core.repository.favorites.FavoritesRepository
+import com.test.application.core.repository.FavoritesRepository
 import com.test.application.core.utils.AppState.AppState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

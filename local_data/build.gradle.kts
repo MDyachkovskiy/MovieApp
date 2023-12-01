@@ -43,7 +43,6 @@ dependencies {
     //AndroidX
     implementation("androidx.appcompat:appcompat:1.6.1")
 
-
     //Room
     implementation("androidx.room:room-runtime:2.5.2")
     implementation ("androidx.room:room-ktx:2.5.2")

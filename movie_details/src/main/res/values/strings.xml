@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MovieDetailsFragment -->
+    <string name="movie_title">Название фильма</string>
+    <string name="movie_description">Описание фильма</string>
+    <string name="release_date">Год выхода: </string>
+    <string name="genre">Жанр:</string>
+    <string name="movie_length">Продолжительность фильма:</string>
+    <string name="movie_country">Страна:</string>
+    <string name="movie_budget">Бюджет фильма:</string>
+    <string name="movie_kp_rating">Оценка Кинопоиска:</string>
+    <string name="movie_imdb_rating">Оценка IMDB:</string>
+    <string name="actors">Актеры</string>
+    <string name="movie_staff">Съемочная группа</string>
+    <string name="user_note_title">Добавьте свой комментарий</string>
+    <string name="user_comment_hint">Оставьте здесь свой комментарий по фильму</string>
+
+    <string name="format_movie_budget"> %1$s %2$s</string>
+    <string name="format_movie_length"> %1$s мин</string>
+
+</resources>

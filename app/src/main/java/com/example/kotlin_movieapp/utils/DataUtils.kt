@@ -90,5 +90,3 @@ fun convertContactsItemToContactsEntity (contact: com.test.application.local_dat
         phoneNumber = contact.phoneNumber
     )
 
-fun <T> List<T>.convert(getValue: (T) -> String?) = this.joinToString(", "){
-    getValue(it) ?: "" }

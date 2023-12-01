@@ -5,11 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_movieapp.databinding.ItemHistoryMovieBinding
-import com.test.application.local_data.history.HistoryMovieItem
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.example.kotlin_movieapp.utils.convertHistoryMovieItemToMovie
 import com.test.application.core.utils.openDetailsFragment
-import com.example.kotlin_movieapp.view.movieDetails.MovieDetailsFragment
+import com.test.application.movie_details.MovieDetailsFragment
 import com.squareup.picasso.Picasso
 import java.util.*
 

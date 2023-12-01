@@ -4,11 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.test.application.core.utils.AppState.AppState
-import com.example.kotlin_movieapp.model.repository.history.LocalRepository
+import com.test.application.core.repository.HistoryRepository
 import kotlinx.coroutines.launch
 
 class HistoryViewModel(
-    private val historyRepository: LocalRepository
+    private val historyRepository: HistoryRepository
 ) : ViewModel() {
 
     private val historyLiveData: MutableLiveData<AppState> = MutableLiveData()

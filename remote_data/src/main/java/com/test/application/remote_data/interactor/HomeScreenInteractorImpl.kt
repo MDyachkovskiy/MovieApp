@@ -3,7 +3,7 @@ package com.test.application.remote_data.interactor
 import androidx.paging.PagingData
 import com.test.application.core.domain.collection.Movie
 import com.test.application.core.interactor.HomeScreenInteractor
-import com.test.application.core.repository.collections.CollectionsRepository
+import com.test.application.core.repository.CollectionsRepository
 import kotlinx.coroutines.flow.Flow
 
 class HomeScreenInteractorImpl(
