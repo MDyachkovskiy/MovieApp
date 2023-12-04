@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/person_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/person_photo"
+                android:layout_width="@dimen/persons_image_width"
+                android:layout_height="@dimen/persons_image_height"
+                android:scaleType="centerCrop"
+                android:src="@drawable/person_placeholder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_person_name"
+                style="@style/movie_title_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/margin_12dp_medium"
+                android:ellipsize="end"
+                android:lines="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/person_photo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/profession"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_person_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_person_name">
+
+                <TextView
+                    style="@style/movie_details_title_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp_small"
+                    android:text="@string/person_profession" />
+
+                <TextView
+                    android:id="@+id/tv_person_profession"
+                    style="@style/movie_details_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp_small"
+                    android:layout_marginTop="@dimen/margin_8dp_small"
+                    android:ellipsize="end"
+                    android:lines="3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/age"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp_small"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_person_name"
+                app:layout_constraintTop_toBottomOf="@id/profession">
+
+                <TextView
+                    style="@style/movie_details_title_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp_small"
+                    android:text="@string/age" />
+
+                <TextView
+                    android:id="@+id/tv_person_age"
+                    style="@style/movie_details_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp_small"
+                    android:layout_marginTop="@dimen/margin_8dp_small"
+                    android:ellipsize="end"
+                    android:lines="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/date_of_birth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp_small"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/person_photo">
+
+                <TextView
+                    style="@style/movie_details_title_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp_small"
+                    android:text="@string/date_of_birth" />
+
+                <TextView
+                    android:id="@+id/tv_person_date_of_birth"
+                    style="@style/movie_details_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp_small"
+                    android:layout_marginTop="@dimen/margin_8dp_small"
+                    android:lines="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/place_of_birth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp_small"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_of_birth">
+
+                <TextView
+                    style="@style/movie_details_title_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp_small"
+                    android:text="@string/place_of_birth" />
+
+                <TextView
+                    android:id="@+id/tv_person_place_of_birth"
+                    style="@style/movie_details_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp_small"
+                    android:layout_marginTop="@dimen/margin_8dp_small"
+                    android:lines="2" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/place_of_birth_map_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/place_of_birth_map_height"
+                android:layout_marginTop="@dimen/margin_8dp_small"
+                android:padding="@dimen/margin_10dp_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/place_of_birth" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

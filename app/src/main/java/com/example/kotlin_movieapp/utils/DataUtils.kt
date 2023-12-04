@@ -3,12 +3,8 @@ package com.example.kotlin_movieapp.utils
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.collection.Movie
 import com.test.application.core.domain.collection.Poster
-import com.test.application.local_data.contacts.ContactsEntity
-import com.test.application.local_data.contacts.ContactsItem
-import com.test.application.local_data.favorites.FavoriteMovieEntity
+import com.test.application.core.domain.contacts.ContactsItem
 import com.test.application.core.domain.favorites.FavoriteMovieItem
-import com.test.application.local_data.history.HistoryEntity
-import com.test.application.local_data.history.HistoryMovieItem
 
 
 fun convertListHistoryEntityToMovie (entityList : List<com.test.application.local_data.history.HistoryEntity>) : List<com.test.application.local_data.history.HistoryMovieItem>{
@@ -71,18 +67,9 @@ fun convertFavoriteMovieItemToMovie (movie: FavoriteMovieItem) : Movie =
         poster = Poster(previewUrl = movie.poster ?: ""),
     )
 
-fun convertListContactsEntityToContactsItem (entityList : List<com.test.application.local_data.contacts.ContactsEntity>) : List<com.test.application.local_data.contacts.ContactsItem>
-{
-    return entityList.map {
-        com.test.application.local_data.contacts.ContactsItem(
-            it.id,
-            it.name,
-            it.phoneNumber
-        )
-    }
-}
 
-fun convertContactsItemToContactsEntity (contact: com.test.application.local_data.contacts.ContactsItem):
+
+fun convertContactsItemToContactsEntity (contact: ContactsItem):
         com.test.application.local_data.contacts.ContactsEntity =
     com.test.application.local_data.contacts.ContactsEntity(
         id = contact.id,

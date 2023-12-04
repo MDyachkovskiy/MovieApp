@@ -47,6 +47,8 @@ android {
 }
 
 dependencies {
+
+
     //Kotlin
     implementation("androidx.core:core-ktx:1.12.0")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
@@ -59,4 +61,6 @@ dependencies {
 
     //Pagination
     implementation ("androidx.paging:paging-runtime:3.2.1")
+
+
 }

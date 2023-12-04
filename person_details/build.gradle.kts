@@ -37,6 +37,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+
     //Kotlin
     implementation("androidx.core:core-ktx:1.9.0")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
@@ -44,6 +45,13 @@ dependencies {
     //AndroidX
     implementation("androidx.appcompat:appcompat:1.6.1")
 
+    //Koin
+    implementation ("io.insert-koin:koin-android:3.4.2")
+
     //Design
     implementation("com.google.android.material:material:1.10.0")
+    implementation("io.coil-kt:coil:2.4.0")
+
+    //GoogleMap
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
 }

@@ -65,7 +65,7 @@ class MovieDetailsFragment : com.test.application.core.view.BaseFragmentWithAppS
         }
     }
 
-    private fun requestMovieDetail(movieId: Int?) {
+    private fun requestMovieDetail(movieId: Int) {
         viewModel.getMovieFromRemoteSource(movieId)
     }
 

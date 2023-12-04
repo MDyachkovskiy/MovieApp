@@ -3,20 +3,20 @@ package com.example.kotlin_movieapp.di
 import androidx.room.Room
 import com.test.application.core.repository.CollectionsRepository
 import com.test.application.remote_data.repository.CollectionsRepositoryImpl
-import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepository
-import com.example.kotlin_movieapp.model.repository.contacts.ContactsRepositoryImpl
+import com.test.application.core.repository.ContactsRepository
+import com.test.application.local_data.repository.ContactsRepositoryImpl
 import com.test.application.local_data.repository.FavoritesRepositoryImpl
 import com.test.application.core.repository.HistoryRepository
 import com.test.application.local_data.repository.HistoryRepositoryImpl
 import com.test.application.core.repository.MovieDetailsRepository
-import com.test.application.remote_data.repository.DetailsRepositoryImpl
-import com.example.kotlin_movieapp.model.repository.personDetails.PersonDetailsRepository
-import com.example.kotlin_movieapp.model.repository.personDetails.PersonDetailsRepositoryImpl
-import com.example.kotlin_movieapp.model.repository.search.SearchRepository
-import com.example.kotlin_movieapp.model.repository.search.SearchRepositoryImpl
-import com.example.kotlin_movieapp.view.contacts.ContactsViewModel
+import com.test.application.remote_data.repository.MovieDetailsRepositoryImpl
+import com.test.application.core.repository.PersonDetailsRepository
+import com.test.application.remote_data.repository.PersonDetailsRepositoryImpl
+import com.test.application.core.repository.SearchRepository
+import com.test.application.remote_data.repository.SearchRepositoryImpl
+import com.test.application.contacts.ContactsViewModel
 import com.test.application.favorites.FavoritesViewModel
-import com.example.kotlin_movieapp.view.history.HistoryViewModel
+import com.test.application.history.HistoryViewModel
 import com.test.application.movie_details.MovieDetailsViewModel
 import com.test.application.person_details.PersonDetailsViewModel
 import com.google.gson.GsonBuilder
@@ -29,7 +29,9 @@ import com.test.application.core.utils.KINOPOISK_DOMAIN
 import com.test.application.home.top250Movie.Top250MovieViewModel
 import com.test.application.home.topTvShows.TopTvShowsViewModel
 import com.test.application.home.upComing.UpComingMovieViewModel
+import com.test.application.local_data.contacts.ContactsGetter
 import com.test.application.local_data.database.MovieAppDataBase
+import com.test.application.local_data.service.ContactsSyncWorkerFactory
 import com.test.application.remote_data.api.KinopoiskService
 import com.test.application.search.SearchViewModel
 import okhttp3.OkHttpClient
@@ -43,7 +45,7 @@ val appModule = module {
     viewModel { Top250MovieViewModel(get()) }
     viewModel { TopTvShowsViewModel(get()) }
     viewModel { UpComingMovieViewModel(get()) }
-    viewModel { ContactsViewModel(get()) }
+    viewModel { com.test.application.contacts.ContactsViewModel(get()) }
     viewModel { FavoritesViewModel(get()) }
     viewModel { HistoryViewModel(get()) }
     viewModel { MovieDetailsViewModel(get(), get(), get()) }
@@ -90,11 +92,16 @@ val repositoryModule = module {
     single<ContactsRepository> { ContactsRepositoryImpl(get()) }
     single<FavoritesRepository> { FavoritesRepositoryImpl(get()) }
     single<HistoryRepository> { HistoryRepositoryImpl(get()) }
-    single<MovieDetailsRepository> { DetailsRepositoryImpl(get()) }
+    single<MovieDetailsRepository> { MovieDetailsRepositoryImpl(get()) }
     single<PersonDetailsRepository> { PersonDetailsRepositoryImpl(get()) }
     single<SearchRepository> { SearchRepositoryImpl(get()) }
 }
 
 val interactorModule = module {
     single<HomeScreenInteractor> { HomeScreenInteractorImpl(get()) }
+}
+
+val workerModule = module {
+    single { ContactsGetter(get(), get()) }
+    factory { ContactsSyncWorkerFactory(get()) }
 }

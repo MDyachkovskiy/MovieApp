@@ -1,7 +1,9 @@
 package com.test.application.local_data.mapper
 
+import com.test.application.core.domain.contacts.ContactsItem
 import com.test.application.core.domain.favorites.FavoriteMovieItem
 import com.test.application.core.domain.movieDetail.MovieDetails
+import com.test.application.local_data.contacts.ContactsEntity
 
 fun convertListFavoritesEntityToMovie (entityList : List<com.test.application.local_data.favorites.FavoriteMovieEntity>) : List<FavoriteMovieItem>{
     return entityList.map {
@@ -26,3 +28,11 @@ fun convertMovieDetailsToFavoriteMovieEntity (movie : MovieDetails) : com.test.a
         userNote = "",
         isFavorite = true
     )
+
+fun ContactsItem.toEntity() : ContactsEntity {
+    return ContactsEntity(
+        id = this.id,
+        name = this.name,
+        phoneNumber = this.phoneNumber
+    )
+}

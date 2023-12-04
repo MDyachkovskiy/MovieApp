@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/movieDetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -25,16 +25,16 @@
 
             <TextView
                 android:id="@+id/tv_movie_title"
+                style="@style/movie_title_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/margin_12dp_medium"
-                android:text="@string/movie_title"
-                style="@style/movie_title_style" />
+                android:text="@string/movie_title" />
 
             <TextView
-                style="@style/movie_description_title_style"
                 android:id="@+id/tv_movie_description"
+                style="@style/movie_description_title_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -54,8 +54,8 @@
                     android:text="@string/release_date" />
 
                 <TextView
-                    style="@style/movie_details_style"
                     android:id="@+id/tv_movie_release_date"
+                    style="@style/movie_details_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8dp_small" />
@@ -77,8 +77,8 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    style="@style/movie_details_style"
                     android:id="@+id/tv_movie_genres"
+                    style="@style/movie_details_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8dp_small" />
@@ -97,8 +97,8 @@
                     android:text="@string/movie_length" />
 
                 <TextView
-                    style="@style/movie_details_style"
                     android:id="@+id/tv_movie_length"
+                    style="@style/movie_details_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8dp_small" />
@@ -117,8 +117,8 @@
                     android:text="@string/movie_country" />
 
                 <TextView
-                    style="@style/movie_details_style"
                     android:id="@+id/tv_movie_country"
+                    style="@style/movie_details_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8dp_small" />
@@ -137,8 +137,8 @@
                     android:text="@string/movie_budget" />
 
                 <TextView
-                    style="@style/movie_details_style"
                     android:id="@+id/tv_movie_budget"
+                    style="@style/movie_details_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8dp_small" />
@@ -183,11 +183,11 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_movie_staff"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:listitem="@layout/item_persons"/>
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_persons" />
 
             </LinearLayout>
 
@@ -201,11 +201,11 @@
                     style="@style/ratings_title_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/movie_kp_rating"/>
+                    android:text="@string/movie_kp_rating" />
 
                 <TextView
-                    style="@style/ratings_title_style"
                     android:id="@+id/tv_movie_kp_rating"
+                    style="@style/ratings_title_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8dp_small" />
@@ -221,11 +221,11 @@
                     style="@style/ratings_title_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/movie_imdb_rating"/>
+                    android:text="@string/movie_imdb_rating" />
 
                 <TextView
-                    style="@style/ratings_title_style"
                     android:id="@+id/tv_movie_imdb_rating"
+                    style="@style/ratings_title_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8dp_small" />

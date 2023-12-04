@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PersonDetailsFragment -->
+    <string name="person_profession">Карьера</string>
+    <string name="date_of_birth">Дата рождения</string>
+    <string name="age">Возраст</string>
+    <string name="place_of_birth">Место рождения</string>
+    <string name="default_city">Москва</string>
+    <string name="not_found_birth_city_geoposition">Не удалось отобразить точное место рождения</string>
+</resources>

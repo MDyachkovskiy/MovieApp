@@ -26,7 +26,7 @@ class MovieDetailsViewModel(
 
     fun getLiveData() = liveData
 
-    fun getMovieFromRemoteSource(movieId: Int?) {
+    fun getMovieFromRemoteSource(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             liveData.postValue(AppState.Loading)
             liveData.postValue(detailsRepository.getMovieDetailsFromServer(movieId))

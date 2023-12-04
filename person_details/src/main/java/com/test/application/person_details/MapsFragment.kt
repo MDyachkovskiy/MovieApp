@@ -1,6 +1,5 @@
 package com.test.application.person_details
 
-import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import androidx.fragment.app.Fragment
@@ -9,47 +8,56 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.kotlin_movieapp.databinding.FragmentBirthPlaceMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.test.application.person_details.databinding.FragmentBirthPlaceMapBinding
 import java.util.*
 
 class MapsFragment (
     private var location : String?
-        ) : Fragment() {
+) : Fragment() {
 
     private var _binding: FragmentBirthPlaceMapBinding? = null
     private val binding get() = _binding!!
     private lateinit var map: GoogleMap
+
     private val defaultCity = LatLng(55.0, 37.0)
-    private val defaultCityName = "Москва"
-    private var fragmentContext: Context? = null
+    private val defaultCityName = getString(R.string.default_city)
 
     private val callback = OnMapReadyCallback { googleMap ->
+        initializeMap(googleMap)
+    }
+
+    private fun initializeMap(googleMap: GoogleMap) {
         map = googleMap
         map.uiSettings.isZoomControlsEnabled = true
 
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
         val marker = checkLocation(geocoder, location)
-        if (fragmentContext != null) {
-            if (marker == defaultCity) {
-                Toast.makeText(context,
-                    getString(R.string.notFoundBirthCityGeoposition),
-                    Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-        map.addMarker(MarkerOptions().position(marker).title(location))
+        handleLocationCheck(marker)
+        addMarkerOnMap(marker,location)
+        moveCameraToLocation(marker)
+    }
+
+    private fun moveCameraToLocation(marker: LatLng) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 5f))
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragmentContext = context
+    private fun addMarkerOnMap(marker: LatLng, location: String?) {
+        map.addMarker(MarkerOptions().position(marker).title(location))
+    }
+
+    private fun handleLocationCheck(marker: LatLng) {
+        if (marker == defaultCity) {
+            Toast.makeText(requireContext(),
+                getString(R.string.not_found_birth_city_geoposition),
+                Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     override fun onCreateView(
@@ -71,7 +79,8 @@ class MapsFragment (
         return if (location.isNullOrEmpty()) {
             defaultCity
         } else {
-            val searchResult = checkGeoResult(geocoder, geocoder.getFromLocationName(location!!, 1))
+            val searchResult =
+                checkGeoResult(geocoder, geocoder.getFromLocationName(location!!, 1))
             val lat = searchResult[0].latitude
             val long= searchResult[0].longitude
             LatLng(lat, long)
@@ -85,6 +94,5 @@ class MapsFragment (
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        fragmentContext = null
     }
 }

@@ -1,12 +1,6 @@
 <resources>
     <string name="app_name">Kotlin_MovieApp</string>
 
-    <!-- Объединение строк в коде -->
-
-
-    <!-- Отображения текста в приложении -->
-    <string name="notFoundBirthCityGeoposition">Не удалось отобразить точное место рождения</string>
-
     <!-- Меню навигация -->
     <string name="collections">Коллекции</string>
     <string name="favorites">Понравившиеся</string>
@@ -16,18 +10,6 @@
     <!-- HistoryFragment -->
     <string name="userComments">Ваши комментарии по фильму:</string>
     <string name="viewingDate">Дата просмотра:</string>
-
-
-
-    <!-- ContentDescription -->
-    <string name="moviePoster">Постер к фильму</string>
-    <string name="actorPhoto">Фото актера</string>
-
-    <!-- PersonDetailsFragment -->
-    <string name="personProfession">Карьера</string>
-    <string name="dateOfBirth">Дата рождения</string>
-    <string name="age">Возраст</string>
-    <string name="placeOfBirth">Место рождения</string>
 
     <!-- Сервис пуш-уведомлений -->
     <string name="lowPriorChannelName">Канал низкого приоритета</string>

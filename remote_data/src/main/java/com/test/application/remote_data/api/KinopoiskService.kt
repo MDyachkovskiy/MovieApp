@@ -26,7 +26,7 @@ interface KinopoiskService {
     @GET("$MOVIE_DETAILS/{movieId}")
     fun getMovieAsync(
         @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
-        @Path("movieId") id : Int?
+        @Path("movieId") id : String
     ) : Deferred<MovieDetailsDTO>
 
     @GET(PERSON_END_POINT)

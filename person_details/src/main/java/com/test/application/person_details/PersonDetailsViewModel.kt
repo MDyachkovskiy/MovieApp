@@ -3,8 +3,8 @@ package com.test.application.person_details
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.test.application.core.repository.PersonDetailsRepository
 import com.test.application.core.utils.AppState.AppState
-import com.example.kotlin_movieapp.model.repository.personDetails.PersonDetailsRepository
 import kotlinx.coroutines.launch
 
 class PersonDetailsViewModel (
