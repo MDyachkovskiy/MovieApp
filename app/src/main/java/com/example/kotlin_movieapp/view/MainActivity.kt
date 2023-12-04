@@ -63,4 +63,8 @@ class MainActivity : AppCompatActivity(), Navigator {
     override fun navigateFromFavoritesToMovieDetails() {
         TODO("Not yet implemented")
     }
+
+    override fun navigateToMovieDetailsFragment(movieId: Int) {
+        TODO("Not yet implemented")
+    }
 }

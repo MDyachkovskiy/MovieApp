@@ -1,7 +1,6 @@
 package com.test.application.favorites
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -13,7 +12,7 @@ class FavoriteMovieAdapter(
     private var movieData: List<FavoriteMovieItem>
 ) : RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolder>() {
 
-    var listener: (() -> Unit)? = null
+    var listener: ((id: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemFavoriteMovieBinding.inflate(
@@ -22,7 +21,7 @@ class FavoriteMovieAdapter(
             false
         )
 
-        return ViewHolder(binding.root)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -31,15 +30,16 @@ class FavoriteMovieAdapter(
 
     override fun getItemCount(): Int = movieData.size
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(
+        private val binding: ItemFavoriteMovieBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: FavoriteMovieItem) {
-            val binding = ItemFavoriteMovieBinding.bind(itemView)
             with(binding) {
 
-                movieTitle.text = movie.name
+                tvMovieTitle.text = movie.name
 
-                movieDescription.text = movie.description
+                tvMovieDescription.text = movie.description
 
                 poster.load(movie.poster){
                     crossfade(true)
@@ -47,20 +47,14 @@ class FavoriteMovieAdapter(
                 }
 
                 val viewingDate = Date(movie.date)
-                date.text = viewingDate.toString()
+                tvDate.text = viewingDate.toString()
 
-                userNote.text = movie.userNote
+                tvUserNote.text = movie.userNote
 
                 root.setOnClickListener {
-                    listener?.invoke()
+                    listener?.invoke(movie.kinopoiskId)
                 }
             }
         }
     }
 }
-
-/*it.openDetailsFragment(
-                        MovieDetailsFragment::class.java,
-                        KEY_BUNDLE_MOVIE,
-                        convertFavoriteMovieItemToMovie(movie)
-                    )*/

@@ -18,4 +18,6 @@
     <string name="format_movie_budget"> %1$s %2$s</string>
     <string name="format_movie_length"> %1$s мин</string>
 
+    <string name="incorrect_movie_id"> Ошибка в получении id фильма</string>
+
 </resources>

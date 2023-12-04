@@ -35,5 +35,9 @@ class FavoritesFragment : BaseFragmentWithAppState<AppState, List<FavoriteMovieI
          favoritesMovieAdapter.listener = {
              (activity as? Navigator)?.navigateFromFavoritesToMovieDetails()
          }
+
+         favoritesMovieAdapter.listener = { movieId ->
+             (activity as Navigator).navigateToMovieDetailsFragment(movieId)
+         }
     }
 }

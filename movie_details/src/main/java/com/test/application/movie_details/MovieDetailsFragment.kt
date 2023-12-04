@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.test.application.core.utils.AppState.AppState
-import com.test.application.core.domain.collection.Movie
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.movieDetail.Person
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
@@ -21,25 +20,26 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MovieDetailsFragment : com.test.application.core.view.BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate
 ) {
-    private lateinit var movieBundle: Movie
+    private val movieId: Int by lazy {
+        arguments?.getInt(KEY_BUNDLE_MOVIE) ?:
+        throw IllegalArgumentException(getString(R.string.incorrect_movie_id))
+    }
     private lateinit var movie: MovieDetails
 
     private val viewModel: MovieDetailsViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        movieBundle = arguments?.getParcelable(KEY_BUNDLE_MOVIE) ?: Movie()
-
         initViewModel()
         initCommentsEditText()
-        initFavoritesCheckBox(movieBundle.id)
+        initFavoritesCheckBox(movieId)
     }
 
     private fun initViewModel() {
         viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
-        requestMovieDetail(movieBundle.id)
+        requestMovieDetail(movieId)
     }
 
     private fun initCommentsEditText() {
