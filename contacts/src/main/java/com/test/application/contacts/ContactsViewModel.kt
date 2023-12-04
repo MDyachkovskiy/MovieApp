@@ -1,10 +1,12 @@
 package com.test.application.contacts
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.test.application.core.domain.contacts.ContactsItem
+import androidx.lifecycle.viewModelScope
 import com.test.application.core.repository.ContactsRepository
 import com.test.application.core.utils.AppState.AppState
+import kotlinx.coroutines.launch
 
 class ContactsViewModel(
     private val contactsRepository: ContactsRepository
@@ -12,14 +14,17 @@ class ContactsViewModel(
 
     private val contactsLiveData: MutableLiveData<AppState> = MutableLiveData()
 
-    fun getLiveData() = contactsLiveData
+    fun getLiveData(): LiveData<AppState> = contactsLiveData
 
-    fun getAllContacts() {
+    fun fetchAllContacts() {
         contactsLiveData.postValue(AppState.Loading)
-        contactsLiveData.postValue(AppState.Success(contactsRepository.getAllContacts()))
-    }
-
-    fun addAllContacts(contacts: MutableList<ContactsItem>){
-        contacts.forEach { entity -> contactsRepository.saveEntity(entity) }
+        viewModelScope.launch {
+            try {
+                val contacts = contactsRepository.getAllContacts()
+                contactsLiveData.postValue(AppState.Success(contacts))
+            } catch( e: Exception) {
+                contactsLiveData.postValue(AppState.Error(e))
+            }
+        }
     }
 }

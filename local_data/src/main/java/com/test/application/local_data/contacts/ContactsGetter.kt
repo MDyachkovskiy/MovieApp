@@ -8,20 +8,20 @@ import com.test.application.core.domain.contacts.ContactsItem
 import com.test.application.local_data.mapper.toEntity
 
 class ContactsGetter (
-    private val context : Context,
+    context : Context,
     private val contactsDao: ContactsDao
 ) {
 
     private val appContext = context.applicationContext
 
     fun fetchAndStoreContacts() {
-        val contacts = getContactsfromContentProvider()
+        val contacts = getContactsFromContentProvider()
         contacts.map { contactItem ->
             contactsDao.insertContact(contactItem.toEntity())
         }
     }
 
-    private fun getContactsfromContentProvider(): List<ContactsItem> {
+    private fun getContactsFromContentProvider(): List<ContactsItem> {
         val contacts = mutableListOf<ContactsItem>()
         val contentResolver : ContentResolver = appContext.contentResolver
 
@@ -32,7 +32,7 @@ class ContactsGetter (
             null,
             ContactsContract.Contacts._ID + " ASC")
 
-        cursorWithContacts?.let { cursor ->
+        cursorWithContacts?.use { cursor ->
             while (cursor.moveToNext()) {
                 val idIndex = cursor.getColumnIndex(ContactsContract
                     .CommonDataKinds

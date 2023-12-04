@@ -36,3 +36,11 @@ fun ContactsItem.toEntity() : ContactsEntity {
         phoneNumber = this.phoneNumber
     )
 }
+
+fun ContactsEntity.toDomain() : ContactsItem {
+    return ContactsItem(
+        id = this.id,
+        name = this.name,
+        phoneNumber = this.phoneNumber
+    )
+}

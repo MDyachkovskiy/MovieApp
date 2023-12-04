@@ -1,58 +1,53 @@
 package com.test.application.contacts
 
-import android.Manifest
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.test.application.contacts.databinding.ItemContactsBinding
-import com.test.application.contacts.utils.checkPermission
+import com.test.application.contacts.utils.DiffCallback
 import com.test.application.core.domain.contacts.ContactsItem
 
-class ContactsAdapter(
-    private var contactsData: List<ContactsItem>,
-    private var activity: FragmentActivity?
-) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
+class ContactsAdapter : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
+
+    private var contacts: List<ContactsItem> = listOf()
+
+    var listener: ((phoneNumber: String) -> Unit)? = null
+
+    fun updateData(newContacts: List<ContactsItem>) {
+        val diffCallback = DiffCallback(contacts, newContacts)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        contacts = newContacts
+        diffResult.dispatchUpdatesTo(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemContactsBinding.inflate(LayoutInflater.from(parent.context), parent,
             false
         )
-        return ViewHolder(binding.root)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(contactsData[position], activity)
+        holder.bind(contacts[position])
     }
 
-    override fun getItemCount(): Int = contactsData.size
+    override fun getItemCount() = contacts.size
 
-    inner class ViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(
+        private val binding: ItemContactsBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(contact: ContactsItem, activity: FragmentActivity?) {
-            val binding = ItemContactsBinding.bind(itemView)
-
+        fun bind(contact: ContactsItem) {
             with(binding) {
-                contactName.text = contact.name
-                contactPhoneNumber.text = contact.phoneNumber
+                tvContactName.text = contact.name
+                tvContactPhoneNumber.text = contact.phoneNumber
 
                 call.setOnClickListener {
-                    if (checkPermission(Manifest.permission.CALL_PHONE, activity, itemView)) {
-                        makePhoneCall(contactPhoneNumber.text.toString())
-                    }
+                    contact.phoneNumber?.let { phoneNumber ->
+                        listener?.invoke(phoneNumber) }
                 }
-            }
-        }
-
-        private fun makePhoneCall(phoneNumber: String) {
-            if (phoneNumber.isNotEmpty()) {
-                val callIntent = Intent(Intent.ACTION_CALL)
-                callIntent.data = Uri.parse("tel:$phoneNumber")
-                itemView.context.startActivity(callIntent)
             }
         }
     }
