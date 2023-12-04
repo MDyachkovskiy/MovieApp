@@ -10,7 +10,6 @@ import com.test.application.home.adapter.MovieCollectionAdapter
 import com.test.application.home.databinding.FragmentUpcomingBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
     FragmentUpcomingBinding::inflate
 ) {
@@ -36,5 +35,8 @@ class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
             (activity as? Navigator)?.navigateFromFavoritesToMovieDetails()
         }
         binding.RVUpComing.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
+        movieAdapter.listener = { movieId ->
+            (activity as Navigator).navigateToMovieDetailsFragment(movieId)
+        }
     }
 }

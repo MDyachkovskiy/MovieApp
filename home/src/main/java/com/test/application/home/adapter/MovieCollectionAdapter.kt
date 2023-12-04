@@ -11,7 +11,7 @@ import com.test.application.home.databinding.ItemMovieBinding
 class MovieCollectionAdapter :
     PagingDataAdapter<Movie, MovieCollectionAdapter.ViewHolder>(MovieCollectionDiffCallback()) {
 
-    var listener: (() -> Unit)? = null
+    var listener: ((movieId: Int) -> Unit)? = null
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = getItem(position)
@@ -36,15 +36,9 @@ class MovieCollectionAdapter :
                 }
 
                 root.setOnClickListener {
-                    listener?.invoke()
+                    listener?.invoke(movie.id)
                 }
             }
         }
     }
 }
-
-    /*it.openDetailsFragment(
-    MovieDetailsFragment::class.java,
-    KEY_BUNDLE_MOVIE,
-    movie
-    )}*/

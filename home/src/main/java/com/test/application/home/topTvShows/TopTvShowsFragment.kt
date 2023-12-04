@@ -36,5 +36,8 @@ class TopTvShowsFragment : BaseFragment<FragmentTvshowsBinding>(
             (activity as? Navigator)?.navigateFromFavoritesToMovieDetails()
         }
         binding.RVTvShows.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
+        movieAdapter.listener = { movieId ->
+            (activity as Navigator).navigateToMovieDetailsFragment(movieId)
+        }
     }
 }
