@@ -32,6 +32,15 @@
     </fragment>
 
     <fragment
+        android:id="@+id/personDetailsFragment"
+        android:name="com.test.application.person_details.PersonDetailsFragment"
+        android:label="PersonDetailsFragment">
+        <argument
+            android:name="person_id"
+            app:argType="java.lang.Int" />
+    </fragment>
+
+    <fragment
         android:id="@+id/searchFragment"
         android:name="com.test.application.search.SearchFragment"
         android:label="SearchFragment">

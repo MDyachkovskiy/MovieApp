@@ -5,12 +5,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.movieDetail.Person
+import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
+import com.test.application.core.utils.KEY_BUNDLE_PERSON
 import com.test.application.core.utils.convert
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragmentWithAppState
@@ -113,15 +116,32 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
     }
 
     private fun initPersonsRecyclerView(persons: List<Person>) {
-        val actors = persons.filter {
-            it.enProfession == "actor"
-        }
+        initActorsRV(persons)
+        initMovieStaff(persons)
+    }
+
+    private fun initMovieStaff(persons: List<Person>) {
         val movieStaff = persons.filter {
             it.enProfession != "actor"
         }
-
-        binding.rvActors.init(PersonsAdapter(actors), LinearLayoutManager.HORIZONTAL)
+        val movieStaffAdapter = PersonsAdapter(movieStaff)
+        movieStaffAdapter.listener = {personId ->
+            val bundle = bundleOf(KEY_BUNDLE_PERSON to personId)
+            (activity as Navigator).navigateToPersonDetailsFragment(bundle)
+        }
         binding.rvMovieStaff.init(PersonsAdapter(movieStaff), LinearLayoutManager.HORIZONTAL)
+    }
+
+    private fun initActorsRV(persons: List<Person>) {
+        val actors = persons.filter {
+            it.enProfession == "actor"
+        }
+        val actorsAdapter = PersonsAdapter(actors)
+        actorsAdapter.listener = { personId ->
+            val bundle = bundleOf(KEY_BUNDLE_PERSON to personId)
+            (activity as Navigator).navigateToPersonDetailsFragment(bundle)
+        }
+        binding.rvActors.init(actorsAdapter, LinearLayoutManager.HORIZONTAL)
     }
 
     private fun saveMovie(movie: MovieDetails, date: Long) {

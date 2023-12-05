@@ -2,8 +2,10 @@ package com.test.application.home.upComing
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.navigation.Navigator
+import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
 import com.test.application.home.adapter.MovieCollectionAdapter
@@ -36,7 +38,8 @@ class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
         }
         binding.RVUpComing.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
         movieAdapter.listener = { movieId ->
-            (activity as Navigator).navigateToMovieDetailsFragment(movieId)
+            val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)
+            (activity as Navigator).navigateToMovieDetailsFragment(bundle)
         }
     }
 }

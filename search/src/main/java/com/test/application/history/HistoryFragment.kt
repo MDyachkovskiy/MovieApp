@@ -2,10 +2,12 @@ package com.test.application.history
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.domain.history.HistoryMovieItem
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.AppState.AppState
+import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.search.databinding.FragmentHistoryBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,6 +18,12 @@ class HistoryFragment : BaseFragmentWithAppState<AppState, List<HistoryMovieItem
 ) {
 
     private val viewModel: HistoryViewModel by viewModel()
+
+    companion object {
+        fun newInstance(): HistoryFragment {
+            return HistoryFragment()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,7 +46,8 @@ class HistoryFragment : BaseFragmentWithAppState<AppState, List<HistoryMovieItem
         recyclerView.adapter = historyAdapter
 
         historyAdapter.listener = { movieId ->
-            (activity as Navigator).navigateToMovieDetailsFragment(movieId)
+            val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)
+            (activity as Navigator).navigateToMovieDetailsFragment(bundle)
         }
     }
 }

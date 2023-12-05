@@ -20,13 +20,15 @@ class PersonDetailsFragment :
     FragmentPersonBinding::inflate
 ) {
 
-    private lateinit var personBundle : Person
+    private val personId: Int by lazy {
+        arguments?.getInt(KEY_BUNDLE_PERSON) ?:
+        throw IllegalArgumentException(getString(R.string.incorrect_person_id))
+    }
 
     private val viewModel: PersonDetailsViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        personBundle = arguments?.getParcelable(KEY_BUNDLE_PERSON)?: Person()
         initViewModel()
     }
 
@@ -34,7 +36,7 @@ class PersonDetailsFragment :
         viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
-        requestPersonDetail(personBundle.id)
+        requestPersonDetail(personId)
     }
 
     private fun requestPersonDetail(personId: Int) {
@@ -43,7 +45,6 @@ class PersonDetailsFragment :
 
     private fun convertDate (date : String?) : String {
         return if (date != null) {
-
             val formatter = DateTimeFormatter.ISO_DATE_TIME
             val dateTime = LocalDateTime.parse(date, formatter)
             val outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")

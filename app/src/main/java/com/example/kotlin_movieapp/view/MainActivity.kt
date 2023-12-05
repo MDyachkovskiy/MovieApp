@@ -50,7 +50,11 @@ class MainActivity : AppCompatActivity(), Navigator {
         navController.navigate(R.id.action_favoritesFragment_to_movieDetailsFragment)
     }
 
-    override fun navigateToMovieDetailsFragment(movieId: Int) {
-        navController.navigate(R.id.movieDetailsFragment)
+    override fun navigateToMovieDetailsFragment(bundle: Bundle) {
+        navController.navigate(R.id.movieDetailsFragment, bundle)
+    }
+
+    override fun navigateToPersonDetailsFragment(bundle: Bundle) {
+        navController.navigate(R.id.personDetailsFragment, bundle)
     }
 }

@@ -12,7 +12,7 @@ class PersonsAdapter(
     private var personsData: List<Person>
     ) : RecyclerView.Adapter<PersonsAdapter.ViewHolder>() {
 
-    var listener: (() -> Unit)? = null
+    var listener: ((personId: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemPersonsBinding.inflate(LayoutInflater.from(parent.context),
@@ -42,16 +42,9 @@ class PersonsAdapter(
                 tvPersonName.text = person.name
 
                 root.setOnClickListener {
-                    listener?.invoke()
+                    listener?.invoke(person.id)
                 }
             }
         }
     }
 }
-/*
-it.openDetailsFragment(
-                        PersonDetailsFragmentWithAppState::class.java,
-                        KEY_BUNDLE_PERSON,
-                        person
-                    )
- */

@@ -11,19 +11,19 @@ import com.test.application.search.databinding.ItemSearchMovieBinding
 class SearchMovieAdapter :
     PagingDataAdapter<SearchMovie, SearchMovieAdapter.ViewHolder>(SearchCollectionDiffCallback()) {
 
-    var listener: (() -> Unit)? = null
+    var listener: ((movieId: Int) -> Unit)? = null
     inner class ViewHolder(
         private val binding: ItemSearchMovieBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: SearchMovie) {
             initTextData(movie)
             initImages(movie)
-            initRoomListener()
+            initRoomListener(movie)
         }
 
-        private fun initRoomListener() {
+        private fun initRoomListener(movie: SearchMovie) {
             binding.root.setOnClickListener {
-                listener?.invoke()
+                listener?.invoke(movie.id)
             }
         }
 
@@ -37,7 +37,6 @@ class SearchMovieAdapter :
         private fun initTextData(movie: SearchMovie) {
             with(binding) {
                 tvMovieTitle.text = movie.name
-
                 tvMovieDescription.text = movie.description
             }
         }
@@ -54,10 +53,3 @@ class SearchMovieAdapter :
         return ViewHolder(binding)
     }
 }
-
-/*
-it.openDetailsFragment(
-                        MovieDetailsFragment::class.java,
-                        KEY_BUNDLE_MOVIE,
-                        movie)
- */

@@ -2,10 +2,12 @@ package com.test.application.favorites
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.domain.favorites.FavoriteMovieItem
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.AppState.AppState
+import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.favorites.databinding.FragmentFavoritesBinding
@@ -37,7 +39,8 @@ class FavoritesFragment : BaseFragmentWithAppState<AppState, List<FavoriteMovieI
          }
 
          favoritesMovieAdapter.listener = { movieId ->
-             (activity as Navigator).navigateToMovieDetailsFragment(movieId)
+             val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)
+             (activity as Navigator).navigateToMovieDetailsFragment(bundle)
          }
     }
 }

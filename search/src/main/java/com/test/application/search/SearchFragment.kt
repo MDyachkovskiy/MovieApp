@@ -7,16 +7,13 @@ import android.view.MenuItem
 import android.view.View
 import com.test.application.core.utils.replaceFragment
 import com.test.application.core.view.BaseFragment
+import com.test.application.history.HistoryFragment
 import com.test.application.search.databinding.FragmentSearchBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
-
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(
     FragmentSearchBinding::inflate
 ) {
-    companion object {
-        fun newInstance() = SearchFragment()
-    }
 
     private val viewModel: SearchViewModel by activityViewModel()
 
@@ -52,7 +49,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         return when (item.itemId) {
             R.id.menu_history -> {
                 childFragmentManager.replaceFragment(R.id.container,
-                    HistoryFragmentWithAppState.newInstance())
+                    HistoryFragment.newInstance())
                 true
             }
 
