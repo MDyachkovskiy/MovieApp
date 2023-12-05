@@ -2,10 +2,13 @@ package com.test.application.local_data.mapper
 
 import com.test.application.core.domain.contacts.ContactsItem
 import com.test.application.core.domain.favorites.FavoriteMovieItem
+import com.test.application.core.domain.history.HistoryMovieItem
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.local_data.contacts.ContactsEntity
+import com.test.application.local_data.favorites.FavoriteMovieEntity
+import com.test.application.local_data.history.HistoryEntity
 
-fun convertListFavoritesEntityToMovie (entityList : List<com.test.application.local_data.favorites.FavoriteMovieEntity>) : List<FavoriteMovieItem>{
+fun convertListFavoritesEntityToMovie (entityList : List<FavoriteMovieEntity>) : List<FavoriteMovieItem>{
     return entityList.map {
         FavoriteMovieItem(
             it.kinopoiskId,
@@ -14,12 +17,13 @@ fun convertListFavoritesEntityToMovie (entityList : List<com.test.application.lo
             it.poster,
             it.date,
             it.userNote,
-            it.isFavorite)
+            it.isFavorite
+        )
     }
 }
 
-fun convertMovieDetailsToFavoriteMovieEntity (movie : MovieDetails) : com.test.application.local_data.favorites.FavoriteMovieEntity =
-    com.test.application.local_data.favorites.FavoriteMovieEntity(
+fun convertMovieDetailsToFavoriteMovieEntity (movie : MovieDetails) : FavoriteMovieEntity =
+    FavoriteMovieEntity(
         kinopoiskId = movie.id,
         name = movie.name,
         description = movie.description,
@@ -42,5 +46,27 @@ fun ContactsEntity.toDomain() : ContactsItem {
         id = this.id,
         name = this.name,
         phoneNumber = this.phoneNumber
+    )
+}
+
+fun HistoryEntity.toDomain() : HistoryMovieItem {
+    return HistoryMovieItem(
+        kinopoiskId = this.kinopoiskId,
+        name = this.name,
+        description = this.description,
+        poster = this.poster,
+        date = this.date,
+        userNote = this.userNote
+    )
+}
+
+fun MovieDetails.toHistoryEntity() : HistoryEntity {
+    return HistoryEntity(
+        kinopoiskId = this.id,
+        name = this.name,
+        description = this.description,
+        poster = this.poster?.previewUrl,
+        date = 0,
+        userNote = ""
     )
 }

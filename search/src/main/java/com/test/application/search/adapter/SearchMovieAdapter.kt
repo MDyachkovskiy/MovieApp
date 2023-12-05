@@ -13,24 +13,32 @@ class SearchMovieAdapter :
 
     var listener: (() -> Unit)? = null
     inner class ViewHolder(
-        binding: ItemSearchMovieBinding
+        private val binding: ItemSearchMovieBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: SearchMovie) {
-            val binding = ItemSearchMovieBinding.bind(itemView)
+            initTextData(movie)
+            initImages(movie)
+            initRoomListener()
+        }
+
+        private fun initRoomListener() {
+            binding.root.setOnClickListener {
+                listener?.invoke()
+            }
+        }
+
+        private fun initImages(movie: SearchMovie) {
+            binding.poster.load(movie.poster) {
+                crossfade(true)
+                placeholder(com.test.application.core.R.drawable.default_placeholder)
+            }
+        }
+
+        private fun initTextData(movie: SearchMovie) {
             with(binding) {
+                tvMovieTitle.text = movie.name
 
-                movieTitle.text = movie.name
-
-                movieDescription.text = movie.description
-
-                poster.load(movie.poster) {
-                    crossfade(true)
-                    placeholder(com.test.application.core.R.drawable.default_placeholder)
-                }
-
-                root.setOnClickListener {
-                    listener?.invoke()
-                }
+                tvMovieDescription.text = movie.description
             }
         }
     }

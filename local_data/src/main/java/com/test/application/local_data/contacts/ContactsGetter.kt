@@ -52,7 +52,13 @@ class ContactsGetter (
                 val id = cursor.getString(idIndex)
                 val name = cursor.getString(nameIndex)
                 val phoneNumber = cursor.getString(phoneNumberIndex)
-                contacts.add(ContactsItem(id, name, phoneNumber))
+                contacts.add(
+                    ContactsItem(
+                        id,
+                        name,
+                        phoneNumber
+                    )
+                )
             }
         }
         return contacts

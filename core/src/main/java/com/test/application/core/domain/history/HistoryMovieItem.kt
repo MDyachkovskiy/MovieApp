@@ -1,4 +1,4 @@
-package com.test.application.local_data.history
+package com.test.application.core.domain.history
 
 data class HistoryMovieItem (
     var kinopoiskId: Int = 0,

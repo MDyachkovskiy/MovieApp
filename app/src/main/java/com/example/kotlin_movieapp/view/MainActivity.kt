@@ -4,17 +4,12 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.ActivityMainBinding
 import com.example.kotlin_movieapp.service.ConnectivityReceiver
 import com.test.application.core.navigation.Navigator
-import com.test.application.favorites.FavoritesFragment
-import com.test.application.search.SearchFragment
-import com.test.application.settings.SettingsFragment
-import com.test.application.home.HomeFragment
 
 class MainActivity : AppCompatActivity(), Navigator {
 
@@ -34,25 +29,16 @@ class MainActivity : AppCompatActivity(), Navigator {
             supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
         navController = navHostFragment.navController
 
-        binding.navigationMenu.setOnItemSelectedListener {
+        binding.navigationMenu.setOnItemSelectedListener { menuItem ->
 
-            when(it.itemId) {
-                R.id.nav_collections -> replaceFragment(HomeFragment())
-                R.id.nav_favorites -> replaceFragment(FavoritesFragment())
-                R.id.nav_search -> replaceFragment(SearchFragment())
-                R.id.nav_settings -> replaceFragment(SettingsFragment())
-
-                else -> {}
+            when(menuItem.itemId) {
+                R.id.nav_collections -> navController.navigate(R.id.homeFragment)
+                R.id.nav_favorites -> navController.navigate(R.id.favoritesFragment)
+                R.id.nav_search -> navController.navigate(R.id.searchFragment)
+                R.id.nav_settings -> navController.navigate(R.id.settingsFragment)
             }
             true
         }
-    }
-
-    private fun replaceFragment(fragment : Fragment){
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.main_container, fragment)
-            .commit()
     }
 
     override fun onDestroy() {
@@ -61,10 +47,10 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     override fun navigateFromFavoritesToMovieDetails() {
-        TODO("Not yet implemented")
+        navController.navigate(R.id.action_favoritesFragment_to_movieDetailsFragment)
     }
 
     override fun navigateToMovieDetailsFragment(movieId: Int) {
-        TODO("Not yet implemented")
+        navController.navigate(R.id.movieDetailsFragment)
     }
 }

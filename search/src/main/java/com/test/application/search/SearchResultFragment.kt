@@ -27,6 +27,6 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding>(
     private fun initRV(movieData: PagingData<SearchMovie>) {
         movieAdapter = SearchMovieAdapter()
         movieAdapter.submitData(viewLifecycleOwner.lifecycle, movieData)
-        binding.searchRecyclerView.init(movieAdapter, LinearLayoutManager.VERTICAL)
+        binding.rvSearch.init(movieAdapter, LinearLayoutManager.VERTICAL)
     }
 }

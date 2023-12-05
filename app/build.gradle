@@ -74,6 +74,7 @@ dependencies {
     implementation (project(":home"))
     implementation (project(":favorites"))
     implementation (project(":search"))
+    implementation (project(":contacts"))
     implementation (project(":settings"))
     implementation (project(":movie_details"))
     implementation (project(":person_details"))

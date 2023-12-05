@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.test.application.contacts.databinding.ItemContactsBinding
-import com.test.application.contacts.utils.DiffCallback
 import com.test.application.core.domain.contacts.ContactsItem
 
 class ContactsAdapter : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {

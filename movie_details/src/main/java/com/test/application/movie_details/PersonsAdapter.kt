@@ -36,7 +36,7 @@ class PersonsAdapter(
 
                 personPoster.load(person.photo){
                     crossfade(true)
-                    placeholder(R.drawable.person_placeholder_image)
+                    placeholder(com.test.application.core.R.drawable.person_placeholder)
                 }
 
                 tvPersonName.text = person.name

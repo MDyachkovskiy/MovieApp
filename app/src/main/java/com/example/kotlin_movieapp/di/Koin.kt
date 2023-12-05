@@ -45,7 +45,7 @@ val appModule = module {
     viewModel { Top250MovieViewModel(get()) }
     viewModel { TopTvShowsViewModel(get()) }
     viewModel { UpComingMovieViewModel(get()) }
-    viewModel { com.test.application.contacts.ContactsViewModel(get()) }
+    viewModel { ContactsViewModel(get()) }
     viewModel { FavoritesViewModel(get()) }
     viewModel { HistoryViewModel(get()) }
     viewModel { MovieDetailsViewModel(get(), get(), get()) }

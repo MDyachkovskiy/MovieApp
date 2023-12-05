@@ -1,18 +1,19 @@
-package com.test.application.contacts.utils
+package com.test.application.history
 
 import androidx.recyclerview.widget.DiffUtil
-import com.test.application.core.domain.contacts.ContactsItem
+import com.test.application.core.domain.history.HistoryMovieItem
 
-class DiffCallback(
-    private val oldList: List<ContactsItem>,
-    private val newList: List<ContactsItem>
+class HistoryAdapterDiffCallback(
+    private val oldList: List<HistoryMovieItem>,
+    private val newList: List<HistoryMovieItem>
 ) : DiffUtil.Callback() {
+
     override fun getOldListSize() = oldList.size
 
     override fun getNewListSize() = newList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].id == newList[newItemPosition].id
+        return oldList[oldItemPosition].kinopoiskId == newList[newItemPosition].kinopoiskId
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

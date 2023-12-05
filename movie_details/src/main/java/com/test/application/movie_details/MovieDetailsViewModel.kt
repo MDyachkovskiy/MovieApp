@@ -33,27 +33,27 @@ class MovieDetailsViewModel(
         }
     }
 
-    fun saveMovieToDB (movieDTO: MovieDetails, date: Long) {
+    fun saveMovieToDB (movie: MovieDetails, date: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            historyRepository.saveEntity(movieDTO, date)
+            historyRepository.saveEntity(movie, date)
         }
     }
 
-    fun saveFavoriteMovieToDB (movieDTO: MovieDetails) {
+    fun saveFavoriteMovieToDB (movie: MovieDetails) {
         viewModelScope.launch(Dispatchers.IO) {
-            favoriteRepository.saveEntity(movieDTO)
+            favoriteRepository.saveEntity(movie)
         }
     }
 
-    fun deleteFavoriteMovieFromDB (movieDTO: MovieDetails) {
+    fun deleteFavoriteMovieFromDB (movie: MovieDetails) {
         viewModelScope.launch(Dispatchers.IO) {
-            favoriteRepository.deleteEntity(movieDTO)
+            favoriteRepository.deleteEntity(movie)
         }
     }
 
-    fun addCommentToMovie (movieDTO: MovieDetails, text: Editable?) {
+    fun addCommentToMovie (movie: MovieDetails, text: Editable?) {
         viewModelScope.launch(Dispatchers.IO) {
-            historyRepository.addUserComment(movieDTO,text)
+            historyRepository.addUserComment(movie,text)
         }
     }
 

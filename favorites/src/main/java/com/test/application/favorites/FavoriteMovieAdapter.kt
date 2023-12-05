@@ -17,8 +17,7 @@ class FavoriteMovieAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemFavoriteMovieBinding.inflate(
             LayoutInflater.from(parent.context),
-            parent,
-            false
+            parent, false
         )
 
         return ViewHolder(binding)
@@ -41,7 +40,7 @@ class FavoriteMovieAdapter(
 
                 tvMovieDescription.text = movie.description
 
-                poster.load(movie.poster){
+                poster.load(movie.poster) {
                     crossfade(true)
                     placeholder(com.test.application.core.R.drawable.default_placeholder)
                 }

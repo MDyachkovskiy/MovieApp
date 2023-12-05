@@ -8,5 +8,4 @@ interface FavoritesRepository {
     suspend fun saveEntity(movie: MovieDetails)
     suspend fun deleteEntity(movie: MovieDetails)
     suspend fun checkExistenceInDB(id: Int): Boolean
-
 }

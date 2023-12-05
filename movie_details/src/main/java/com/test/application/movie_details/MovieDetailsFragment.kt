@@ -13,11 +13,12 @@ import com.test.application.core.domain.movieDetail.Person
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.utils.convert
 import com.test.application.core.utils.init
+import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.movie_details.databinding.FragmentMovieDetailBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MovieDetailsFragment : com.test.application.core.view.BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieDetailBinding>(
+class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate
 ) {
     private val movieId: Int by lazy {

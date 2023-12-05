@@ -39,7 +39,7 @@ fun PosterDTO.toDomain(): Poster {
 
 fun SearchMovieDTO.toDomain(): SearchMovie {
     return SearchMovie(
-        id  = id,
+        id = id,
         name = name,
         poster = poster,
         description = description
@@ -48,7 +48,7 @@ fun SearchMovieDTO.toDomain(): SearchMovie {
 
 fun SearchDTO.toDomain(): SearchResponse {
     return SearchResponse(
-        movies = movies.map {it.toDomain()},
+        movies = movies.map { it.toDomain() },
         limit = limit,
         page = page,
         pages = pages,

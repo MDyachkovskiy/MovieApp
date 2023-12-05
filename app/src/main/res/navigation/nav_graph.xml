@@ -31,4 +31,16 @@
             app:argType="java.lang.Int" />
     </fragment>
 
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.test.application.search.SearchFragment"
+        android:label="SearchFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.test.application.settings.SettingsFragment"
+        android:label="SettingsFragment">
+    </fragment>
+
 </navigation>
