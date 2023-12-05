@@ -15,7 +15,7 @@ class PersonDetailsViewModel (
 
     fun getLiveData() = liveData
 
-    fun getPersonDetailsFromRemoteSource(personId: Int?) {
+    fun getPersonDetailsFromRemoteSource(personId: Int) {
         viewModelScope.launch {
             liveData.value = AppState.Loading
             liveData.value = personRepository.getPersonDetailsFromRemoteServer(personId)

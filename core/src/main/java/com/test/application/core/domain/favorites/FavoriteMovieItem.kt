@@ -1,9 +1,5 @@
 package com.test.application.core.domain.favorites
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class FavoriteMovieItem (
     var kinopoiskId: Int = 0,
     var name: String? = "",
@@ -12,4 +8,4 @@ data class FavoriteMovieItem (
     var date: Long = 0,
     var userNote: String? = "",
     var isFavorite: Boolean = false
-) : Parcelable
+)

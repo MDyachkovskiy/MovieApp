@@ -3,7 +3,6 @@ import java.util.Properties
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id ("kotlin-parcelize")
 }
 
 android {
@@ -31,7 +30,7 @@ android {
             apiKeyFile.inputStream().use { properties.load(it) }
             val apiKey = properties.getProperty("kinopoisk_api_key", "")
 
-            buildType.buildConfigField("String", "KINOPOISK_API_KEY", "\"$apiKey\"")
+            buildType.buildConfigField("String", "KINOPOISK_API_KEY", apiKey)
         }
     }
     compileOptions {
@@ -47,8 +46,6 @@ android {
 }
 
 dependencies {
-
-
     //Kotlin
     implementation("androidx.core:core-ktx:1.12.0")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
@@ -61,6 +58,4 @@ dependencies {
 
     //Pagination
     implementation ("androidx.paging:paging-runtime:3.2.1")
-
-
 }

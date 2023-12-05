@@ -1,14 +1,15 @@
 package com.test.application.search.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.kotlin_movieapp.model.datasource.domain.searchCollection.Movie
+import com.test.application.core.domain.searchCollection.SearchMovie
 
-class SearchCollectionDiffCallback : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+class SearchCollectionDiffCallback : DiffUtil.ItemCallback<SearchMovie>() {
+
+    override fun areItemsTheSame(oldItem: SearchMovie, newItem: SearchMovie): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+    override fun areContentsTheSame(oldItem: SearchMovie, newItem: SearchMovie): Boolean {
         return oldItem == newItem
     }
 }
