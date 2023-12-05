@@ -1,5 +1,5 @@
 package com.test.application.remote_data.dto.movieDetails
 
-data class Country(
+data class GenreDTO(
     val name: String = ""
 )

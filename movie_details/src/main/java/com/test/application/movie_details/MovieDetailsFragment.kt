@@ -109,7 +109,7 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
     }
 
     private fun initMoviePosterImage(movie: MovieDetails) {
-        binding.moviePoster.load(movie.poster?.url){
+        binding.moviePoster.load(movie.movieDetailsPoster?.url){
             crossfade(true)
             placeholder(com.test.application.core.R.drawable.default_placeholder)
         }

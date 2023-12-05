@@ -27,7 +27,7 @@ fun convertMovieDetailsToFavoriteMovieEntity (movie : MovieDetails) : FavoriteMo
         kinopoiskId = movie.id,
         name = movie.name,
         description = movie.description,
-        poster = movie.poster?.previewUrl,
+        poster = movie.movieDetailsPoster?.previewUrl,
         date = 0,
         userNote = "",
         isFavorite = true
@@ -65,7 +65,7 @@ fun MovieDetails.toHistoryEntity() : HistoryEntity {
         kinopoiskId = this.id,
         name = this.name,
         description = this.description,
-        poster = this.poster?.previewUrl,
+        poster = this.movieDetailsPoster?.previewUrl,
         date = 0,
         userNote = ""
     )

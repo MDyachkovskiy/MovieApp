@@ -1,10 +1,10 @@
 package com.test.application.remote_data.dto.movieDetails
 
-data class SimilarMovy(
+data class SimilarMovyDTO(
     val alternativeName: String = "",
-    val enName: Any = Any(),
+    val enName: String = "",
     val id: Int = 0,
     val name: String = "",
-    val poster: Poster = Poster(),
+    val poster: MovieDetailsPosterDTO = MovieDetailsPosterDTO(),
     val type: String = ""
 )

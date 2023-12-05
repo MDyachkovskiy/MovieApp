@@ -1,6 +1,6 @@
 package com.test.application.remote_data.dto.movieDetails
 
-data class Person(
+data class PersonDTO(
     val description: String = "",
     val enName: String = "",
     val enProfession: String = "",
