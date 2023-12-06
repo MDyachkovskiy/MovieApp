@@ -90,10 +90,8 @@ abstract class BaseFragmentWithAppState<T : AppState, I, VB : ViewBinding>(
     }
 
    private fun showErrorDialog(message: String?) {
-       Toast.makeText(
-           requireContext(),
-           message ?: getString(R.string.error_message), Toast.LENGTH_SHORT
-       ).show()
+       Toast.makeText(requireContext(),
+           message ?: getString(R.string.error_message), Toast.LENGTH_SHORT).show()
    }
 
     private fun showWorkingView() {

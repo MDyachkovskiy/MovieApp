@@ -33,9 +33,7 @@ class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
 
     private fun initRV() {
         movieAdapter = MovieCollectionAdapter()
-        movieAdapter.listener = {
-            (activity as? Navigator)?.navigateFromFavoritesToMovieDetails()
-        }
+
         binding.RVTop250.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
 
         movieAdapter.listener = { movieId ->

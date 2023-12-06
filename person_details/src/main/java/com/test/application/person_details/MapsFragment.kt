@@ -4,6 +4,7 @@ import android.location.Address
 import android.location.Geocoder
 import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,19 +25,24 @@ class MapsFragment (
     private var _binding: FragmentBirthPlaceMapBinding? = null
     private val binding get() = _binding!!
     private lateinit var map: GoogleMap
+    private lateinit var defaultCityName : String
 
     private val defaultCity = LatLng(55.0, 37.0)
-    private val defaultCityName = getString(R.string.default_city)
 
     private val callback = OnMapReadyCallback { googleMap ->
         initializeMap(googleMap)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        defaultCityName = getString(R.string.default_city)
     }
 
     private fun initializeMap(googleMap: GoogleMap) {
         map = googleMap
         map.uiSettings.isZoomControlsEnabled = true
 
-        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        val geocoder = Geocoder(requireContext(), Locale("ru"))
         val marker = checkLocation(geocoder, location)
         handleLocationCheck(marker)
         addMarkerOnMap(marker,location)
@@ -76,14 +82,24 @@ class MapsFragment (
     }
 
     private fun checkLocation (geocoder: Geocoder, location : String?): LatLng {
-        return if (location.isNullOrEmpty()) {
-            defaultCity
+        Log.d("@@@", "Checking location for: $location")
+        if(location.isNullOrEmpty()) {
+            return defaultCity
         } else {
-            val searchResult =
-                checkGeoResult(geocoder, geocoder.getFromLocationName(location!!, 1))
-            val lat = searchResult[0].latitude
-            val long= searchResult[0].longitude
-            LatLng(lat, long)
+            return try {
+                val searchResult =
+                    checkGeoResult(geocoder, geocoder.getFromLocationName(location, 1))
+                Log.d("@@@", "Geocoder results: $searchResult")
+                if (searchResult.isNullOrEmpty()) {
+                    defaultCity
+                } else {
+                    val lat = searchResult[0].latitude
+                    val long= searchResult[0].longitude
+                    LatLng(lat, long)
+                }
+            } catch (e: Exception) {
+                defaultCity
+            }
         }
     }
 

@@ -2,21 +2,22 @@ package com.test.application.person_details
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import coil.load
 import com.test.application.core.domain.personDetail.Person
+import com.test.application.core.domain.personDetail.PersonDetails
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.utils.KEY_BUNDLE_PERSON
 import com.test.application.core.utils.convert
-import com.test.application.core.utils.replaceFragment
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.person_details.databinding.FragmentPersonBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class PersonDetailsFragment :
-    BaseFragmentWithAppState<AppState, Person, FragmentPersonBinding>(
+    BaseFragmentWithAppState<AppState, PersonDetails, FragmentPersonBinding>(
     FragmentPersonBinding::inflate
 ) {
 
@@ -53,16 +54,30 @@ class PersonDetailsFragment :
         } else ""
     }
 
-    override fun setupData(data: Person) {
-        displayPersonImage(data)
-        initPersonTextData(data)
-        initBirthPlaceMap(data)
+    override fun setupData(data: PersonDetails) {
+        val person = data.person.firstOrNull()
+        if (person != null) {
+            displayPersonImage(person)
+            initPersonTextData(person)
+            initBirthPlaceMap(person)
+        } else {
+            showErrorToast(getString(R.string.no_data_for_actor_error))
+        }
+    }
+
+    private fun showErrorToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun initBirthPlaceMap(data: Person) {
-        childFragmentManager.replaceFragment(
-           R.id.place_of_birth_map_container,
-            MapsFragment(data.birthPlace[0].value) )
+        if (data.birthPlace.isNotEmpty()) {
+            val birthPlaceValue = data.birthPlace.first().value
+            val mapsFragment = MapsFragment(birthPlaceValue)
+            childFragmentManager.beginTransaction()
+                .replace(R.id.place_of_birth_map_container, mapsFragment)
+                .commit()
+        }
+        showErrorToast(getString(R.string.no_data_for_birth_place))
     }
 
     private fun initPersonTextData(person: Person) {

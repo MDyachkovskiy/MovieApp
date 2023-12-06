@@ -33,9 +33,7 @@ class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
 
     private fun initRV() {
         movieAdapter = MovieCollectionAdapter()
-        movieAdapter.listener = {
-            (activity as? Navigator)?.navigateFromFavoritesToMovieDetails()
-        }
+
         binding.RVUpComing.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
         movieAdapter.listener = { movieId ->
             val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)

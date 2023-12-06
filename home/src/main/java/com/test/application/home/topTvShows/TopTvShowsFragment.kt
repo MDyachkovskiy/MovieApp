@@ -34,10 +34,9 @@ class TopTvShowsFragment : BaseFragment<FragmentTvshowsBinding>(
 
     private fun initRV() {
         movieAdapter = MovieCollectionAdapter()
-        movieAdapter.listener = {
-            (activity as? Navigator)?.navigateFromFavoritesToMovieDetails()
-        }
+
         binding.RVTvShows.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
+
         movieAdapter.listener = { movieId ->
             val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)
             (activity as Navigator).navigateToMovieDetailsFragment(bundle)
