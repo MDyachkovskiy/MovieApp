@@ -18,7 +18,16 @@ class FavoritesViewModel(
     fun getAllFavorites() {
         viewModelScope.launch(Dispatchers.IO) {
             favoritesLiveData.postValue(AppState.Loading)
-            favoritesLiveData.postValue(AppState.Success(favoritesRepository.getAllFavorites()))
+            val sortedList = favoritesRepository.getAllFavorites().sortedByDescending { favoriteMovie ->
+                favoriteMovie.date
+            }
+            favoritesLiveData.postValue(AppState.Success(sortedList))
+        }
+    }
+
+    fun deleteFavoriteMovie(movieId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            favoritesRepository.deleteEntity(movieId)
         }
     }
 }

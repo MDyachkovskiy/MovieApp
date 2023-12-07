@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface FavoriteMovieDao {
@@ -14,8 +15,14 @@ interface FavoriteMovieDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert (entity: FavoriteMovieEntity)
 
+    @Query("SELECT * FROM FavoriteMovieEntity WHERE name LIKE :name")
+    fun getDataByMovieName (name: String?) : FavoriteMovieEntity
+
     @Query ("DELETE FROM FavoriteMovieEntity WHERE kinopoiskId = :id")
     fun deleteById(id: Int?)
+
+    @Update
+    fun update (entity: FavoriteMovieEntity)
 
     @Query ("SELECT EXISTS(SELECT 1 FROM FavoriteMovieEntity WHERE kinopoiskId = :id)")
     suspend fun checkExists(id: Int): Boolean

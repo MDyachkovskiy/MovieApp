@@ -1,6 +1,5 @@
 package com.test.application.local_data.repository
 
-import android.text.Editable
 import com.test.application.core.repository.HistoryRepository
 import com.test.application.local_data.history.HistoryDao
 import com.test.application.core.domain.history.HistoryMovieItem
@@ -24,9 +23,9 @@ class HistoryRepositoryImpl (
         localDataSource.insert(historyEntity)
     }
 
-    override suspend fun addUserComment(movie: MovieDetails, userComment: Editable?) {
+    override suspend fun addUserComment(movie: MovieDetails, userComment: String) {
         val historyEntity = localDataSource.getDataByMovieName(movie.name)
-        historyEntity.userNote = userComment.toString()
+        historyEntity.userNote = userComment
         localDataSource.update(historyEntity)
     }
 }

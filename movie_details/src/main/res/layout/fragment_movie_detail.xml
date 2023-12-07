@@ -250,8 +250,9 @@
                     android:gravity="top|start"
                     android:hint="@string/user_comment_hint"
                     android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:textColor="@color/white"
+                    android:inputType="textImeMultiLine"
+                    android:background="@color/white"
+                    android:imeOptions="actionDone"
                     android:textSize="18sp" />
 
             </LinearLayout>

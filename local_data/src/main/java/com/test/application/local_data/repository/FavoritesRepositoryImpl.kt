@@ -15,13 +15,20 @@ class FavoritesRepositoryImpl (
         return convertListFavoritesEntityToMovie(localDataSource.all())
     }
 
-    override suspend fun saveEntity(movie: MovieDetails) {
+    override suspend fun saveEntity(movie: MovieDetails, date: Long) {
         val favoriteEntity = convertMovieDetailsToFavoriteMovieEntity(movie)
+        favoriteEntity.date = date
         localDataSource.insert(favoriteEntity)
     }
 
-    override suspend fun deleteEntity(movie: MovieDetails) {
-        localDataSource.deleteById(movie.id)
+    override suspend fun addUserComment(movie: MovieDetails, userComment: String) {
+        val favoriteEntity = localDataSource.getDataByMovieName(movie.name)
+        favoriteEntity.userNote = userComment
+        localDataSource.update(favoriteEntity)
+    }
+
+    override suspend fun deleteEntity(movieId: Int) {
+        localDataSource.deleteById(movieId)
     }
 
     override suspend fun checkExistenceInDB(id: Int): Boolean {

@@ -1,6 +1,5 @@
 package com.test.application.movie_details
 
-import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,21 +38,22 @@ class MovieDetailsViewModel(
         }
     }
 
-    fun saveFavoriteMovieToDB (movie: MovieDetails) {
+    fun saveFavoriteMovieToDB (movie: MovieDetails, date: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            favoriteRepository.saveEntity(movie)
+            favoriteRepository.saveEntity(movie, date)
         }
     }
 
     fun deleteFavoriteMovieFromDB (movie: MovieDetails) {
         viewModelScope.launch(Dispatchers.IO) {
-            favoriteRepository.deleteEntity(movie)
+            favoriteRepository.deleteEntity(movie.id)
         }
     }
 
-    fun addCommentToMovie (movie: MovieDetails, text: Editable?) {
+    fun addCommentToMovie (movie: MovieDetails, comment: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            historyRepository.addUserComment(movie,text)
+            historyRepository.addUserComment(movie,comment)
+            favoriteRepository.addUserComment(movie, comment)
         }
     }
 

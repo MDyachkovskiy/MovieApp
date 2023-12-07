@@ -7,10 +7,12 @@
     android:padding="@dimen/margin_4dp_small">
 
     <CheckBox
+        android:id="@+id/favorite_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:button="@drawable/selector_favorite_item"
         android:checked="true"
+        android:layout_margin="@dimen/margin_8dp_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +30,6 @@
         android:paddingBottom="@dimen/margin_10dp_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_movie_title" />
-
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/poster_block"
@@ -55,7 +56,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_8dp_small"
-        android:layout_marginTop="@dimen/margin_24dp_medium"
+        android:layout_marginTop="@dimen/margin_48dp_large"
         android:includeFontPadding="false"
         android:paddingTop="@dimen/margin_4dp_small"
         app:layout_constraintEnd_toEndOf="parent"

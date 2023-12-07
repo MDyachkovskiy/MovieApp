@@ -1,17 +1,19 @@
 package com.test.application.movie_details
 
+import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.text.InputType
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
-import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.movieDetail.Person
 import com.test.application.core.navigation.Navigator
+import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.utils.KEY_BUNDLE_PERSON
 import com.test.application.core.utils.convert
@@ -35,7 +37,7 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        initCommentsEditText()
+        initCommentsEditTextButton()
         initFavoritesCheckBox(movieId)
     }
 
@@ -46,18 +48,27 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
         requestMovieDetail(movieId)
     }
 
-    private fun initCommentsEditText() {
-        binding.etUserNote.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+    private fun initCommentsEditTextButton() {
+        binding.etUserNote.apply {
+            setRawInputType(
+                InputType.TYPE_CLASS_TEXT or
+                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD or
+                        InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+            )
+            imeOptions = EditorInfo.IME_ACTION_DONE
 
-            override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            setOnEditorActionListener { textView, actionId, event ->
+                if (event == null && actionId == EditorInfo.IME_ACTION_DONE) {
+                    textView.clearFocus()
+                    val imm = context
+                        .getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                    imm?.hideSoftInputFromWindow(windowToken, 0)
+                    val comment = textView.text.toString()
+                    addCommentToMovie(movie, comment)
+                }
+                false
             }
-
-            override fun afterTextChanged(text: Editable?) {
-                addCommentToMovie(movie, text)
-            }
-        })
+        }
     }
 
     private fun initFavoritesCheckBox(movieId: Int) {
@@ -149,21 +160,24 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
     }
 
     private fun saveFavoriteMovie(movie: MovieDetails) {
-        viewModel.saveFavoriteMovieToDB(movie)
+        val date = System.currentTimeMillis()
+        viewModel.saveFavoriteMovieToDB(movie, date)
     }
 
     private fun deleteFavoriteMovie(movie: MovieDetails) {
         viewModel.deleteFavoriteMovieFromDB(movie)
     }
 
-    private fun addCommentToMovie(movie: MovieDetails, text: Editable?) {
-        viewModel.addCommentToMovie(movie, text)
+    private fun addCommentToMovie(movie: MovieDetails, comment: String) {
+        viewModel.addCommentToMovie(movie, comment)
     }
 
     private fun setFavoriteCheckBoxListener() {
         binding.favorite.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 saveFavoriteMovie(movie)
+                val comment = getCommentFromEditText()
+                addCommentToMovie(movie, comment)
                 binding.movieDetail
                     .showToast(getString(com.test.application.core.R.string.add_movie_to_favorite))
             } else {
@@ -175,5 +189,9 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
     }
     private fun View.showToast(text: String) {
         Toast.makeText(this.context, text, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun getCommentFromEditText() : String {
+        return binding.etUserNote.text.toString()
     }
 }
