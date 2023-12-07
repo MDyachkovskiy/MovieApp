@@ -4,7 +4,6 @@ import android.location.Address
 import android.location.Geocoder
 import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,19 +76,17 @@ class MapsFragment (
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment?
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 
     private fun checkLocation (geocoder: Geocoder, location : String?): LatLng {
-        Log.d("@@@", "Checking location for: $location")
         if(location.isNullOrEmpty()) {
             return defaultCity
         } else {
             return try {
                 val searchResult =
                     checkGeoResult(geocoder, geocoder.getFromLocationName(location, 1))
-                Log.d("@@@", "Geocoder results: $searchResult")
                 if (searchResult.isNullOrEmpty()) {
                     defaultCity
                 } else {

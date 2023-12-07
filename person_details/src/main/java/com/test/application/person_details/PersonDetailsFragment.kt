@@ -76,8 +76,9 @@ class PersonDetailsFragment :
             childFragmentManager.beginTransaction()
                 .replace(R.id.place_of_birth_map_container, mapsFragment)
                 .commit()
+        } else {
+            showErrorToast(getString(R.string.no_data_for_birth_place))
         }
-        showErrorToast(getString(R.string.no_data_for_birth_place))
     }
 
     private fun initPersonTextData(person: Person) {
