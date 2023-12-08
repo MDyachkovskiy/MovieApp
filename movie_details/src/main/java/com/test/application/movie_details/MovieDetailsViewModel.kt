@@ -53,7 +53,9 @@ class MovieDetailsViewModel(
     fun addCommentToMovie (movie: MovieDetails, comment: String) {
         viewModelScope.launch(Dispatchers.IO) {
             historyRepository.addUserComment(movie,comment)
-            favoriteRepository.addUserComment(movie, comment)
+            if (favoriteRepository.checkExistenceInDB(movie.id)) {
+                favoriteRepository.addUserComment(movie, comment)
+            }
         }
     }
 

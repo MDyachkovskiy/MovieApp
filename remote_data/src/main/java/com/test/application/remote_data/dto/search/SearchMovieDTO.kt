@@ -3,5 +3,5 @@ data class SearchMovieDTO(
     val description: String = "",
     val id: Int = 0,
     val name: String = "",
-    val poster: String = "",
+    val poster: String? = "",
 )

@@ -5,32 +5,24 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import com.test.application.KEY_QUERY
 import com.test.application.core.utils.replaceFragment
 import com.test.application.core.view.BaseFragment
 import com.test.application.history.HistoryFragment
 import com.test.application.search.databinding.FragmentSearchBinding
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(
     FragmentSearchBinding::inflate
 ) {
 
-    private val viewModel: SearchViewModel by activityViewModel()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.searchResultLiveData.observe(viewLifecycleOwner) { _ ->
-            if(childFragmentManager.findFragmentById(R.id.container) !is SearchResultFragment){
-                childFragmentManager.replaceFragment(R.id.container, SearchResultFragment())
-            }
-        }
 
         binding.searchView.setOnQueryTextListener(object
             : androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.getSearchCollection(query)
+                openSearchResultFragment(query)
                 return true
             }
 
@@ -39,6 +31,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             }
         })
     }
+
+    private fun openSearchResultFragment(query: String) {
+        val searchResultFragment = SearchResultFragment().apply {
+            arguments = Bundle().apply {
+                putString(KEY_QUERY, query)
+            }
+        }
+        childFragmentManager.beginTransaction()
+            .replace(R.id.container, searchResultFragment)
+            .commit()
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.history_menu, menu)

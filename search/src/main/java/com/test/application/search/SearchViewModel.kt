@@ -1,5 +1,6 @@
 package com.test.application.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,9 +27,9 @@ class SearchViewModel(
 
         viewModelScope.launch {
             myPagingDataFlow.collectLatest {pagingData ->
+                Log.d("@@@", "Received in VM paging data: $pagingData")
                 _searchResultLiveData.value = pagingData
             }
         }
     }
 }
-

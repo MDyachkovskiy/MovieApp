@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_16dp_medium"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/margin_4dp_small">
 
@@ -54,7 +55,7 @@
         app:layout_constraintTop_toTopOf="@id/poster_block" />
 
     <TextView
-        style="@style/movie_description_title_style"
+        style="@style/search_movie_description_title_style"
         android:id="@+id/tv_movie_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

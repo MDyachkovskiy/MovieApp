@@ -1,5 +1,6 @@
 package com.test.application.remote_data.paging_source
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.test.application.core.domain.searchCollection.SearchMovie
@@ -21,12 +22,15 @@ class SearchMoviePagingSource(
             val response = responseDTO.toDomain()
             val nextPage = if (currentPage < response.pages) currentPage + 1 else null
             val movies = response.movies
+
+            Log.d("@@@", "Loaded movies: $movies")
             LoadResult.Page(
                 data = movies,
                 prevKey = if (currentPage == 1) null else currentPage -1,
                 nextKey = nextPage
             )
         } catch (e: Exception) {
+            Log.e("@@@", "Error loading movies", e)
             LoadResult.Error(e)
         }
     }

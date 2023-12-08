@@ -1,5 +1,6 @@
 package com.test.application.remote_data.repository
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -15,6 +16,7 @@ class SearchRepositoryImpl (
 ) : SearchRepository {
 
     override fun getSearchCollection(name: String): Flow<PagingData<SearchMovie>> {
+        Log.d("@@@", "getSearchCollection called with query: $name")
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { SearchMoviePagingSource(kinopoiskService, name) }
