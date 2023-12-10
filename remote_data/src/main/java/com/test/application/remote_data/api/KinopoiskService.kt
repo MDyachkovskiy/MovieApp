@@ -18,27 +18,23 @@ import com.test.application.remote_data.utils.TV_SHOW_TYPE
 import com.test.application.remote_data.utils.UPCOMING_YEAR
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface KinopoiskService {
     @GET("$MOVIE_DETAILS/{movieId}")
     fun getMovieAsync(
-        @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Path("movieId") id : String
     ) : Deferred<MovieDetailsDTO>
 
     @GET(PERSON_END_POINT)
     fun getPersonAsync (
-        @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Query("id") id : Int?,
         @Query("selectFields") selectedFields: String? = PERSON_SELECTED_FIELDS
     ) : Deferred<PersonDetailsDTO>
 
     @GET(TOP_COLLECTIONS_END_POINT)
     fun getTop250CollectionAsync(
-        @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Query("sortFields") sort: String? = KINOPOISK_RATING,
         @Query("sortType") sortType: Int? = DENOMINATION_SORT,
         @Query("page") page: Int? = 1,
@@ -50,7 +46,6 @@ interface KinopoiskService {
 
     @GET(TOP_COLLECTIONS_END_POINT)
     fun getTopTvShowsCollectionAsync(
-        @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Query("sortFields") sort: String? = KINOPOISK_RATING,
         @Query("sortType") sortType: Int? = DENOMINATION_SORT,
         @Query("page") page: Int? = 1,
@@ -62,7 +57,6 @@ interface KinopoiskService {
 
     @GET(TOP_COLLECTIONS_END_POINT)
     fun getUpComingCollectionAsync(
-        @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Query("page") page: Int? = 1,
         @Query("limit") limit: Int? = RESPONSE_QUANTITY,
         @Query("movie") movie: String? = "!null",
@@ -72,7 +66,6 @@ interface KinopoiskService {
 
     @GET(MOVIE_SEARCH)
     fun getSearchMovieAsync(
-        @Header("x-api-key") apiKey: String = "ZSHR6KE-1B84QK2-G3HSAJY-V6F6YBB",
         @Query("query") query : String,
         @Query("page") page: Int? = 1
     ) : Deferred<SearchDTO>

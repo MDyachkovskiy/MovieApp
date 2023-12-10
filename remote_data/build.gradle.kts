@@ -33,21 +33,21 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
+    implementation (project(":core"))
     //Kotlin
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+    implementation (Kotlin.core)
+    implementation (platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
     //AndroidX
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation (AndroidX.appcompat)
 
     //Design
-    implementation("com.google.android.material:material:1.10.0")
+    implementation (Design.material)
 
     //Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.google.code.gson:gson:2.9.0")
+    implementation (Retrofit.main)
+    implementation (Retrofit.gson_convertor)
 
     //Pagination
-    implementation ("androidx.paging:paging-runtime:3.2.1")
+    implementation (Design.pagination)
 }

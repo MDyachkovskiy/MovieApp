@@ -40,16 +40,16 @@ dependencies {
     implementation(project(":core"))
 
     //Kotlin
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+    implementation (Kotlin.core)
+    implementation (platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
     //AndroidX
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation (AndroidX.appcompat)
 
     //Koin
-    implementation ("io.insert-koin:koin-android:3.4.2")
+    implementation (Koin.android)
 
     //Design
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("io.coil-kt:coil:2.4.0")
+    implementation (Design.material)
+    implementation (Coil.coil_kt)
 }

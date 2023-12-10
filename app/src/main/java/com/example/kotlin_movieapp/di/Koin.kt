@@ -1,6 +1,7 @@
 package com.example.kotlin_movieapp.di
 
 import androidx.room.Room
+import com.example.kotlin_movieapp.BuildConfig
 import com.test.application.core.repository.CollectionsRepository
 import com.test.application.remote_data.repository.CollectionsRepositoryImpl
 import com.test.application.core.repository.ContactsRepository
@@ -35,7 +36,6 @@ import com.test.application.local_data.service.ContactsSyncWorkerFactory
 import com.test.application.remote_data.api.KinopoiskService
 import com.test.application.search.SearchViewModel
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -56,7 +56,13 @@ val appModule = module {
 val networkModule = module {
     single {
         OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor { chain ->
+                val originalRequest = chain.request()
+                val requestWithHeader = originalRequest.newBuilder()
+                    .header("x-api-key", BuildConfig.KINOPOISK_API_KEY)
+                    .build()
+                chain.proceed(requestWithHeader)
+            }
             .build()
     }
 

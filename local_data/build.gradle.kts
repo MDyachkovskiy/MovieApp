@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -38,16 +36,16 @@ android {
 dependencies {
     implementation(project(":core"))
     //Kotlin
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+    implementation (Kotlin.core)
+    implementation (platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     //AndroidX
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation (AndroidX.appcompat)
 
     //Room
-    implementation("androidx.room:room-runtime:2.5.2")
-    implementation ("androidx.room:room-ktx:2.5.2")
-    kapt("androidx.room:room-compiler:2.5.2")
+    implementation (Room.runtime)
+    implementation (Room.ktx)
+    kapt(Room.compiler)
 
     //WorkManager
-    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation(WorkManager.runtime_ktx)
 }

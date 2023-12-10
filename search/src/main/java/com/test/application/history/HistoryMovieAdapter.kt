@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.test.application.core.domain.history.HistoryMovieItem
 import com.test.application.search.databinding.ItemHistoryMovieBinding
+import java.text.SimpleDateFormat
 import java.util.*
 
 class HistoryMovieAdapter : RecyclerView.Adapter<HistoryMovieAdapter.ViewHolder>() {
@@ -44,13 +45,8 @@ class HistoryMovieAdapter : RecyclerView.Adapter<HistoryMovieAdapter.ViewHolder>
         }
 
         private fun initClickListener(movie: HistoryMovieItem) {
-            with(binding) {
-                tvMovieTitle.text = movie.name
-                tvMovieDescription.text = movie.description
-
-                val viewingDate = Date(movie.date)
-                date.text = viewingDate.toString()
-                tvUserNote.text = movie.userNote
+            binding.root.setOnClickListener {
+                listener?.invoke(movie.kinopoiskId)
             }
         }
 
@@ -62,8 +58,15 @@ class HistoryMovieAdapter : RecyclerView.Adapter<HistoryMovieAdapter.ViewHolder>
         }
 
         private fun initTextData(movie: HistoryMovieItem) {
-            binding.root.setOnClickListener {
-                listener?.invoke(movie.kinopoiskId)
+            with(binding) {
+                tvMovieTitle.text = movie.name
+                tvMovieDescription.text = movie.description
+
+                val viewingDate = Date(movie.date)
+                val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+                tvDate.text = formatter.format(viewingDate)
+
+                tvUserNote.text = movie.userNote
             }
         }
     }

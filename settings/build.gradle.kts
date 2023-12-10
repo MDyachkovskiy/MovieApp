@@ -38,13 +38,13 @@ android {
 dependencies {
 
     //Kotlin
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation (Kotlin.core)
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
     //AndroidX
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation (AndroidX.appcompat)
 
     //SharedPreference
-    implementation("androidx.preference:preference:1.2.1")
-    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation (SharedPreferences.main)
+    implementation (SharedPreferences.ktx)
 }

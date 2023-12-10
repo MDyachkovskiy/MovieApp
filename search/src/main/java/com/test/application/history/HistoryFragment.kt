@@ -19,12 +19,6 @@ class HistoryFragment : BaseFragmentWithAppState<AppState, List<HistoryMovieItem
 
     private val viewModel: HistoryViewModel by viewModel()
 
-    companion object {
-        fun newInstance(): HistoryFragment {
-            return HistoryFragment()
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
