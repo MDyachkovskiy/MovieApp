@@ -6,10 +6,12 @@
 
 <h2>Project Screenshots:</h2>
 
-<img src="https://i.ibb.co.com/gZyYqtw/IMG-20231004-013304.jpg" alt="project-screenshot" width="200" height="400/"> <img src="https://i.ibb.co.com/QJLHmXy/IMG-20231004-013634.jpg" alt="project-screenshot" width="200" height="400/"> <img src="https://i.ibb.co.com/qnFPwYG/IMG-20231004-013552.jpg" alt="project-screenshot" width="200" height="400/"> 
-<img src="https://i.ibb.co.com/T8VCywJ/IMG-20231004-013408.jpg" alt="project-screenshot" width="200" height="400/"> <img src="https://i.ibb.co.com/Cw2FdW6/IMG-20231004-013530.jpg" alt="project-screenshot" width="200" height="400/"> <img src="https://i.ibb.co.com/9qpp8VX/IMG-20230924-194501.jpg" alt="project-screenshot" width="200" height="400/">
+<img src="https://gdurl.com/7_2P" alt="project-screenshot" width="200" height="400/">    <img src="https://gdurl.com/XanE" alt="project-screenshot" width="200" height="400/">    <img src="https://gdurl.com/0RtY" alt="project-screenshot" width="200" height="400/"> 
+<img src="https://gdurl.com/qDfX" alt="project-screenshot" width="200" height="400/">    <img src="https://gdurl.com/Pjey" alt="project-screenshot" width="200" height="400/">    <img src="https://gdurl.com/s8NM" alt="project-screenshot" width="200" height="400/">    <img src="https://gdurl.com/JiKI" alt="project-screenshot" width="200" height="400/">
 
-  
+<h2>Application Demo Video:</h2>
+
+<p>Watch a demo of the application here: <a href="https://gdurl.com/KCVT" target="_blank">Movie App Demo Video</a></p>
   
 <h2>💻 Built with</h2>
 
@@ -21,7 +23,6 @@ Within the scope of this educational course the following knowledge and technolo
 *   Geolocation
 *   Retrofit
 *   Room SQLite
-*   Push-notification
-*   BroadcastReciever
+*   BroadcastReceiver
 *   Coroutines
 *   Paging 3 Compose
