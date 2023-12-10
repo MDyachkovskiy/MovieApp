@@ -23,7 +23,6 @@ Within the scope of this educational course the following knowledge and technolo
 *   Geolocation
 *   Retrofit
 *   Room SQLite
-*   Push-notification
-*   BroadcastReciever
+*   BroadcastReceiver
 *   Coroutines
 *   Paging 3 Compose
