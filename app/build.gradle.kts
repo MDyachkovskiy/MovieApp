@@ -1,10 +1,11 @@
 import java.util.Properties
 
 plugins {
-    id ("com.android.application")
-    kotlin ("android")
-    id ("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    id ("com.google.gms.google-services")
+    id("com.android.application")
+    kotlin("android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.gms.google-services")
+    kotlin("kapt")
 }
 
 android {
@@ -39,7 +40,10 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
         getByName("debug") {
             versionNameSuffix = "-debug"
@@ -53,13 +57,13 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    flavorDimensions ("version")
+    flavorDimensions("version")
     productFlavors {
-        create("free"){
+        create("free") {
             dimension = "version"
             versionNameSuffix = "freeConfig"
         }
-        create("paid"){
+        create("paid") {
             dimension = "version"
             versionNameSuffix = "paidConfig"
         }
@@ -67,55 +71,63 @@ android {
 
     afterEvaluate {
         tasks.named("mergeFreeDebugResources").configure {
-            inputs.files (tasks.named("processFreeDebugGoogleServices"))
+            inputs.files(tasks.named("processFreeDebugGoogleServices"))
         }
+    }
+    kapt {
+        correctErrorTypes = true
     }
 }
 
 dependencies {
 
-    implementation (project(":core"))
-    implementation (project(":home"))
-    implementation (project(":favorites"))
-    implementation (project(":search"))
-    implementation (project(":contacts"))
-    implementation (project(":settings"))
-    implementation (project(":movie_details"))
-    implementation (project(":person_details"))
-    implementation (project(":remote_data"))
-    implementation (project(":local_data"))
+    implementation(project(":core"))
+    implementation(project(":home"))
+    implementation(project(":favorites"))
+    implementation(project(":search"))
+    implementation(project(":contacts"))
+    implementation(project(":settings"))
+    implementation(project(":movie_details"))
+    implementation(project(":person_details"))
+    implementation(project(":remote_data"))
+    implementation(project(":local_data"))
 
     //Kotlin
-    implementation (Kotlin.core)
+    implementation(Kotlin.core)
 
     //AndroidX
-    implementation (AndroidX.appcompat)
+    implementation(AndroidX.appcompat)
 
     //Firebase
-    implementation (Firebase.messaging_ktx)
+    implementation(Firebase.messaging_ktx)
 
     //Design
-    implementation (Design.material)
-    implementation (Design.constraint_layout)
+    implementation(Design.material)
+    implementation(Design.constraint_layout)
 
     //Retrofit
-    implementation (Retrofit.main)
-    implementation (Retrofit.gson_convertor)
-    implementation (Retrofit.interceptor)
-    implementation (Retrofit.retrofit_coroutine_adapter)
+    implementation(Retrofit.main)
+    implementation(Retrofit.gson_convertor)
+    implementation(Retrofit.interceptor)
+    implementation(Retrofit.retrofit_coroutine_adapter)
 
     //Room
-    implementation (Room.runtime)
+    implementation(Room.runtime)
 
     //Koin
-    implementation (Koin.android)
-    implementation (Koin.core)
-    implementation (Koin.navigation)
+    implementation(Koin.android)
+    implementation(Koin.core)
+    implementation(Koin.navigation)
 
     //Navigation
-    implementation (Navigation.fragment_ktx)
-    implementation (Navigation.ui_ktx)
+    implementation(Navigation.fragment_ktx)
+    implementation(Navigation.ui_ktx)
 
     //WorkManager
-    implementation (WorkManager.runtime_ktx)
+    implementation(WorkManager.runtime_ktx)
+
+    //Dagger
+    implementation(Dagger.main)
+    implementation("com.google.dagger:dagger-android-support:2.49")
+    kapt(Dagger.compiler)
 }

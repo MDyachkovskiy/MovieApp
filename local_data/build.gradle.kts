@@ -48,4 +48,8 @@ dependencies {
 
     //WorkManager
     implementation(WorkManager.runtime_ktx)
+
+    //Dagger
+    implementation (Dagger.main)
+    kapt (Dagger.compiler)
 }

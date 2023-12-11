@@ -1,6 +1,5 @@
 package com.example.kotlin_movieapp.di
 
-import androidx.room.Room
 import com.example.kotlin_movieapp.BuildConfig
 import com.test.application.core.repository.CollectionsRepository
 import com.test.application.remote_data.repository.CollectionsRepositoryImpl
@@ -31,7 +30,6 @@ import com.test.application.home.top250Movie.Top250MovieViewModel
 import com.test.application.home.topTvShows.TopTvShowsViewModel
 import com.test.application.home.upComing.UpComingMovieViewModel
 import com.test.application.local_data.contacts.ContactsGetter
-import com.test.application.local_data.database.MovieAppDataBase
 import com.test.application.local_data.service.ContactsSyncWorkerFactory
 import com.test.application.remote_data.api.KinopoiskService
 import com.test.application.search.SearchViewModel
@@ -78,19 +76,6 @@ val networkModule = module {
     single{
         get<Retrofit>().create(KinopoiskService::class.java)
     }
-}
-
-val databaseModule = module {
-    single {
-        Room.databaseBuilder(
-            get(),
-            MovieAppDataBase::class.java,
-            "MovieAppDataBase.db"
-        ).build()
-    }
-    factory { get<MovieAppDataBase>().historyDao() }
-    factory { get<MovieAppDataBase>().favoriteDao() }
-    factory { get<MovieAppDataBase>().contactsDao() }
 }
 
 val repositoryModule = module {

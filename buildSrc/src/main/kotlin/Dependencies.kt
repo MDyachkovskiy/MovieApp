@@ -45,6 +45,9 @@ object Versions {
     //SharedPreferences
     const val shared_preferences = "1.2.1"
 
+    //Dagger
+    const val dagger = "2.49"
+
 }
 
 object Kotlin {
@@ -104,4 +107,9 @@ object GoogleMaps {
 object SharedPreferences {
     const val main = "androidx.preference:preference:${Versions.shared_preferences}"
     const val ktx = "androidx.preference:preference-ktx:${Versions.shared_preferences}"
+}
+
+object Dagger {
+    const val main = "com.google.dagger:dagger:${Versions.dagger}"
+    const val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
 }
