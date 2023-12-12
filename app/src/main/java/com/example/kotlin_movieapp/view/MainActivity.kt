@@ -10,7 +10,9 @@ import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.ActivityMainBinding
 import com.example.kotlin_movieapp.service.ConnectivityReceiver
 import com.test.application.core.navigation.Navigator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), Navigator {
 
     private lateinit var binding : ActivityMainBinding

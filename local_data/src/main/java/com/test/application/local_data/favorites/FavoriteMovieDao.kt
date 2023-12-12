@@ -24,6 +24,6 @@ interface FavoriteMovieDao {
     @Update
     fun update (entity: FavoriteMovieEntity)
 
-    @Query ("SELECT EXISTS(SELECT 1 FROM FavoriteMovieEntity WHERE kinopoiskId = :id)")
+    @Query("SELECT COUNT(*) > 0 FROM FavoriteMovieEntity WHERE kinopoiskId = :id")
     suspend fun checkExists(id: Int): Boolean
 }

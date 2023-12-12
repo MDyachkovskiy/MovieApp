@@ -8,17 +8,19 @@ import com.test.application.local_data.favorites.FavoriteMovieDao
 import com.test.application.local_data.history.HistoryDao
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-class DatabaseModule(
-    private val applicationContext: Context
-) {
+@InstallIn(SingletonComponent::class)
+class DatabaseModule {
     @Singleton
     @Provides
-    fun provideDatabase(): MovieAppDataBase {
+    fun provideDatabase(@ApplicationContext context: Context): MovieAppDataBase {
         return Room.databaseBuilder(
-            applicationContext,
+            context,
             MovieAppDataBase::class.java,
             "MovieAppDataBase.db"
         ).build()

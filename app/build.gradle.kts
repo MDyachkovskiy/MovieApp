@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("com.google.dagger.hilt.android")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.google.gms.google-services")
     kotlin("kapt")
@@ -64,6 +65,9 @@ android {
     kapt {
         correctErrorTypes = true
     }
+    hilt {
+        enableAggregatingTask = true
+    }
 }
 
 dependencies {
@@ -92,10 +96,9 @@ dependencies {
     implementation(Design.material)
     implementation(Design.constraint_layout)
 
-    //Koin
-    implementation(Koin.android)
-    implementation(Koin.core)
-    implementation(Koin.navigation)
+    //Hilt
+    implementation (Hilt.main)
+    kapt (Hilt.compiler)
 
     //Navigation
     implementation(Navigation.fragment_ktx)

@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
     kotlin("kapt")
 }
 
@@ -44,6 +45,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    kapt {
+        correctErrorTypes = true
+    }
+    hilt {
+        enableAggregatingTask = true
+    }
 }
 
 dependencies {
@@ -67,4 +74,8 @@ dependencies {
     //Dagger
     implementation (Dagger.main)
     kapt (Dagger.compiler)
+
+    //Hilt
+    implementation (Hilt.main)
+    kapt (Hilt.compiler)
 }

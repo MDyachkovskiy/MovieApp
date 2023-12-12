@@ -11,12 +11,6 @@ object Versions {
     const val constraint_layout = "2.1.4"
     const val pagination = "3.2.1"
 
-    //Koin
-    const val koin_android = "3.4.2"
-    const val koin_core = "3.4.2"
-    const val koin_androidx = "3.4.0"
-    const val koin_navigation = "3.4.0"
-
     //Coil
     const val coil = "2.4.0"
 
@@ -35,7 +29,7 @@ object Versions {
     const val messaging_ktx = "23.4.0"
 
     //Room
-    const val room_runtime = "2.5.2"
+    const val room_runtime = "2.6.1"
 
     //WorkManager
     const val work_runtime_ktx = "2.9.0"
@@ -50,7 +44,7 @@ object Versions {
     const val dagger = "2.49"
 
     //Hilt
-    const val hilt = "2.35"
+    const val hilt = "2.49"
 
 }
 
@@ -66,13 +60,6 @@ object Design {
     const val material = "com.google.android.material:material:${Versions.material}"
     const val constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
     const val pagination = "androidx.paging:paging-runtime:${Versions.pagination}"
-}
-
-object Koin {
-    const val android = "io.insert-koin:koin-android:${Versions.koin_android}"
-    const val core = "io.insert-koin:koin-core:${Versions.koin_core}"
-    const val navigation = "io.insert-koin:koin-androidx-navigation:${Versions.koin_navigation}"
-    const val androidx = "io.insert-koin:koin-androidx-compose:${Versions.koin_androidx}"
 }
 
 object Coil {
