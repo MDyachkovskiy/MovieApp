@@ -9,10 +9,13 @@ import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.repository.FavoritesRepository
 import com.test.application.core.repository.HistoryRepository
 import com.test.application.core.repository.MovieDetailsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieDetailsViewModel(
+@HiltViewModel
+class MovieDetailsViewModel @Inject constructor(
     private val detailsRepository: MovieDetailsRepository,
     private val historyRepository: HistoryRepository,
     private val favoriteRepository: FavoritesRepository

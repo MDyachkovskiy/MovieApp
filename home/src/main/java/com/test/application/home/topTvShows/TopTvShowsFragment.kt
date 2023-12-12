@@ -3,6 +3,7 @@ package com.test.application.home.topTvShows
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
@@ -10,8 +11,9 @@ import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
 import com.test.application.home.adapter.MovieCollectionAdapter
 import com.test.application.home.databinding.FragmentTvshowsBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TopTvShowsFragment : BaseFragment<FragmentTvshowsBinding>(
     FragmentTvshowsBinding::inflate
 ) {
@@ -20,7 +22,7 @@ class TopTvShowsFragment : BaseFragment<FragmentTvshowsBinding>(
         fun newInstance() = TopTvShowsFragment()
     }
 
-    private val viewModel: TopTvShowsViewModel by viewModel()
+    private val viewModel: TopTvShowsViewModel by viewModels()
     private lateinit var movieAdapter: MovieCollectionAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -3,6 +3,7 @@ package com.test.application.home.top250Movie
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
@@ -10,8 +11,9 @@ import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
 import com.test.application.home.adapter.MovieCollectionAdapter
 import com.test.application.home.databinding.FragmentTop250movieBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
     FragmentTop250movieBinding::inflate
 ) {
@@ -19,7 +21,7 @@ class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
         fun newInstance() = Top250MovieFragment()
     }
 
-    private val viewModel: Top250MovieViewModel by viewModel()
+    private val viewModel: Top250MovieViewModel by viewModels()
     private lateinit var movieAdapter: MovieCollectionAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

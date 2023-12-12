@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.contacts.databinding.FragmentContactsBinding
@@ -15,14 +16,15 @@ import com.test.application.contacts.utils.checkPermission
 import com.test.application.contacts.utils.showAlertMessage
 import com.test.application.core.domain.contacts.ContactsItem
 import com.test.application.core.view.BaseFragmentWithAppState
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class ContactsFragment : BaseFragmentWithAppState<AppState, List<ContactsItem>, FragmentContactsBinding>(
     FragmentContactsBinding::inflate
 ) {
 
-    private val viewModel: ContactsViewModel by viewModel()
+    private val viewModel: ContactsViewModel by viewModels()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()

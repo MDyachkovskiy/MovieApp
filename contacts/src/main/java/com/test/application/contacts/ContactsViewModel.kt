@@ -6,9 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.test.application.core.repository.ContactsRepository
 import com.test.application.core.utils.AppState.AppState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ContactsViewModel(
+
+@HiltViewModel
+class ContactsViewModel @Inject constructor(
     private val contactsRepository: ContactsRepository
 ) : ViewModel() {
 

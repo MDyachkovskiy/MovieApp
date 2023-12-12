@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
@@ -43,11 +44,13 @@ dependencies {
 
     //AndroidX
     implementation (AndroidX.appcompat)
+    implementation (AndroidX.fragment_ktx)
 
     //Design
     implementation (Design.material)
     implementation (Coil.coil_kt)
 
-    //Koin
-    implementation (Koin.android)
+    //Hilt
+    implementation (Hilt.main)
+    kapt (Hilt.compiler)
 }

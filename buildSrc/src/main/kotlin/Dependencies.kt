@@ -4,6 +4,7 @@ object Versions {
 
     //AndroidX
     const val appcompat = "1.6.1"
+    const val andrx_fragment_ktx = "1.3.6"
 
     //Design
     const val material = "1.10.0"
@@ -48,6 +49,9 @@ object Versions {
     //Dagger
     const val dagger = "2.49"
 
+    //Hilt
+    const val hilt = "2.35"
+
 }
 
 object Kotlin {
@@ -55,6 +59,7 @@ object Kotlin {
 }
 object AndroidX {
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
+    const val fragment_ktx = "androidx.fragment:fragment-ktx:${Versions.andrx_fragment_ktx}"
 }
 
 object Design {
@@ -112,4 +117,9 @@ object SharedPreferences {
 object Dagger {
     const val main = "com.google.dagger:dagger:${Versions.dagger}"
     const val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+}
+
+object Hilt {
+    const val main = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val compiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
 }

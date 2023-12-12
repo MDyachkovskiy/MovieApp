@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -24,17 +22,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    val properties = Properties()
-    val apikeyFile = rootProject.file("apikey.properties")
-    if (apikeyFile.exists()) {
-        properties.load(apikeyFile.inputStream())
-    }
-    val kinopoiskApiKey = properties.getProperty("kinopoisk_api_key", "")
-
-    android.buildTypes.forEach { buildType ->
-        buildType.buildConfigField("String", "KINOPOISK_API_KEY", "\"$kinopoiskApiKey\"")
     }
 
     buildTypes {
@@ -104,15 +91,6 @@ dependencies {
     //Design
     implementation(Design.material)
     implementation(Design.constraint_layout)
-
-    //Retrofit
-    implementation(Retrofit.main)
-    implementation(Retrofit.gson_convertor)
-    implementation(Retrofit.interceptor)
-    implementation(Retrofit.retrofit_coroutine_adapter)
-
-    //Room
-    implementation(Room.runtime)
 
     //Koin
     implementation(Koin.android)

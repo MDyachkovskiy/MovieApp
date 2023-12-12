@@ -1,6 +1,9 @@
+import java.util.Properties
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
@@ -12,6 +15,17 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+    }
+
+    val properties = Properties()
+    val apikeyFile = rootProject.file("apikey.properties")
+    if (apikeyFile.exists()) {
+        properties.load(apikeyFile.inputStream())
+    }
+    val kinopoiskApiKey = properties.getProperty("kinopoisk_api_key", "")
+
+    android.buildTypes.forEach { buildType ->
+        buildType.buildConfigField("String", "KINOPOISK_API_KEY", "\"$kinopoiskApiKey\"")
     }
 
     buildTypes {
@@ -41,13 +55,16 @@ dependencies {
     //AndroidX
     implementation (AndroidX.appcompat)
 
-    //Design
-    implementation (Design.material)
-
     //Retrofit
-    implementation (Retrofit.main)
-    implementation (Retrofit.gson_convertor)
+    implementation(Retrofit.main)
+    implementation(Retrofit.gson_convertor)
+    implementation(Retrofit.interceptor)
+    implementation(Retrofit.retrofit_coroutine_adapter)
 
     //Pagination
     implementation (Design.pagination)
+
+    //Dagger
+    implementation (Dagger.main)
+    kapt (Dagger.compiler)
 }

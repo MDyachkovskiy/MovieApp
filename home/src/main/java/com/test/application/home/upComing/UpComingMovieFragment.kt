@@ -3,6 +3,7 @@ package com.test.application.home.upComing
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
@@ -10,8 +11,9 @@ import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
 import com.test.application.home.adapter.MovieCollectionAdapter
 import com.test.application.home.databinding.FragmentUpcomingBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
     FragmentUpcomingBinding::inflate
 ) {
@@ -20,7 +22,7 @@ class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
         fun newInstance() = UpComingMovieFragment()
     }
 
-    private val viewModel: UpComingMovieViewModel by viewModel()
+    private val viewModel: UpComingMovieViewModel by viewModels()
     private lateinit var movieAdapter: MovieCollectionAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

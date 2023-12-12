@@ -38,6 +38,7 @@ dependencies {
     //Kotlin
     implementation (Kotlin.core)
     implementation (platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
     //AndroidX
     implementation (AndroidX.appcompat)
 

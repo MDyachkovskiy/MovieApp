@@ -3,6 +3,7 @@ package com.test.application.person_details
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import coil.load
 import com.test.application.core.domain.personDetail.Person
 import com.test.application.core.domain.personDetail.PersonDetails
@@ -11,11 +12,12 @@ import com.test.application.core.utils.KEY_BUNDLE_PERSON
 import com.test.application.core.utils.convert
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.person_details.databinding.FragmentPersonBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
+@AndroidEntryPoint
 class PersonDetailsFragment :
     BaseFragmentWithAppState<AppState, PersonDetails, FragmentPersonBinding>(
     FragmentPersonBinding::inflate
@@ -26,7 +28,7 @@ class PersonDetailsFragment :
         throw IllegalArgumentException(getString(R.string.incorrect_person_id))
     }
 
-    private val viewModel: PersonDetailsViewModel by viewModel()
+    private val viewModel: PersonDetailsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

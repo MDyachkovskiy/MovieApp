@@ -8,11 +8,14 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.test.application.core.domain.collection.Movie
 import com.test.application.core.interactor.HomeScreenInteractor
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UpComingMovieViewModel(
+@HiltViewModel
+class UpComingMovieViewModel @Inject constructor(
     interactor: HomeScreenInteractor
 ) : ViewModel() {
 

@@ -3,6 +3,7 @@ package com.test.application.favorites
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.domain.favorites.FavoriteMovieItem
 import com.test.application.core.navigation.Navigator
@@ -10,14 +11,15 @@ import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.favorites.databinding.FragmentFavoritesBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoritesFragment :
     BaseFragmentWithAppState<AppState, List<FavoriteMovieItem>, FragmentFavoritesBinding>(
         FragmentFavoritesBinding::inflate
     ) {
 
-    private val viewModel: FavoritesViewModel by viewModel()
+    private val viewModel: FavoritesViewModel by viewModels()
     private lateinit var favoritesMovieAdapter: FavoriteMovieAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

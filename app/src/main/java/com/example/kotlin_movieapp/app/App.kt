@@ -7,16 +7,12 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.kotlin_movieapp.di.AppComponent
-import com.example.kotlin_movieapp.di.DaggerAppComponent
-import com.example.kotlin_movieapp.di.appModule
-import com.example.kotlin_movieapp.di.interactorModule
-import com.example.kotlin_movieapp.di.networkModule
-import com.example.kotlin_movieapp.di.repositoryModule
 import com.example.kotlin_movieapp.di.workerModule
+import com.test.application.local_data.di.DatabaseModule
 import com.test.application.local_data.service.ContactsSyncWorker
 import com.test.application.local_data.service.ContactsSyncWorkerFactory
-import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.android.get
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import java.util.concurrent.TimeUnit
 
@@ -27,12 +23,12 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
             appComponent = DaggerAppComponent.builder()
-            .application(this)
-            .build()
+                .application(this)
+                .databaseModule(DatabaseModule(this))
+                .build()
         startKoin {
             androidContext(this@App)
-            modules(listOf(appModule, networkModule, repositoryModule,
-                interactorModule, workerModule))
+            modules(listOf(workerModule))
         }
         setupWorkManager()
     }

@@ -1,9 +1,9 @@
 package com.test.application.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.KEY_QUERY
@@ -14,13 +14,14 @@ import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
 import com.test.application.search.adapter.SearchMovieAdapter
 import com.test.application.search.databinding.FragmentSearchResultBinding
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchResultFragment: BaseFragment<FragmentSearchResultBinding>(
     FragmentSearchResultBinding::inflate
 ) {
     private lateinit var movieAdapter: SearchMovieAdapter
-    private val viewModel: SearchViewModel by activityViewModel()
+    private val viewModel: SearchViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,7 +33,6 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding>(
 
     private fun observeSearchResult() {
         viewModel.searchResultLiveData.observe(viewLifecycleOwner) { pagingData ->
-            Log.d("@@@", "Observing paging data: $pagingData")
             initRV(pagingData)
         }
     }

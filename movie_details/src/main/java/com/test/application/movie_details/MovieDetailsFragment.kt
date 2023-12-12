@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.test.application.core.domain.movieDetail.MovieDetails
@@ -20,9 +21,10 @@ import com.test.application.core.utils.convert
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.movie_details.databinding.FragmentMovieDetailBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate
 ) {
@@ -32,7 +34,7 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
     }
     private lateinit var movie: MovieDetails
 
-    private val viewModel: MovieDetailsViewModel by viewModel()
+    private val viewModel: MovieDetailsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
