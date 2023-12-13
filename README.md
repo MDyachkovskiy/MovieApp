@@ -22,6 +22,7 @@ Within the scope of this educational course the following knowledge and technolo
 *   Google Map
 *   Geolocation
 *   Retrofit
+*   Dagger 2 + Hilt
 *   Room SQLite
 *   BroadcastReceiver
 *   Coroutines
