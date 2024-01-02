@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tv_Top250movies">Топ 250 лучших фильмов</string>
-    <string name="tv_UpComing">Новинки кино</string>
-    <string name="tv_TopTvShows">Лучшие сериалы</string>
+    <string name="tv_UpComing">Новинки</string>
+    <string name="tv_TopTvShows">Стриминговые сервисы</string>
 
     <string name="movie_title_mock">Название фильма</string>
     <string name="rating_mock">5.0</string>
+
     <string name="chip_movie">Фильмы</string>
     <string name="chip_tv_series">Сериалы</string>
     <string name="chip_cartoon">Мультфильмы</string>
+
+    <string name="chip_netflix">Netflix</string>
+    <string name="chip_prime">Prime</string>
+    <string name="chip_disney">Disney+</string>
+    <string name="chip_hbo">HBO</string>
+    <string name="chip_apple">Apple TV</string>
 
 </resources>

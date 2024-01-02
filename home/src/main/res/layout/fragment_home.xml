@@ -17,26 +17,38 @@
             <FrameLayout
                 android:id="@+id/container_UpComing"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include layout="@layout/fragment_upcoming"/>
+
+            </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/container_Top250"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_UpComing" />
+                app:layout_constraintTop_toBottomOf="@id/container_UpComing">
+
+                <include layout="@layout/fragment_top250movie"/>
+
+            </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/container_TvShows"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_Top250" />
+                app:layout_constraintTop_toBottomOf="@id/container_Top250">
+
+                <include layout="@layout/fragment_tvshows"/>
+
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
