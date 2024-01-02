@@ -3,4 +3,11 @@
     <string name="tv_Top250movies">Топ 250 лучших фильмов</string>
     <string name="tv_UpComing">Новинки кино</string>
     <string name="tv_TopTvShows">Лучшие сериалы</string>
+
+    <string name="movie_title_mock">Название фильма</string>
+    <string name="rating_mock">5.0</string>
+    <string name="chip_movie">Фильмы</string>
+    <string name="chip_tv_series">Сериалы</string>
+    <string name="chip_cartoon">Мультфильмы</string>
+
 </resources>
