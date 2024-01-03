@@ -21,4 +21,11 @@
         <item name="android:lineHeight">26.4dp</item>
     </style>
 
+    <style name="CustomChipFilterStyle" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@drawable/chip_background_selector</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="closeIconTint">@color/chip_text_color</item>
+    </style>
+
 </resources>

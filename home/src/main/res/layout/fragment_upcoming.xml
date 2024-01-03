@@ -34,31 +34,25 @@
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
+            style="@style/CustomChipFilterStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkable="true"
             android:checked="true"
-            android:text="@string/chip_movie"
-            app:chipBackgroundColor="@color/chip_background_selector"
-            app:chipTextColor="@color/chip_text_color_selector"
-            app:chipType="filter" />
+            android:text="@string/chip_movie" />
 
         <com.google.android.material.chip.Chip
+            style="@style/CustomChipFilterStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkable="true"
-            android:text="@string/chip_tv_series"
-            app:chipBackgroundColor="@color/chip_background_selector"
-            app:chipTextColor="@color/chip_text_color_selector"
-            app:chipType="filter" />
+            android:text="@string/chip_tv_series" />
 
         <com.google.android.material.chip.Chip
+            style="@style/CustomChipFilterStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/chip_cartoon"
-            app:chipBackgroundColor="@color/chip_background_selector"
-            app:chipTextColor="@color/chip_text_color_selector"
-            app:chipType="filter" />
+            android:text="@string/chip_cartoon" />
 
     </com.google.android.material.chip.ChipGroup>
 

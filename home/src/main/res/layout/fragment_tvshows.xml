@@ -39,47 +39,37 @@
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
+                style="@style/CustomChipFilterStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:checked="true"
-                android:text="@string/chip_netflix"
-                app:chipBackgroundColor="@color/chip_background_selector"
-                app:chipTextColor="@color/chip_text_color_selector"
-                app:chipType="filter" />
+                android:text="@string/chip_netflix" />
 
             <com.google.android.material.chip.Chip
+                style="@style/CustomChipFilterStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="@string/chip_prime"
-                app:chipBackgroundColor="@color/chip_background_selector"
-                app:chipTextColor="@color/chip_text_color_selector"
-                app:chipType="filter" />
+                android:text="@string/chip_prime" />
 
             <com.google.android.material.chip.Chip
+                style="@style/CustomChipFilterStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chip_disney"
-                app:chipBackgroundColor="@color/chip_background_selector"
-                app:chipTextColor="@color/chip_text_color_selector"
-                app:chipType="filter" />
+                android:text="@string/chip_disney" />
 
             <com.google.android.material.chip.Chip
+                style="@style/CustomChipFilterStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chip_hbo"
-                app:chipBackgroundColor="@color/chip_background_selector"
-                app:chipTextColor="@color/chip_text_color_selector"
-                app:chipType="filter" />
+                android:text="@string/chip_hbo" />
 
             <com.google.android.material.chip.Chip
+                style="@style/CustomChipFilterStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chip_apple"
-                app:chipBackgroundColor="@color/chip_background_selector"
-                app:chipTextColor="@color/chip_text_color_selector"
-                app:chipType="filter" />
+                android:text="@string/chip_apple" />
 
         </com.google.android.material.chip.ChipGroup>
 

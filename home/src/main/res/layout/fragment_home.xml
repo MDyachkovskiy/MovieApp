@@ -20,11 +20,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <include layout="@layout/fragment_upcoming"/>
-
-            </FrameLayout>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <FrameLayout
                 android:id="@+id/container_Top250"
@@ -32,11 +28,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_UpComing">
-
-                <include layout="@layout/fragment_top250movie"/>
-
-            </FrameLayout>
+                app:layout_constraintTop_toBottomOf="@id/container_UpComing"/>
 
             <FrameLayout
                 android:id="@+id/container_TvShows"
@@ -44,11 +36,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_Top250">
-
-                <include layout="@layout/fragment_tvshows"/>
-
-            </FrameLayout>
+                app:layout_constraintTop_toBottomOf="@id/container_Top250" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
