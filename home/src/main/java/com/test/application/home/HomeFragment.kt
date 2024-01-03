@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.test.application.home.databinding.FragmentHomeBinding
-import com.test.application.home.top250Movie.Top250MovieFragment
-import com.test.application.home.topTvShows.TopTvShowsFragment
-import com.test.application.home.upComing.UpComingMovieFragment
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: HomeSharedViewModel by viewModels()
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val initiateViewModel = viewModel.top250LiveData
         childFragmentManager
             .beginTransaction()
             .replace(R.id.container_UpComing, UpComingMovieFragment.newInstance())

@@ -59,4 +59,8 @@ class MainActivity : AppCompatActivity(), Navigator {
     override fun navigateToPersonDetailsFragment(bundle: Bundle) {
         navController.navigate(R.id.personDetailsFragment, bundle)
     }
+
+    override fun navigateToMovieListFragment() {
+        navController.navigate(R.id.action_homeFragment_to_movieListFragment)
+    }
 }

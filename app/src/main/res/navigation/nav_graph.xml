@@ -11,6 +11,10 @@
         <action
             android:id="@+id/action_homeFragment_to_movieDetailsFragment"
             app:destination="@+id/movieDetailsFragment"/>
+
+        <action
+            android:id="@+id/action_homeFragment_to_movieListFragment"
+            app:destination="@+id/movieListFragment"/>
     </fragment>
 
     <fragment
@@ -50,6 +54,17 @@
         android:id="@+id/settingsFragment"
         android:name="com.test.application.settings.SettingsFragment"
         android:label="SettingsFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieListFragment"
+        android:name="com.test.application.home.MovieListFragment"
+        android:label="MovieListFragment">
+
+        <action
+            android:id="@+id/action_movieListFragment_to_homeFragment"
+            app:destination="@+id/homeFragment"/>
+
     </fragment>
 
 </navigation>

@@ -1,4 +1,4 @@
-package com.test.application.home.upComing
+package com.test.application.home
 
 import android.os.Bundle
 import android.view.View
@@ -22,7 +22,7 @@ class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
         fun newInstance() = UpComingMovieFragment()
     }
 
-    private val viewModel: UpComingMovieViewModel by viewModels()
+    private val viewModel: HomeSharedViewModel by viewModels({requireParentFragment()})
     private lateinit var movieAdapter: MovieCollectionAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

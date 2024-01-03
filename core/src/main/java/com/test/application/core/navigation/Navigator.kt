@@ -6,4 +6,5 @@ interface Navigator {
     fun navigateFromFavoritesToMovieDetails()
     fun navigateToMovieDetailsFragment(bundle: Bundle)
     fun navigateToPersonDetailsFragment(bundle: Bundle)
+    fun navigateToMovieListFragment()
 }

@@ -1,4 +1,4 @@
-package com.test.application.home.topTvShows
+package com.test.application.home
 
 import android.os.Bundle
 import android.view.View
@@ -10,34 +10,39 @@ import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
 import com.test.application.home.adapter.MovieCollectionAdapter
-import com.test.application.home.databinding.FragmentTvshowsBinding
+import com.test.application.home.databinding.FragmentTop250movieBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TopTvShowsFragment : BaseFragment<FragmentTvshowsBinding>(
-    FragmentTvshowsBinding::inflate
+class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
+    FragmentTop250movieBinding::inflate
 ) {
-
     companion object {
-        fun newInstance() = TopTvShowsFragment()
+        fun newInstance() = Top250MovieFragment()
     }
 
-    private val viewModel: TopTvShowsViewModel by viewModels()
+    private val viewModel: HomeSharedViewModel by viewModels({requireParentFragment()})
     private lateinit var movieAdapter: MovieCollectionAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRV()
-
-        viewModel.topTvShowsLiveData.observe(viewLifecycleOwner) { pagingData ->
+        initTextButton()
+        viewModel.top250LiveData.observe(viewLifecycleOwner){ pagingData ->
             movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
+        }
+    }
+
+    private fun initTextButton() {
+        binding.categoryTitle.setOnClickListener {
+            (activity as Navigator).navigateToMovieListFragment()
         }
     }
 
     private fun initRV() {
         movieAdapter = MovieCollectionAdapter()
 
-        binding.RVTvShows.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
+        binding.RVTop250.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
 
         movieAdapter.listener = { movieId ->
             val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)

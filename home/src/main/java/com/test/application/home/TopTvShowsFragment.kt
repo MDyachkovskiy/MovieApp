@@ -1,4 +1,4 @@
-package com.test.application.home.top250Movie
+package com.test.application.home
 
 import android.os.Bundle
 import android.view.View
@@ -10,25 +10,26 @@ import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
 import com.test.application.home.adapter.MovieCollectionAdapter
-import com.test.application.home.databinding.FragmentTop250movieBinding
+import com.test.application.home.databinding.FragmentTvshowsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
-    FragmentTop250movieBinding::inflate
+class TopTvShowsFragment : BaseFragment<FragmentTvshowsBinding>(
+    FragmentTvshowsBinding::inflate
 ) {
+
     companion object {
-        fun newInstance() = Top250MovieFragment()
+        fun newInstance() = TopTvShowsFragment()
     }
 
-    private val viewModel: Top250MovieViewModel by viewModels()
+    private val viewModel: HomeSharedViewModel by viewModels({requireParentFragment()})
     private lateinit var movieAdapter: MovieCollectionAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRV()
 
-        viewModel.top250LiveData.observe(viewLifecycleOwner){ pagingData ->
+        viewModel.topTvShowsLiveData.observe(viewLifecycleOwner) { pagingData ->
             movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
     }
@@ -36,7 +37,7 @@ class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
     private fun initRV() {
         movieAdapter = MovieCollectionAdapter()
 
-        binding.RVTop250.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
+        binding.RVTvShows.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
 
         movieAdapter.listener = { movieId ->
             val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)
