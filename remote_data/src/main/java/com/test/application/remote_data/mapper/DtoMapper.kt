@@ -40,6 +40,7 @@ fun CollectionsDTO.toDomain(): Collections {
 fun MovieDTO.toDomain(): Movie {
     return Movie(
         id = id,
+        rating = rating.toDomain(),
         name = name,
         poster = poster.toDomain(),
         description = description

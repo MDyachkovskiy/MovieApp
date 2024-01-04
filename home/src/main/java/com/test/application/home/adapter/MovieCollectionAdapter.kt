@@ -35,6 +35,10 @@ class MovieCollectionAdapter :
                     placeholder(com.test.application.core.R.drawable.default_placeholder)
                 }
 
+                movieTitle.text = movie.name
+
+                tvRating.text = movie.rating.imdb.toString()
+
                 root.setOnClickListener {
                     listener?.invoke(movie.id)
                 }

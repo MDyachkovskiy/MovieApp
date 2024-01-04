@@ -1,4 +1,4 @@
-package com.test.application.home
+package com.test.application.home.view
 
 import android.os.Bundle
 import android.view.View
@@ -7,18 +7,22 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
+import com.test.application.core.utils.KEY_BUNDLE_MOVIE_TYPE
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
 import com.test.application.home.adapter.MovieCollectionAdapter
-import com.test.application.home.databinding.FragmentTop250movieBinding
+import com.test.application.home.databinding.FragmentUpcomingBinding
+import com.test.application.home.navigation.MovieListFragmentHandler
+import com.test.application.home.util.MovieDataType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
-    FragmentTop250movieBinding::inflate
+class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
+    FragmentUpcomingBinding::inflate
 ) {
+
     companion object {
-        fun newInstance() = Top250MovieFragment()
+        fun newInstance() = UpComingMovieFragment()
     }
 
     private val viewModel: HomeSharedViewModel by viewModels({requireParentFragment()})
@@ -28,22 +32,27 @@ class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
         super.onViewCreated(view, savedInstanceState)
         initRV()
         initTextButton()
-        viewModel.top250LiveData.observe(viewLifecycleOwner){ pagingData ->
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel.upComingLiveData.observe(viewLifecycleOwner) { pagingData ->
             movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
+        viewModel.loadUpcomingMovies()
     }
 
     private fun initTextButton() {
         binding.categoryTitle.setOnClickListener {
-            (activity as Navigator).navigateToMovieListFragment()
+            val bundle = bundleOf(KEY_BUNDLE_MOVIE_TYPE to MovieDataType.UPCOMING_MOVIES.name)
+            (parentFragment as MovieListFragmentHandler).showMovieList(bundle)
         }
     }
 
     private fun initRV() {
         movieAdapter = MovieCollectionAdapter()
 
-        binding.RVTop250.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
-
+        binding.RVUpComing.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
         movieAdapter.listener = { movieId ->
             val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)
             (activity as Navigator).navigateToMovieDetailsFragment(bundle)

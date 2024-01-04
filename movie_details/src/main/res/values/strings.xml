@@ -19,5 +19,6 @@
     <string name="format_movie_length"> %1$s мин</string>
 
     <string name="incorrect_movie_id"> Ошибка в получении id фильма</string>
+    <string name="error_back_pressed_handler"> Ошибка: Контекст должен реализовать интерфейс BackPressedHandler </string>
 
 </resources>

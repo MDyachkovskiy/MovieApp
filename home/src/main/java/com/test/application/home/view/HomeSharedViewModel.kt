@@ -1,4 +1,4 @@
-package com.test.application.home
+package com.test.application.home.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,14 +27,22 @@ class HomeSharedViewModel @Inject constructor(
     private val _upComingLiveData = MutableLiveData<PagingData<Movie>>()
     val upComingLiveData: LiveData<PagingData<Movie>> = _upComingLiveData
 
-    init {
+    fun loadTop250Movies() {
         viewModelScope.launch {
             interactor.getTop250CollectionFromServer().cachedIn(viewModelScope)
                 .collectLatest { pagingData -> _top250LiveData.value = pagingData }
+        }
+    }
 
+    fun loadTopTvShows() {
+        viewModelScope.launch {
             interactor.getTopTvShowsCollectionFromServer().cachedIn(viewModelScope)
                 .collectLatest { pagingData ->  _topTvShowsLiveData.value = pagingData}
+        }
+    }
 
+    fun loadUpcomingMovies() {
+        viewModelScope.launch {
             interactor.getUpComingCollectionFromServer().cachedIn(viewModelScope)
                 .collectLatest { pagingData -> _upComingLiveData.value = pagingData }
         }

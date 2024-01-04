@@ -17,4 +17,6 @@
     <string name="chip_hbo">HBO</string>
     <string name="chip_apple">Apple TV</string>
 
+    <string name="incorrect_movie_data">Не определен тип данных</string>
+
 </resources>
