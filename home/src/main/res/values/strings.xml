@@ -5,6 +5,9 @@
     <string name="tv_TopTvShows">Стриминговые сервисы</string>
 
     <string name="movie_title_mock">Название фильма</string>
+    <string name="movie_genre_mock">Приключение семейный ужастик</string>
+    <string name="movie_release_year_mock">2023</string>
+
     <string name="rating_mock">5.0</string>
 
     <string name="chip_movie">Фильмы</string>

@@ -52,6 +52,13 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeMovieData(movieDataType)
+        setupBackButton()
+    }
+
+    private fun setupBackButton() {
+        binding.backButton.setOnClickListener {
+            childFragmentManager.popBackStack()
+        }
     }
 
     private fun setupRecyclerView() {
