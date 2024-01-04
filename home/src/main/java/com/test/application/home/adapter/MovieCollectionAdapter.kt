@@ -8,10 +8,14 @@ import com.test.application.core.domain.collection.Movie
 import coil.load
 import com.test.application.home.databinding.ItemMovieBinding
 
-class MovieCollectionAdapter :
+class MovieCollectionAdapter(
+    private val itemWidth: Int = -1,
+    private val itemHeight: Int = -1
+) :
     PagingDataAdapter<Movie, MovieCollectionAdapter.ViewHolder>(MovieCollectionDiffCallback()) {
 
     var listener: ((movieId: Int) -> Unit)? = null
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = getItem(position)
@@ -21,6 +25,12 @@ class MovieCollectionAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemMovieBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
+
+        if(itemWidth > 0 && itemHeight > 0) {
+            binding.root.layoutParams.width = itemWidth
+            binding.root.layoutParams.height = itemHeight
+        }
+
         return ViewHolder(binding)
     }
 

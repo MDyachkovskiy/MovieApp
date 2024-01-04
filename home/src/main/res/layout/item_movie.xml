@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="130dp"
-    android:layout_height="240dp"
+    android:layout_width="@dimen/item_movie_width"
+    android:layout_height="@dimen/item_movie_height"
     android:layout_margin="@dimen/margin_8dp_small"
     app:cardCornerRadius="@dimen/corner_radius_10dp">
 
@@ -17,7 +17,7 @@
             android:id="@+id/movie_poster"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/default_placeholder"
             app:layout_constraintBottom_toTopOf="@id/movie_title"
             app:layout_constraintEnd_toEndOf="parent"

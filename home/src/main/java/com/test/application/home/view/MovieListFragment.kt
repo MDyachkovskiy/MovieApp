@@ -1,5 +1,6 @@
 package com.test.application.home.view
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -54,18 +55,38 @@ class MovieListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        movieAdapter = MovieCollectionAdapter()
-        binding.movieListRV.layoutManager = GridLayoutManager(requireContext(), 3)
-        binding.movieListRV.adapter = movieAdapter
+        val (itemWidth, itemHeight) = calculateItemWidth()
+        initializeRecyclerView(itemWidth, itemHeight)
+        setupItemClickListener()
+    }
 
-        val spacingInPixels = resources
-            .getDimensionPixelSize(com.test.application.core.R.dimen.margin_6dp_small)
-        binding.movieListRV.addItemDecoration(SpacingItemDecoration(spacingInPixels))
-
+    private fun setupItemClickListener() {
         movieAdapter.listener = { movieId ->
             val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)
             (activity as Navigator).navigateToMovieDetailsFragment(bundle)
         }
+    }
+
+    private fun initializeRecyclerView(itemWidth: Int, itemHeight: Int) {
+        movieAdapter = MovieCollectionAdapter(itemWidth, itemHeight)
+        binding.movieListRV.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.movieListRV.adapter = movieAdapter
+        val spacingInPixels = resources
+            .getDimensionPixelSize(com.test.application.core.R.dimen.margin_8dp_small)
+        binding.movieListRV.addItemDecoration(SpacingItemDecoration(spacingInPixels))
+    }
+
+    private fun calculateItemWidth(): Pair<Int, Int> {
+        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
+        val spacingInPixels = resources
+            .getDimensionPixelSize(com.test.application.core.R.dimen.margin_10dp_small)
+
+        val originalWidthDp = resources.getDimensionPixelSize(R.dimen.item_movie_width)
+        val originalHeightDp = resources.getDimensionPixelSize(R.dimen.item_movie_height)
+
+        val itemWidth = (screenWidth - (4 * spacingInPixels)) / 3
+        val itemHeight = (itemWidth * originalHeightDp) / originalWidthDp
+        return Pair(itemWidth, itemHeight)
     }
 
     private fun observeMovieData(movieDataType: String) {
