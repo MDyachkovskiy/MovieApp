@@ -10,3 +10,4 @@ const val KEY_BUNDLE_MOVIE_TYPE = "movie_data_type"
 
 
 const val MOVIE_DETAILS_TAG = "MovieDetails"
+const val MOVIE_LIST_TAG = "MovieListFragment"

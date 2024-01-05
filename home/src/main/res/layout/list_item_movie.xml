@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_movie_height"
-    android:layout_marginBottom="@dimen/margin_8dp_small"
+    android:layout_marginBottom="@dimen/margin_16dp_medium"
     android:background="@color/black">
 
     <androidx.constraintlayout.widget.ConstraintLayout

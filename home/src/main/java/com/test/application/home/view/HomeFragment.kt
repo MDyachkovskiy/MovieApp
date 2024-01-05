@@ -1,11 +1,13 @@
 package com.test.application.home.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.test.application.core.utils.MOVIE_LIST_TAG
 import com.test.application.home.R
 import com.test.application.home.databinding.FragmentHomeBinding
 import com.test.application.home.navigation.MovieListFragmentHandler
@@ -18,15 +20,6 @@ class HomeFragment : Fragment(), MovieListFragmentHandler {
     private val binding get() = _binding!!
 
     private val viewModel: HomeSharedViewModel by viewModels()
-
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        newInstance()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +39,13 @@ class HomeFragment : Fragment(), MovieListFragmentHandler {
             .replace(R.id.container_Top250, Top250MovieFragment.newInstance())
             .replace(R.id.container_TvShows, TopTvShowsFragment.newInstance())
             .commit()
+
+        childFragmentManager.addOnBackStackChangedListener {
+            Log.d("@@@", "HomeFragment Back stack changed. Current back stack count: " + childFragmentManager.backStackEntryCount)
+            for (index in 0 until childFragmentManager.backStackEntryCount) {
+                Log.d("@@@", "HomeFragment Back stack entry at $index: " + childFragmentManager.getBackStackEntryAt(index).name)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -57,8 +57,9 @@ class HomeFragment : Fragment(), MovieListFragmentHandler {
         activateMovieListContainer()
         childFragmentManager.beginTransaction()
             .replace(R.id.movie_list_container, MovieListFragment.newInstance(bundle))
-            .addToBackStack(null)
+            .addToBackStack(MOVIE_LIST_TAG)
             .commit()
+        Log.d("@@@", "HomeFragment MovieListFragment added to back stack")
     }
 
     private fun activateMovieListContainer() {

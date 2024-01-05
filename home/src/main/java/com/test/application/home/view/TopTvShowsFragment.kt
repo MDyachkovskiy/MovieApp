@@ -14,6 +14,7 @@ import com.test.application.home.adapter.MovieCollectionAdapter
 import com.test.application.home.databinding.FragmentTvshowsBinding
 import com.test.application.home.navigation.MovieListFragmentHandler
 import com.test.application.home.util.MovieDataType
+import com.test.application.home.util.RecyclerViewType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,7 +51,9 @@ class TopTvShowsFragment : BaseFragment<FragmentTvshowsBinding>(
     }
 
     private fun initRV() {
-        movieAdapter = MovieCollectionAdapter()
+        movieAdapter = MovieCollectionAdapter().apply {
+            setViewType(RecyclerViewType.HORIZONTAL_LIST)
+        }
 
         binding.RVTvShows.init(movieAdapter, LinearLayoutManager.HORIZONTAL)
 

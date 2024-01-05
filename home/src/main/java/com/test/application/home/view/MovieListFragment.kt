@@ -2,21 +2,26 @@ package com.test.application.home.view
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE_TYPE
+import com.test.application.core.utils.MOVIE_LIST_TAG
 import com.test.application.home.R
 import com.test.application.home.adapter.MovieCollectionAdapter
 import com.test.application.home.adapter.SpacingItemDecoration
 import com.test.application.home.databinding.FragmentMovieListBinding
 import com.test.application.home.util.MovieDataType
+import com.test.application.home.util.RecyclerViewType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +32,7 @@ class MovieListFragment : Fragment() {
 
     private val viewModel: HomeSharedViewModel by viewModels({requireParentFragment()})
 
-    private lateinit var movieAdapter: MovieCollectionAdapter
+    private var movieAdapter: MovieCollectionAdapter? = null
 
     private val movieDataType: String by lazy {
         arguments?.getString(KEY_BUNDLE_MOVIE_TYPE) ?:
@@ -50,37 +55,84 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeAdapter()
         setupRecyclerView()
         observeMovieData(movieDataType)
-        setupBackButton()
+        setupButtons()
     }
 
-    private fun setupBackButton() {
-        binding.backButton.setOnClickListener {
-            childFragmentManager.popBackStack()
-        }
-    }
-
-    private fun setupRecyclerView() {
+    private fun initializeAdapter() {
         val (itemWidth, itemHeight) = calculateItemWidth()
-        initializeRecyclerView(itemWidth, itemHeight)
-        setupItemClickListener()
-    }
-
-    private fun setupItemClickListener() {
-        movieAdapter.listener = { movieId ->
-            val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)
-            (activity as Navigator).navigateToMovieDetailsFragment(bundle)
+        movieAdapter = MovieCollectionAdapter(itemWidth, itemHeight).apply {
+            setupItemClickListener()
         }
     }
 
-    private fun initializeRecyclerView(itemWidth: Int, itemHeight: Int) {
-        movieAdapter = MovieCollectionAdapter(itemWidth, itemHeight)
+    private fun setupButtons() {
+        binding.backButton.setOnClickListener {
+            Log.d("@@@", "MovieListFragment Back button clicked")
+            parentFragmentManager.popBackStack(MOVIE_LIST_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE) }
+
+        binding.listViewButton.setOnClickListener { switchToListLayout() }
+        binding.gridViewButton.setOnClickListener { switchToGridLayout() }
+    }
+
+    private fun switchToGridLayout() {
+        val (itemWidth, itemHeight) = calculateItemWidth()
         binding.movieListRV.layoutManager = GridLayoutManager(requireContext(), 3)
-        binding.movieListRV.adapter = movieAdapter
+        recreateAdapter(itemWidth, itemHeight, RecyclerViewType.GRID)
+        updateButtonVisibility(isListLayout = false)
+        addItemDecoration()
+    }
+
+    private fun addItemDecoration() {
         val spacingInPixels = resources
             .getDimensionPixelSize(com.test.application.core.R.dimen.margin_8dp_small)
         binding.movieListRV.addItemDecoration(SpacingItemDecoration(spacingInPixels))
+    }
+
+    private fun switchToListLayout() {
+        binding.movieListRV.layoutManager = LinearLayoutManager(requireContext())
+        recreateAdapter(viewType = RecyclerViewType.LIST)
+        updateButtonVisibility(isListLayout = true)
+        removeItemDecoration()
+    }
+
+    private fun recreateAdapter(width: Int = -1, height: Int = -1, viewType: RecyclerViewType) {
+        movieAdapter = MovieCollectionAdapter(width, height).apply {
+            setViewType(viewType)
+            setupItemClickListener()
+        }
+        binding.movieListRV.adapter = movieAdapter
+        observeMovieData(movieDataType)
+    }
+
+    private fun removeItemDecoration() {
+        while (binding.movieListRV.itemDecorationCount > 0) {
+            binding.movieListRV.removeItemDecorationAt(0)
+        }
+    }
+
+    private fun updateButtonVisibility(isListLayout: Boolean) {
+        binding.listViewButton.visibility = if(isListLayout) View.GONE else View.VISIBLE
+        binding.gridViewButton.visibility = if(isListLayout) View.VISIBLE else View.GONE
+    }
+
+    private fun setupRecyclerView() {
+        binding.movieListRV.apply {
+            layoutManager = GridLayoutManager(requireContext(), 3)
+            adapter = movieAdapter
+            val spacingInPixels = resources
+                .getDimensionPixelSize(com.test.application.core.R.dimen.margin_8dp_small)
+            addItemDecoration(SpacingItemDecoration(spacingInPixels))
+        }
+    }
+
+    private fun setupItemClickListener() {
+        movieAdapter?.listener = { movieId ->
+            val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)
+            (activity as Navigator).navigateToMovieDetailsFragment(bundle)
+        }
     }
 
     private fun calculateItemWidth(): Pair<Int, Int> {
@@ -97,22 +149,15 @@ class MovieListFragment : Fragment() {
     }
 
     private fun observeMovieData(movieDataType: String) {
-        when(movieDataType){
-            MovieDataType.TOP_250.name -> {
-                viewModel.top250LiveData.observe(viewLifecycleOwner){ pagingData ->
-                    movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
-                }
-            }
-            MovieDataType.TOP_TV_SHOWS.name -> {
-                viewModel.topTvShowsLiveData.observe(viewLifecycleOwner){ pagingData ->
-                    movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
-                }
-            }
-            MovieDataType.UPCOMING_MOVIES.name -> {
-                viewModel.upComingLiveData.observe(viewLifecycleOwner){ pagingData ->
-                    movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
-                }
-            }
+        val liveData = when (movieDataType) {
+            MovieDataType.TOP_250.name -> viewModel.top250LiveData
+            MovieDataType.TOP_TV_SHOWS.name -> viewModel.topTvShowsLiveData
+            MovieDataType.UPCOMING_MOVIES.name -> viewModel.upComingLiveData
+            else -> throw IllegalArgumentException(getString(R.string.incorrect_movie_data))
+        }
+        liveData.removeObservers(viewLifecycleOwner)
+        liveData.observe(viewLifecycleOwner) { pagingData ->
+            movieAdapter?.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
     }
 
