@@ -17,7 +17,7 @@ class HomeScreenInteractorImpl(
         return remoteDataSource.getTopTvShowsCollectionFromServer()
     }
 
-    override fun getUpComingCollectionFromServer(): Flow<PagingData<Movie>> {
-        return remoteDataSource.getUpComingCollectionFromServer()
+    override fun getUpComingCollectionFromServer(type: String): Flow<PagingData<Movie>> {
+        return remoteDataSource.getUpComingCollectionFromServer(type)
     }
 }

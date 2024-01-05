@@ -8,7 +8,9 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.test.application.core.domain.collection.Movie
 import com.test.application.core.interactor.HomeScreenInteractor
+import com.test.application.home.util.MovieType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,6 +29,8 @@ class HomeSharedViewModel @Inject constructor(
     private val _upComingLiveData = MutableLiveData<PagingData<Movie>>()
     val upComingLiveData: LiveData<PagingData<Movie>> = _upComingLiveData
 
+    private val flowsCache = mutableMapOf<MovieType, Flow<PagingData<Movie>>>()
+
     fun loadTop250Movies() {
         viewModelScope.launch {
             interactor.getTop250CollectionFromServer().cachedIn(viewModelScope)
@@ -41,10 +45,13 @@ class HomeSharedViewModel @Inject constructor(
         }
     }
 
-    fun loadUpcomingMovies() {
+    fun loadUpcomingMovies(movieType: MovieType) {
+        val flow = flowsCache.getOrPut(movieType) {
+            interactor.getUpComingCollectionFromServer(movieType.type).cachedIn(viewModelScope)
+
+        }
         viewModelScope.launch {
-            interactor.getUpComingCollectionFromServer().cachedIn(viewModelScope)
-                .collectLatest { pagingData -> _upComingLiveData.value = pagingData }
+            flow.collectLatest { pagingData -> _upComingLiveData.value = pagingData }
         }
     }
 }

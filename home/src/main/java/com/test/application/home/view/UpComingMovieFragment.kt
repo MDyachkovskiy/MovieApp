@@ -14,6 +14,7 @@ import com.test.application.home.adapter.MovieCollectionAdapter
 import com.test.application.home.databinding.FragmentUpcomingBinding
 import com.test.application.home.navigation.MovieListFragmentHandler
 import com.test.application.home.util.MovieDataType
+import com.test.application.home.util.MovieType
 import com.test.application.home.util.RecyclerViewType
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,13 +35,26 @@ class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
         initRV()
         initTextButton()
         initViewModel()
+        initChips()
+    }
+
+    private fun initChips() {
+        binding.chipFilter.setOnCheckedStateChangeListener { _, checkedIds ->
+            val movieType = when(checkedIds) {
+                binding.chipMovie -> MovieType.MOVIE
+                binding.chipTvSeries -> MovieType.TV_SERIES
+                binding.chipCartoon -> MovieType.CARTOON
+                else -> MovieType.MOVIE
+            }
+            viewModel.loadUpcomingMovies(movieType)
+        }
     }
 
     private fun initViewModel() {
         viewModel.upComingLiveData.observe(viewLifecycleOwner) { pagingData ->
             movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
-        viewModel.loadUpcomingMovies()
+        viewModel.loadUpcomingMovies(MovieType.MOVIE)
     }
 
     private fun initTextButton() {

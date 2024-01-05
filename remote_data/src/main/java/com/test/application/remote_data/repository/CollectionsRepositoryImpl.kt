@@ -29,10 +29,10 @@ class CollectionsRepositoryImpl(
         ).flow
     }
 
-    override fun getUpComingCollectionFromServer(): Flow<PagingData<Movie>> {
+    override fun getUpComingCollectionFromServer(type: String): Flow<PagingData<Movie>> {
        return Pager(
            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-           pagingSourceFactory = { UpComingPagingSource(kinopoiskService) }
+           pagingSourceFactory = { UpComingPagingSource(kinopoiskService, type) }
        ).flow
     }
 }

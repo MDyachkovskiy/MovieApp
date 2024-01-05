@@ -15,7 +15,6 @@ import com.test.application.remote_data.utils.PERSON_SELECTED_FIELDS
 import com.test.application.remote_data.utils.RESPONSE_QUANTITY
 import com.test.application.remote_data.utils.TOP_COLLECTIONS_END_POINT
 import com.test.application.remote_data.utils.TV_SHOW_TYPE
-import com.test.application.remote_data.utils.UPCOMING_YEAR
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -59,8 +58,8 @@ interface KinopoiskService {
     fun getUpComingCollectionAsync(
         @Query("page") page: Int? = 1,
         @Query("limit") limit: Int? = RESPONSE_QUANTITY,
-        @Query("movie") movie: String? = "!null",
-        @Query("year") year: Int? = UPCOMING_YEAR,
+        @Query("type") type: String? = "movie",
+        @Query("premiere.world") premiereWorld: String? = "",
         @Query("selectFields") selectedFields: String? = COLLECTION_SELECTED_FIELDS
     ) : Deferred<CollectionsDTO>
 

@@ -6,6 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.test.application.core.domain.collection.Movie
 import coil.load
+import com.test.application.core.utils.convert
 import com.test.application.home.R
 import com.test.application.home.databinding.ItemMovieBinding
 import com.test.application.home.databinding.ListItemMovieBinding
@@ -93,6 +94,8 @@ class MovieCollectionAdapter(
                 }
 
                 tvMovieTitle.text = movie.name
+                tvMovieReleaseYear.text = movie.year
+                tvMovieGenre.text = movie.genres?.convert { genre -> genre.name }
 
                 tvRating.text = movie.rating.imdb.toString()
             }

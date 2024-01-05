@@ -41,16 +41,18 @@ fun MovieDTO.toDomain(): Movie {
     return Movie(
         id = id,
         rating = rating.toDomain(),
-        name = name,
-        poster = poster.toDomain(),
+        year = year,
+        genres = this.genres?.map { genreDTO -> genreDTO.toDomain() },
+        name = name ?: "",
+        poster = poster?.toDomain() ?: Poster(),
         description = description
     )
 }
 
 fun PosterDTO.toDomain(): Poster {
     return Poster(
-        previewUrl = previewUrl,
-        url = url
+        previewUrl = previewUrl ?: "",
+        url = url ?: ""
     )
 }
 

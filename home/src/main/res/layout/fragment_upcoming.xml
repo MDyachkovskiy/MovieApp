@@ -15,12 +15,12 @@
         android:layout_marginStart="@dimen/margin_16dp_medium"
         android:layout_marginTop="@dimen/margin_16dp_medium"
         android:text="@string/tv_UpComing"
-        android:drawableRight="@drawable/ic_arrow_forward"
         android:drawablePadding="@dimen/margin_8dp_small"
-        android:drawableTint="@color/white"
         android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:drawableRightCompat="@drawable/ic_arrow_forward"
+        app:drawableTint="@color/white" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_filter"
@@ -34,6 +34,7 @@
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/chip_movie"
             style="@style/CustomChipFilterStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,6 +43,7 @@
             android:text="@string/chip_movie" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/chip_tv_series"
             style="@style/CustomChipFilterStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,9 +51,11 @@
             android:text="@string/chip_tv_series" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/chip_cartoon"
             style="@style/CustomChipFilterStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checkable="true"
             android:text="@string/chip_cartoon" />
 
     </com.google.android.material.chip.ChipGroup>

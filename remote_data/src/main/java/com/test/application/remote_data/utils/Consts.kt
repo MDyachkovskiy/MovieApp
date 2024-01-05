@@ -9,7 +9,6 @@ const val DENOMINATION_SORT = -1
 const val RESPONSE_QUANTITY = 10
 const val MOVIE_TYPE = "movie"
 const val TV_SHOW_TYPE = "tv-series"
-const val UPCOMING_YEAR = 2023
-const val COLLECTION_SELECTED_FIELDS = "id name poster rating"
+const val COLLECTION_SELECTED_FIELDS = "id name poster rating year genres"
 const val MOVIE_SEARCH = "v1.2/movie/search"
 
