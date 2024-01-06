@@ -17,21 +17,33 @@ class CollectionsRepositoryImpl(
 
     override fun getTop250CollectionFromServer(): Flow<PagingData<Movie>> {
         return Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false,
+                initialLoadSize = 20,
+                prefetchDistance = 10),
             pagingSourceFactory = { Top250PagingSource(kinopoiskService) }
         ).flow
     }
 
     override fun getTopTvShowsCollectionFromServer(): Flow<PagingData<Movie>> {
         return Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false,
+                initialLoadSize = 20,
+                prefetchDistance = 10),
             pagingSourceFactory = { TopTvShowsPagingSource(kinopoiskService) }
         ).flow
     }
 
     override fun getUpComingCollectionFromServer(type: String): Flow<PagingData<Movie>> {
        return Pager(
-           config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+           config = PagingConfig(
+               pageSize = 20,
+               enablePlaceholders = false,
+               initialLoadSize = 20,
+               prefetchDistance = 10),
            pagingSourceFactory = { UpComingPagingSource(kinopoiskService, type) }
        ).flow
     }

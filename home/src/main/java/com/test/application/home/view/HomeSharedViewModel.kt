@@ -51,7 +51,8 @@ class HomeSharedViewModel @Inject constructor(
 
         }
         viewModelScope.launch {
-            flow.collectLatest { pagingData -> _upComingLiveData.value = pagingData }
+            flow.collectLatest { pagingData ->
+                _upComingLiveData.value = pagingData }
         }
     }
 }
