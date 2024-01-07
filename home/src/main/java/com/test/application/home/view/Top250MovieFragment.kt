@@ -14,6 +14,7 @@ import com.test.application.home.adapter.MovieCollectionAdapter
 import com.test.application.home.databinding.FragmentTop250movieBinding
 import com.test.application.home.navigation.MovieListFragmentHandler
 import com.test.application.home.util.MovieDataType
+import com.test.application.home.util.MovieType
 import com.test.application.home.util.RecyclerViewType
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,13 +34,26 @@ class Top250MovieFragment : BaseFragment<FragmentTop250movieBinding>(
         initRV()
         initTextButton()
         initViewModel()
+        initChips()
+    }
+
+    private fun initChips() {
+        binding.chipFilter.setOnCheckedStateChangeListener { _, checkedIds ->
+            val movieType = when {
+                binding.chipMovie.id in checkedIds -> MovieType.MOVIE
+                binding.chipTvSeries.id in checkedIds -> MovieType.TV_SERIES
+                binding.chipCartoon.id in checkedIds -> MovieType.CARTOON
+                else -> MovieType.MOVIE
+            }
+            viewModel.loadTop250Movies(movieType)
+        }
     }
 
     private fun initViewModel() {
         viewModel.top250LiveData.observe(viewLifecycleOwner){ pagingData ->
             movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
-        viewModel.loadTop250Movies()
+        viewModel.loadTop250Movies(MovieType.MOVIE)
     }
 
     private fun initTextButton() {

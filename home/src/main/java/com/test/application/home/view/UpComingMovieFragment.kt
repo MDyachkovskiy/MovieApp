@@ -2,17 +2,14 @@ package com.test.application.home.view
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.chip.Chip
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE_TYPE
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragment
-import com.test.application.home.R
 import com.test.application.home.adapter.MovieCollectionAdapter
 import com.test.application.home.databinding.FragmentUpcomingBinding
 import com.test.application.home.navigation.MovieListFragmentHandler
@@ -42,10 +39,6 @@ class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
     }
 
     private fun initChips() {
-        setCheckedIconColor(binding.chipMovie, R.color.chip_text_color)
-        setCheckedIconColor(binding.chipTvSeries, R.color.chip_text_color)
-        setCheckedIconColor(binding.chipCartoon, R.color.chip_text_color)
-
         binding.chipFilter.setOnCheckedStateChangeListener { _, checkedIds ->
             val movieType = when {
                 binding.chipMovie.id in checkedIds -> MovieType.MOVIE
@@ -54,14 +47,6 @@ class UpComingMovieFragment : BaseFragment<FragmentUpcomingBinding>(
                 else -> MovieType.MOVIE
             }
             viewModel.loadUpcomingMovies(movieType)
-        }
-    }
-
-    private fun setCheckedIconColor(chip: Chip, colorResId: Int) {
-        chip.checkedIcon?.let { icon ->
-            val wrappedDrawable = DrawableCompat.wrap(icon)
-            DrawableCompat.setTint(wrappedDrawable, colorResId)
-            chip.checkedIcon = wrappedDrawable
         }
     }
 

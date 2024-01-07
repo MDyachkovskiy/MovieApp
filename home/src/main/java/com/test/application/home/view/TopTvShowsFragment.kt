@@ -14,6 +14,7 @@ import com.test.application.home.adapter.MovieCollectionAdapter
 import com.test.application.home.databinding.FragmentTvshowsBinding
 import com.test.application.home.navigation.MovieListFragmentHandler
 import com.test.application.home.util.MovieDataType
+import com.test.application.home.util.MovieType
 import com.test.application.home.util.RecyclerViewType
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,13 +35,28 @@ class TopTvShowsFragment : BaseFragment<FragmentTvshowsBinding>(
         initRV()
         initTextButton()
         initViewModel()
+        initChips()
+    }
+
+    private fun initChips() {
+        binding.chipFilter.setOnCheckedStateChangeListener{_, checkedIds ->
+            val movieType = when {
+                binding.chipNetflix.id in checkedIds -> MovieType.NETFLIX
+                binding.chipPrime.id in checkedIds -> MovieType.PRIME
+                binding.chipHbo.id in checkedIds -> MovieType.HBO
+                binding.chipDisney.id in checkedIds -> MovieType.DISNEY
+                binding.chipApple.id in checkedIds -> MovieType.APPLE
+                else -> MovieType.MOVIE
+            }
+            viewModel.loadTopTvShows(movieType)
+        }
     }
 
     private fun initViewModel() {
         viewModel.topTvShowsLiveData.observe(viewLifecycleOwner) { pagingData ->
             movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
-        viewModel.loadTopTvShows()
+        viewModel.loadTopTvShows(MovieType.NETFLIX)
     }
 
     private fun initTextButton() {

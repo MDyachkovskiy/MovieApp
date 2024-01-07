@@ -15,25 +15,25 @@ class CollectionsRepositoryImpl(
     private val kinopoiskService: KinopoiskService
 ) : CollectionsRepository<Movie> {
 
-    override fun getTop250CollectionFromServer(): Flow<PagingData<Movie>> {
+    override fun getTop250CollectionFromServer(type: String): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
                 enablePlaceholders = false,
                 initialLoadSize = 20,
                 prefetchDistance = 10),
-            pagingSourceFactory = { Top250PagingSource(kinopoiskService) }
+            pagingSourceFactory = { Top250PagingSource(kinopoiskService, type) }
         ).flow
     }
 
-    override fun getTopTvShowsCollectionFromServer(): Flow<PagingData<Movie>> {
+    override fun getTopTvShowsCollectionFromServer(type: String): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
                 enablePlaceholders = false,
                 initialLoadSize = 20,
                 prefetchDistance = 10),
-            pagingSourceFactory = { TopTvShowsPagingSource(kinopoiskService) }
+            pagingSourceFactory = { TopTvShowsPagingSource(kinopoiskService, type) }
         ).flow
     }
 
