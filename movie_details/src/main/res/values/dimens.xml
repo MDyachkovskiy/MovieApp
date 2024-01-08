@@ -7,4 +7,6 @@
     <dimen name="persons_item_height">180dp</dimen>
     <dimen name="persons_item_width">100dp</dimen>
 
+    <dimen name="movie_images_height">150dp</dimen>
+
 </resources>

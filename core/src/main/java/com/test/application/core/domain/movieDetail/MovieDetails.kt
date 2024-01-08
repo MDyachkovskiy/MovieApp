@@ -10,6 +10,8 @@ data class MovieDetails(
     val name: String = "",
     val persons: List<Person> = listOf(),
     val movieDetailsPoster: MovieDetailsPoster? = MovieDetailsPoster(),
+    val backdrop: Backdrop? = Backdrop(),
+    val premiere: Premiere? = Premiere(),
     val rating: Rating? = Rating(),
     val similarMovies: List<SimilarMovy>? = listOf(),
     val type: String? = "",

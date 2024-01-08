@@ -15,10 +15,15 @@
     <string name="user_note_title">Добавьте свой комментарий</string>
     <string name="user_comment_hint">Оставьте здесь свой комментарий по фильму</string>
 
+    <string name="movie_title_mock">Длинное название фильма</string>
+    <string name="movie_release_date_mock">ноябрь 2024</string>
+    <string name="movie_duration_mock">143 мин</string>
+
     <string name="format_movie_budget"> %1$s %2$s</string>
     <string name="format_movie_length"> %1$s мин</string>
 
     <string name="incorrect_movie_id"> Ошибка в получении id фильма</string>
     <string name="error_back_pressed_handler"> Ошибка: Контекст должен реализовать интерфейс BackPressedHandler </string>
+    <string name="undefined_date"> Дата неизвестна</string>
 
 </resources>
