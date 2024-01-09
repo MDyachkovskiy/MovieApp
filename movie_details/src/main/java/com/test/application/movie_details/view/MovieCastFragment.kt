@@ -14,7 +14,9 @@ import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.movie_details.adapter.ActorsAdapter
 import com.test.application.movie_details.databinding.FragmentMovieCastBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieCastFragment : BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieCastBinding>(
     FragmentMovieCastBinding::inflate
 ) {

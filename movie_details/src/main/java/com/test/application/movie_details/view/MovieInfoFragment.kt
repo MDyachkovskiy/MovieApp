@@ -20,12 +20,14 @@ import com.test.application.movie_details.R
 import com.test.application.movie_details.adapter.MovieStaffAdapter
 import com.test.application.movie_details.adapter.PersonsAdapter
 import com.test.application.movie_details.databinding.FragmentMovieInfoBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Locale
 
+@AndroidEntryPoint
 class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieInfoBinding>(
     FragmentMovieInfoBinding::inflate
 ) {

@@ -6,12 +6,14 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import coil.load
+import com.google.android.material.tabs.TabLayoutMediator
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.navigation.BackPressedHandler
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.movie_details.R
+import com.test.application.movie_details.adapter.ViewPagerAdapter
 import com.test.application.movie_details.databinding.FragmentMovieDetailsNewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
@@ -85,6 +87,16 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
         saveMovie(movie, date)
         initMoviePosterImage(movie)
         initTextData(movie)
+        setupViewPagerAndTabs()
+    }
+
+    private fun setupViewPagerAndTabs() {
+        val pagerAdapter = ViewPagerAdapter(this)
+        binding.movieInfoViewPager.adapter = pagerAdapter
+
+        TabLayoutMediator(binding.tabLayout, binding.movieInfoViewPager) { tab, position ->
+            tab.text = pagerAdapter.tabTitles[position]
+        }.attach()
     }
 
     private fun initTextData(movie: MovieDetails) {

@@ -11,7 +11,9 @@ import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.movie_details.adapter.CommentsAdapter
 import com.test.application.movie_details.databinding.FragmentMovieCommentsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieCommentsFragment : BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieCommentsBinding>(
     FragmentMovieCommentsBinding::inflate
 ) {
@@ -34,6 +36,6 @@ class MovieCommentsFragment : BaseFragmentWithAppState<AppState, MovieDetails, F
 
     private fun initCommentsRecyclerView(facts: List<Facts>) {
         val commentsAdapter = CommentsAdapter(facts)
-        binding.rvMovieComments.init(commentsAdapter, LinearLayoutManager.VERTICAL) }
+        binding.rvMovieComments.init(commentsAdapter, LinearLayoutManager.VERTICAL)
     }
 }
