@@ -6,5 +6,7 @@ data class SimilarMovy(
     val id: Int = 0,
     val name: String? = "",
     val movieDetailsPoster: MovieDetailsPoster = MovieDetailsPoster(),
-    val type: String? = ""
+    val type: String? = "",
+    val year: String? = "",
+    val rating: Rating = Rating()
 )

@@ -6,5 +6,7 @@ data class SimilarMovyDTO(
     val id: Int = 0,
     val name: String = "",
     val poster: MovieDetailsPosterDTO = MovieDetailsPosterDTO(),
-    val type: String = ""
+    val type: String = "",
+    val year: String = "",
+    val rating: RatingDTO = RatingDTO()
 )

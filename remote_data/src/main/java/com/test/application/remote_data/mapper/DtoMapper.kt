@@ -6,6 +6,7 @@ import com.test.application.core.domain.collection.Poster
 import com.test.application.core.domain.movieDetail.Backdrop
 import com.test.application.core.domain.movieDetail.Budget
 import com.test.application.core.domain.movieDetail.Country
+import com.test.application.core.domain.movieDetail.Facts
 import com.test.application.core.domain.movieDetail.Genre
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.movieDetail.MovieDetailsPoster
@@ -21,6 +22,7 @@ import com.test.application.remote_data.dto.collection.PosterDTO
 import com.test.application.remote_data.dto.movieDetails.BackdropDTO
 import com.test.application.remote_data.dto.movieDetails.BudgetDTO
 import com.test.application.remote_data.dto.movieDetails.CountryDTO
+import com.test.application.remote_data.dto.movieDetails.FactsDTO
 import com.test.application.remote_data.dto.movieDetails.GenreDTO
 import com.test.application.remote_data.dto.movieDetails.MovieDetailsDTO
 import com.test.application.remote_data.dto.movieDetails.MovieDetailsPosterDTO
@@ -91,11 +93,18 @@ fun MovieDetailsDTO.toDomain(): MovieDetails {
         persons = this.persons.map { personDTO ->  personDTO.toDomain() },
         movieDetailsPoster = this.poster?.toDomain(),
         backdrop = this.backdrop?.toDomain(),
+        facts = this.facts?.map { factsDTO -> factsDTO.toDomain() },
         premiere = this.premiere?.toDomain(),
         rating = this.rating?.toDomain(),
         similarMovies = this.similarMovies?.map { similarMovyDTO -> similarMovyDTO.toDomain() },
         type = this.type,
         year = this.year
+    )
+}
+
+fun FactsDTO.toDomain(): Facts {
+    return Facts(
+        value = this.value
     )
 }
 
@@ -167,6 +176,8 @@ fun SimilarMovyDTO.toDomain(): SimilarMovy {
         id = this.id,
         name = this.name,
         movieDetailsPoster = this.poster.toDomain(),
-        type = this.type
+        year = this.year,
+        type = this.type,
+        rating = this.rating.toDomain()
     )
 }
