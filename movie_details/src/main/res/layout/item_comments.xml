@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_comment_item"
+    android:layout_margin="@dimen/margin_16dp_medium"
+    android:padding="@dimen/margin_8dp_small"
+    >
+
+    <TextView
+        style="@style/movie_description_text_style"
+        android:id="@+id/tv_movie_facts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/movie_description_mock"/>
+
+</FrameLayout>

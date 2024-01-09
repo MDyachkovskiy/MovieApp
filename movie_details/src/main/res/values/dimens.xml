@@ -8,5 +8,8 @@
     <dimen name="persons_item_width">100dp</dimen>
 
     <dimen name="movie_images_height">150dp</dimen>
+    <dimen name="list_item_movie_height">200dp</dimen>
+    <dimen name="item_movie_width">130dp</dimen>
+    <dimen name="rating_icon_size">15dp</dimen>
 
 </resources>
