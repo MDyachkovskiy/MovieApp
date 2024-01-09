@@ -41,5 +41,6 @@
     <string name="incorrect_movie_id"> Ошибка в получении id фильма</string>
     <string name="error_back_pressed_handler"> Ошибка: Контекст должен реализовать интерфейс BackPressedHandler </string>
     <string name="undefined_date"> Дата неизвестна</string>
+    <string name="undefined_budget"> Неизвестный бюджет</string>
 
 </resources>

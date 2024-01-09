@@ -13,7 +13,7 @@ import com.example.kotlin_movieapp.service.ConnectivityReceiver
 import com.test.application.core.navigation.BackPressedHandler
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.MOVIE_DETAILS_TAG
-import com.test.application.movie_details.MovieDetailsFragment
+import com.test.application.movie_details.view.MovieDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

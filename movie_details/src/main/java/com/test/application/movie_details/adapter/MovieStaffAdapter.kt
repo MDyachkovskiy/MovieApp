@@ -1,4 +1,4 @@
-package com.test.application.movie_details
+package com.test.application.movie_details.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,16 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.test.application.core.domain.movieDetail.Person
-import com.test.application.movie_details.databinding.ItemPersonsBinding
+import com.test.application.movie_details.databinding.ItemMovieStaffBinding
 
-class PersonsAdapter(
+class MovieStaffAdapter(
     private var personsData: List<Person>
-    ) : RecyclerView.Adapter<PersonsAdapter.ViewHolder>() {
+    ) : RecyclerView.Adapter<MovieStaffAdapter.ViewHolder>() {
 
     var listener: ((personId: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemPersonsBinding.inflate(LayoutInflater.from(parent.context),
+        val binding = ItemMovieStaffBinding.inflate(LayoutInflater.from(parent.context),
             parent,
             false)
 
@@ -31,7 +31,7 @@ class PersonsAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(person: Person) {
-            val binding = ItemPersonsBinding.bind(itemView)
+            val binding = ItemMovieStaffBinding.bind(itemView)
             with(binding) {
 
                 personPoster.load(person.photo){
@@ -40,6 +40,7 @@ class PersonsAdapter(
                 }
 
                 tvPersonName.text = person.name
+                tvPersonProfession.text = person.enProfession
 
                 root.setOnClickListener {
                     listener?.invoke(person.id)

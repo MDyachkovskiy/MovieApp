@@ -1,4 +1,4 @@
-package com.test.application.movie_details
+package com.test.application.movie_details.view
 
 import android.content.Context
 import android.os.Bundle
@@ -11,6 +11,7 @@ import com.test.application.core.navigation.BackPressedHandler
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
 import com.test.application.core.view.BaseFragmentWithAppState
+import com.test.application.movie_details.R
 import com.test.application.movie_details.databinding.FragmentMovieDetailsNewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
@@ -27,8 +28,6 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
         arguments?.getInt(KEY_BUNDLE_MOVIE) ?:
         throw IllegalArgumentException(getString(R.string.incorrect_movie_id))
     }
-
-    private lateinit var movie: MovieDetails
 
     private val viewModel: MovieDetailsViewModel by viewModels()
 
@@ -78,7 +77,6 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
         viewModel.getMovieFromRemoteSource(movieId)
     }
     override fun setupData(data: MovieDetails) {
-        movie = data
         displayMovie(data)
     }
 

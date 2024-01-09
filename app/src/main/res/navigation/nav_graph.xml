@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.test.application.movie_details.MovieDetailsFragment"
+        android:name="com.test.application.movie_details.view.MovieDetailsFragment"
         android:label="MovieDetailsFragment">
         <argument
             android:name="movie_id"

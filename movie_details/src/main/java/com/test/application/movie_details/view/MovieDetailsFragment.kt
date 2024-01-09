@@ -1,4 +1,4 @@
-package com.test.application.movie_details
+package com.test.application.movie_details.view
 
 import android.content.Context
 import android.os.Bundle
@@ -22,6 +22,8 @@ import com.test.application.core.utils.KEY_BUNDLE_PERSON
 import com.test.application.core.utils.convert
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragmentWithAppState
+import com.test.application.movie_details.R
+import com.test.application.movie_details.adapter.PersonsAdapter
 import com.test.application.movie_details.databinding.FragmentMovieDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
