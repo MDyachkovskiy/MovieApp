@@ -1,10 +1,14 @@
 package com.test.application.movie_details.view
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.test.application.core.domain.movieDetail.Budget
 import com.test.application.core.domain.movieDetail.Genre
@@ -14,11 +18,9 @@ import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.utils.KEY_BUNDLE_PERSON
 import com.test.application.core.utils.convert
-import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.movie_details.R
 import com.test.application.movie_details.adapter.MovieStaffAdapter
-import com.test.application.movie_details.adapter.PersonsAdapter
 import com.test.application.movie_details.databinding.FragmentMovieInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
@@ -60,13 +62,46 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
             val bundle = bundleOf(KEY_BUNDLE_PERSON to personId)
             (activity as Navigator).navigateToPersonDetailsFragment(bundle)
         }
-        binding.rvProductionStaff.init(PersonsAdapter(movieStaff), LinearLayoutManager.HORIZONTAL)
+        binding.rvProductionStaff.apply {
+            adapter = movieStaffAdapter
+            layoutManager = getCustomLayoutManager()
+        }
+    }
+
+    private fun getCustomLayoutManager(): LinearLayoutManager {
+        return object : LinearLayoutManager(requireContext(), HORIZONTAL, false) {
+            override fun smoothScrollToPosition(recyclerView: RecyclerView?, state: RecyclerView.State?, position: Int) {
+                val smoothScroller = object : LinearSmoothScroller(requireContext()) {
+                    override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float {
+                        val MILLISECONDS_PER_INCH = 50f
+                        return MILLISECONDS_PER_INCH / displayMetrics.densityDpi
+                    }
+
+                    override fun getVerticalSnapPreference(): Int {
+                        return SNAP_TO_START
+                    }
+
+                    override fun getHorizontalSnapPreference(): Int {
+                        return SNAP_TO_START
+                    }
+                }
+                smoothScroller.targetPosition = position
+                startSmoothScroll(smoothScroller)
+            }
+        }
     }
 
     private fun initGenresChip(genres: List<Genre>?) {
+        binding.genresChips.removeAllViews()
         genres?.forEach { genre ->
-            val chip = Chip(context, null, R.style.CustomSuggestionChipStyle).apply {
+            val chip = Chip(requireContext()).apply {
                 text = genre.name
+                chipBackgroundColor = ContextCompat
+                    .getColorStateList(requireContext(), com.test.application.core.R.color.black)
+                setTextColor(ContextCompat.getColor(requireContext(), com.test.application.core.R.color.white))
+                chipStrokeWidth = resources.getDimension(R.dimen.chip_stroke_width)
+                chipStrokeColor = ContextCompat
+                    .getColorStateList(requireContext(),com.test.application.core.R.color.white)
             }
             binding.genresChips.addView(chip)
         }
@@ -74,7 +109,9 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
 
     private fun displayTextInfo(movie: MovieDetails) {
         with(binding) {
-            tvMovieSlogan.text = movie.description
+            val movieSlogan = movie.slogan?.let {"\"$it\""} ?: ""
+            tvMovieSlogan.text = movieSlogan
+
             tvMovieDescription.text = movie.description
 
             tvMovieReleaseDate.text = reformatPremiereDate(movie.premiere?.world.toString())

@@ -4,6 +4,7 @@ data class MovieDetails(
     val budget: Budget? = Budget(),
     val countries: List<Country>? = listOf(),
     val description: String? = "",
+    val slogan: String? = "",
     val genres: List<Genre>? = listOf(),
     val id: Int = 0,
     val movieLength: Int? = 0,

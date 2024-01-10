@@ -17,8 +17,8 @@
         <ImageView
             android:id="@+id/person_poster"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:scaleType="centerCrop"
+            android:layout_height="110dp"
+            android:scaleType="fitXY"
             android:src="@drawable/person_placeholder"
             tools:ignore="ContentDescription" />
 

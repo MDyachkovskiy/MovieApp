@@ -18,7 +18,7 @@
     <string name="production_staff_title">Съемочная группа</string>
     <string name="trailer_title">Трейлеры</string>
     <string name="movie_information_title">Информация</string>
-    <string name="movie_length">Продолжительность фильма:</string>
+    <string name="movie_length">Продолжительность:</string>
     <string name="movie_country">Страна производства </string>
     <string name="movie_budget">Бюджет фильма</string>
 

@@ -4,7 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
 import com.test.application.core.domain.movieDetail.MovieDetails
@@ -93,10 +95,15 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
     private fun setupViewPagerAndTabs() {
         val pagerAdapter = ViewPagerAdapter(this)
         binding.movieInfoViewPager.adapter = pagerAdapter
+        binding.movieInfoViewPager.disableSwipe()
 
         TabLayoutMediator(binding.tabLayout, binding.movieInfoViewPager) { tab, position ->
             tab.text = pagerAdapter.tabTitles[position]
         }.attach()
+    }
+
+    private fun ViewPager2.disableSwipe() {
+        this.isUserInputEnabled = false
     }
 
     private fun initTextData(movie: MovieDetails) {
@@ -126,10 +133,47 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
             crossfade(true)
             placeholder(com.test.application.core.R.drawable.default_placeholder)
         }
-        binding.backgroundImage.load(movie.backdrop?.url) {
-            crossfade(true)
-            placeholder(com.test.application.core.R.drawable.default_placeholder)
+
+        val backdropUrl = movie.backdrop?.url
+        if (backdropUrl != null) {
+            binding.backgroundImage.visibility = View.VISIBLE
+            updateMoviePosterBlockLayout(true)
+            binding.backgroundImage.load(backdropUrl) {
+                crossfade(true)
+                listener(onError = {_,_ ->
+                    binding.backgroundImage.visibility = View.GONE
+                    updateMoviePosterBlockLayout(false)
+                })
+            }
+        } else {
+            binding.backgroundImage.visibility = View.GONE
+            updateMoviePosterBlockLayout(false)
         }
+    }
+
+    private fun updateMoviePosterBlockLayout(isBackgroundVisible: Boolean) {
+        val layoutParams = binding.moviePosterBlock.layoutParams as ConstraintLayout.LayoutParams
+
+        if (isBackgroundVisible) {
+            layoutParams.topToTop = ConstraintLayout.LayoutParams.UNSET
+            layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            layoutParams.bottomToBottom = binding.chipReleaseDate.id
+            layoutParams.marginStart = resources
+                .getDimensionPixelSize(com.test.application.core.R.dimen.margin_24dp_medium)
+        } else {
+            layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+            layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+            layoutParams.setMargins(
+                resources
+                    .getDimensionPixelSize(com.test.application.core.R.dimen.margin_24dp_medium),
+                resources
+                    .getDimensionPixelSize(com.test.application.core.R.dimen.margin_16dp_medium),
+                0,
+                0
+            )
+        }
+
+        binding.moviePosterBlock.layoutParams = layoutParams
     }
 
     private fun saveMovie(movie: MovieDetails, date: Long) {

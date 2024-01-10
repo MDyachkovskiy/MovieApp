@@ -4,6 +4,7 @@ data class MovieDetailsDTO(
     val budget: BudgetDTO? = BudgetDTO(),
     val countries: List<CountryDTO>? = listOf(),
     val description: String? = "",
+    val slogan: String? = "",
     val genres: List<GenreDTO>? = listOf(),
     val id: Int = 0,
     val movieLength: Int? = 0,

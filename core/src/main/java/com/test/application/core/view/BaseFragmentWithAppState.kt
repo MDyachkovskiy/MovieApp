@@ -100,7 +100,9 @@ abstract class BaseFragmentWithAppState<T : AppState, I, VB : ViewBinding>(
             .setDuration(300)
             .setListener(object: AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    bindingLoading.loadingLayout.visibility = View.GONE
+                    if (_bindingLoading != null) {
+                        bindingLoading.loadingLayout.visibility = View.GONE
+                    }
                 }
             })
     }

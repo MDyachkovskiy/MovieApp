@@ -86,6 +86,7 @@ fun MovieDetailsDTO.toDomain(): MovieDetails {
         budget = this.budget?.toDomain() ?: Budget("", 0),
         countries = this.countries?.map { countryDTO -> countryDTO.toDomain() },
         description = this.description,
+        slogan = this.slogan,
         genres = this.genres?.map { genreDTO -> genreDTO.toDomain() },
         id = this.id,
         movieLength = this.movieLength,
