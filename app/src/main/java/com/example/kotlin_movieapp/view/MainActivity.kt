@@ -4,16 +4,20 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.kotlin_movieapp.R
 import com.example.kotlin_movieapp.databinding.ActivityMainBinding
 import com.example.kotlin_movieapp.service.ConnectivityReceiver
+import com.test.application.core.navigation.BackPressedHandler
 import com.test.application.core.navigation.Navigator
+import com.test.application.core.utils.MOVIE_DETAILS_TAG
+import com.test.application.movie_details.view.MovieDetailsFragmentNew
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), Navigator {
+class MainActivity : AppCompatActivity(), Navigator, BackPressedHandler {
 
     private lateinit var binding : ActivityMainBinding
     private val connectivityReceiver = ConnectivityReceiver()
@@ -53,10 +57,23 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     override fun navigateToMovieDetailsFragment(bundle: Bundle) {
-        navController.navigate(R.id.movieDetailsFragment, bundle)
+        val movieDetailsFragment = MovieDetailsFragmentNew().apply {
+            arguments = bundle
+        }
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_container, movieDetailsFragment, MOVIE_DETAILS_TAG)
+            .addToBackStack(MOVIE_DETAILS_TAG)
+            .commit()
     }
 
     override fun navigateToPersonDetailsFragment(bundle: Bundle) {
         navController.navigate(R.id.personDetailsFragment, bundle)
+    }
+
+    override fun onBackButtonPressedInMovieDetails() {
+        if (supportFragmentManager.findFragmentByTag(MOVIE_DETAILS_TAG) != null) {
+            supportFragmentManager
+                .popBackStack(MOVIE_DETAILS_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
     }
 }

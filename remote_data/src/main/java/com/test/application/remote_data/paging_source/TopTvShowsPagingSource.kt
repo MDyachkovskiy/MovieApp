@@ -7,7 +7,8 @@ import com.test.application.remote_data.api.KinopoiskService
 import com.test.application.remote_data.mapper.toDomain
 
 class TopTvShowsPagingSource(
-    private val kinopoiskService: KinopoiskService
+    private val kinopoiskService: KinopoiskService,
+    private val type: String
 ) : PagingSource<Int, Movie>() {
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition
@@ -16,7 +17,8 @@ class TopTvShowsPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val currentPage = params.key ?: 1
-            val responseDTO = kinopoiskService.getTopTvShowsCollectionAsync(page = currentPage).await()
+            val responseDTO = kinopoiskService
+                .getTopTvShowsCollectionAsync(streamingName = type).await()
             val response = responseDTO.toDomain()
             val nextPage = if(currentPage < response.pages) currentPage + 1 else null
 

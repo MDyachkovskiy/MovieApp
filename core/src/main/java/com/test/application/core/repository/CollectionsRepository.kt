@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 
 interface CollectionsRepository<T: Any> {
-    fun getTop250CollectionFromServer(): Flow<PagingData<T>>
-    fun getTopTvShowsCollectionFromServer(): Flow<PagingData<T>>
-    fun getUpComingCollectionFromServer(): Flow<PagingData<T>>
+    fun getTop250CollectionFromServer(type: String): Flow<PagingData<T>>
+    fun getTopTvShowsCollectionFromServer(type: String): Flow<PagingData<T>>
+    fun getUpComingCollectionFromServer(type: String): Flow<PagingData<T>>
 }

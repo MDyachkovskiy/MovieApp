@@ -1,4 +1,4 @@
-package com.test.application.movie_details
+package com.test.application.movie_details.view
 
 import android.content.Context
 import android.os.Bundle
@@ -7,12 +7,14 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.movieDetail.Person
+import com.test.application.core.navigation.BackPressedHandler
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
@@ -20,6 +22,8 @@ import com.test.application.core.utils.KEY_BUNDLE_PERSON
 import com.test.application.core.utils.convert
 import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragmentWithAppState
+import com.test.application.movie_details.R
+import com.test.application.movie_details.adapter.PersonsAdapter
 import com.test.application.movie_details.databinding.FragmentMovieDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,6 +39,36 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
     private lateinit var movie: MovieDetails
 
     private val viewModel: MovieDetailsViewModel by viewModels()
+
+    private var backPressedHandler: BackPressedHandler? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is BackPressedHandler) {
+            backPressedHandler = context
+        } else {
+            throw RuntimeException(context.getString(R.string.error_back_pressed_handler))
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        backPressedHandler = null
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleBackPress()
+    }
+
+    private fun handleBackPress() {
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                backPressedHandler?.onBackButtonPressedInMovieDetails()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
