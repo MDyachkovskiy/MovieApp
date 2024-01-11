@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.test.application.core.domain.movieDetail.Budget
 import com.test.application.core.domain.movieDetail.Genre
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.movieDetail.Person
+import com.test.application.core.domain.movieDetail.Trailer
 import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.utils.KEY_BUNDLE_PERSON
@@ -21,7 +24,9 @@ import com.test.application.core.utils.convert
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.movie_details.R
 import com.test.application.movie_details.adapter.MovieStaffAdapter
+import com.test.application.movie_details.adapter.TrailerAdapter
 import com.test.application.movie_details.databinding.FragmentMovieInfoBinding
+import com.test.application.movie_details.utils.MILLISECONDS_PER_INCH
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import java.time.LocalDate
@@ -51,6 +56,39 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
         displayTextInfo(data)
         initGenresChip(data.genres)
         initMovieStaffList(data.persons)
+        initTrailersList(data.trailers)
+    }
+
+    private fun initTrailersList(trailers: List<Trailer>) {
+        val trailerAdapter = TrailerAdapter(trailers)
+        binding.rvTrailers.apply {
+            adapter = trailerAdapter
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        }
+        val youTubePlayerView = binding.videoContainer.youtubePlayerView
+        lifecycle.addObserver(youTubePlayerView)
+
+        trailerAdapter.listener = { videoUrl ->
+            if(videoUrl != null) {
+                binding.videoContainer.root.visibility = View.VISIBLE
+                val videoId = extractVideoIdFromUrl(videoUrl)
+                youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+                    override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                        youTubePlayer.loadVideo(videoId, 0f)
+                    }
+                })
+            }
+        }
+
+        binding.videoContainer.closeButton.setOnClickListener {
+            binding.videoContainer.root.visibility = View.GONE
+        }
+    }
+
+    private fun extractVideoIdFromUrl(videoUrl: String): String {
+        val regex = Regex("/embed/(\\S+)")
+        val match = regex.find(videoUrl)
+        return match?.groups?.get(1)?.value ?: ""
     }
 
     private fun initMovieStaffList(persons: List<Person>) {
@@ -73,7 +111,6 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
             override fun smoothScrollToPosition(recyclerView: RecyclerView?, state: RecyclerView.State?, position: Int) {
                 val smoothScroller = object : LinearSmoothScroller(requireContext()) {
                     override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float {
-                        val MILLISECONDS_PER_INCH = 50f
                         return MILLISECONDS_PER_INCH / displayMetrics.densityDpi
                     }
 

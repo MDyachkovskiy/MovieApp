@@ -28,6 +28,8 @@
     <string name="chip_genre_horror_mock">Ужасы</string>
     <string name="chip_genre_fantasy_mock">Фантастика</string>
     <string name="rating_mock">5.0</string>
+    <string name="votes_number_mock">20,8K</string>
+    <string name="trailer_name_mock">Название трейлера</string>
     <string name="movie_genre_mock">Приключение семейный ужастик</string>
     <string name="movie_release_year_mock">2023</string>
     <string name="movie_slogan_mock"> "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." </string>

@@ -15,7 +15,9 @@ data class MovieDetailsDTO(
     val facts: List<FactsDTO>? = listOf(),
     val premiere: PremiereDTO? = PremiereDTO(),
     val rating: RatingDTO? = RatingDTO(),
+    val votes: VotesDTO? = VotesDTO(),
     val similarMovies: List<SimilarMovyDTO>? = listOf(),
+    val videos: VideosDTO = VideosDTO(),
     val type: String? = "",
     val year: Int? = 0
 )

@@ -14,6 +14,8 @@ import com.test.application.core.domain.movieDetail.Person
 import com.test.application.core.domain.movieDetail.Premiere
 import com.test.application.core.domain.movieDetail.Rating
 import com.test.application.core.domain.movieDetail.SimilarMovy
+import com.test.application.core.domain.movieDetail.Trailer
+import com.test.application.core.domain.movieDetail.Votes
 import com.test.application.core.domain.searchCollection.SearchMovie
 import com.test.application.core.domain.searchCollection.SearchResponse
 import com.test.application.remote_data.dto.collection.CollectionsDTO
@@ -30,6 +32,8 @@ import com.test.application.remote_data.dto.movieDetails.PersonDTO
 import com.test.application.remote_data.dto.movieDetails.PremiereDTO
 import com.test.application.remote_data.dto.movieDetails.RatingDTO
 import com.test.application.remote_data.dto.movieDetails.SimilarMovyDTO
+import com.test.application.remote_data.dto.movieDetails.TrailerDTO
+import com.test.application.remote_data.dto.movieDetails.VotesDTO
 import com.test.application.remote_data.dto.search.SearchDTO
 import com.test.application.remote_data.dto.search.SearchMovieDTO
 
@@ -97,9 +101,25 @@ fun MovieDetailsDTO.toDomain(): MovieDetails {
         facts = this.facts?.map { factsDTO -> factsDTO.toDomain() },
         premiere = this.premiere?.toDomain(),
         rating = this.rating?.toDomain(),
+        votes = this.votes?.toDomain(),
         similarMovies = this.similarMovies?.map { similarMovyDTO -> similarMovyDTO.toDomain() },
+        trailers = this.videos.trailers.map {trailerDTO -> trailerDTO.toDomain() },
         type = this.type,
         year = this.year
+    )
+}
+
+fun TrailerDTO.toDomain(): Trailer {
+    return Trailer(
+        url = this.url,
+        name = this.name
+    )
+}
+
+fun VotesDTO.toDomain(): Votes {
+    return Votes(
+        kp = this.kp,
+        imdb = this.imdb
     )
 }
 
@@ -162,11 +182,8 @@ fun MovieDetailsPosterDTO.toDomain() : MovieDetailsPoster {
 
 fun RatingDTO.toDomain(): Rating {
     return Rating(
-        await = this.await,
-        filmCritics = this.filmCritics,
         imdb = this.imdb,
-        kp = this.kp,
-        russianFilmCritics = this.russianFilmCritics
+        kp = this.kp
     )
 }
 

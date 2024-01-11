@@ -18,6 +18,8 @@ import com.test.application.movie_details.R
 import com.test.application.movie_details.adapter.ViewPagerAdapter
 import com.test.application.movie_details.databinding.FragmentMovieDetailsNewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -115,8 +117,24 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
             } else { "" }
 
             chipReleaseDate.text = movie.premiere?.world?.let { reformatDate(it) }
+
+            tvKpRating.text = movie.rating?.kp?.let{ rating ->
+                BigDecimal(rating).setScale(1, RoundingMode.HALF_UP).toString() }
+            tvTmdbRating.text = movie.rating?.imdb.toString()
+
+            tvKpVotesCount.text = reformatVotes(movie.votes?.kp)
+            tvTmdbVotesCount.text = reformatVotes(movie.votes?.imdb)
         }
     }
+
+        private fun reformatVotes(votes: Int?): String {
+            return if(votes != null) {
+                val thousands = votes / 1000.0
+                String.format("%,.1fK", thousands)
+            } else {
+                "0.0"
+            }
+        }
 
     private fun reformatDate(dateStr: String): String {
         return try {

@@ -15,7 +15,9 @@ data class MovieDetails(
     val premiere: Premiere? = Premiere(),
     val facts: List<Facts>? = listOf(),
     val rating: Rating? = Rating(),
+    val votes: Votes? = Votes(),
     val similarMovies: List<SimilarMovy>? = listOf(),
+    val trailers: List<Trailer> = listOf(),
     val type: String? = "",
     val year: Int? = 0
 )
