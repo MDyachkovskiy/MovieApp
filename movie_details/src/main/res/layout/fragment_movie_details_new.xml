@@ -36,8 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_24dp_medium"
-                android:elevation="@dimen/margin_10dp_small"
                 app:cardCornerRadius="@dimen/corner_radius_10dp"
+                android:elevation="@dimen/margin_6dp_small"
                 app:layout_constraintBottom_toBottomOf="@id/chip_release_date"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -204,6 +204,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+            <include
+                android:id="@+id/video_container"
+                layout="@layout/video_player_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

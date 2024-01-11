@@ -6,9 +6,10 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
-import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.navigation.BackPressedHandler
 import com.test.application.core.utils.AppState.AppState
@@ -17,22 +18,24 @@ import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.movie_details.R
 import com.test.application.movie_details.adapter.ViewPagerAdapter
 import com.test.application.movie_details.databinding.FragmentMovieDetailsNewBinding
+import com.test.application.movie_details.navigation.TrailerPlayListener
+import com.test.application.movie_details.utils.disableSwipe
+import com.test.application.movie_details.utils.extractVideoIdFromUrl
+import com.test.application.movie_details.utils.reformatDate
+import com.test.application.movie_details.utils.reformatVotes
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
-import java.util.Locale
 
 @AndroidEntryPoint
-class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieDetailsNewBinding>(
-    FragmentMovieDetailsNewBinding::inflate
-) {
+class MovieDetailsFragmentNew :
+    BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieDetailsNewBinding>(
+        FragmentMovieDetailsNewBinding::inflate
+    ), TrailerPlayListener {
 
     private val movieId: Int by lazy {
-        arguments?.getInt(KEY_BUNDLE_MOVIE) ?:
-        throw IllegalArgumentException(getString(R.string.incorrect_movie_id))
+        arguments?.getInt(KEY_BUNDLE_MOVIE)
+            ?: throw IllegalArgumentException(getString(R.string.incorrect_movie_id))
     }
 
     private val viewModel: MovieDetailsViewModel by viewModels()
@@ -41,7 +44,7 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is BackPressedHandler) {
+        if (context is BackPressedHandler) {
             backPressedHandler = context
         } else {
             throw RuntimeException(context.getString(R.string.error_back_pressed_handler))
@@ -59,7 +62,7 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
     }
 
     private fun handleBackPress() {
-        val callback = object : OnBackPressedCallback(true){
+        val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 backPressedHandler?.onBackButtonPressedInMovieDetails()
             }
@@ -82,6 +85,7 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
     private fun requestMovieDetail(movieId: Int) {
         viewModel.getMovieFromRemoteSource(movieId)
     }
+
     override fun setupData(data: MovieDetails) {
         displayMovie(data)
     }
@@ -104,22 +108,21 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
         }.attach()
     }
 
-    private fun ViewPager2.disableSwipe() {
-        this.isUserInputEnabled = false
-    }
-
     private fun initTextData(movie: MovieDetails) {
         with(binding) {
             tvMovieTitle.text = movie.name
 
-            chipMovieDuration.text = if(movie.movieLength?.let { it > 0 } == true) {
+            chipMovieDuration.text = if (movie.movieLength?.let { it > 0 } == true) {
                 getString(R.string.format_movie_length, movie.movieLength.toString())
-            } else { "" }
+            } else {
+                ""
+            }
 
-            chipReleaseDate.text = movie.premiere?.world?.let { reformatDate(it) }
+            chipReleaseDate.text = movie.premiere?.world?.let { reformatDate(requireContext(), it) }
 
-            tvKpRating.text = movie.rating?.kp?.let{ rating ->
-                BigDecimal(rating).setScale(1, RoundingMode.HALF_UP).toString() }
+            tvKpRating.text = movie.rating?.kp?.let { rating ->
+                BigDecimal(rating).setScale(1, RoundingMode.HALF_UP).toString()
+            }
             tvTmdbRating.text = movie.rating?.imdb.toString()
 
             tvKpVotesCount.text = reformatVotes(movie.votes?.kp)
@@ -127,27 +130,8 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
         }
     }
 
-        private fun reformatVotes(votes: Int?): String {
-            return if(votes != null) {
-                val thousands = votes / 1000.0
-                String.format("%,.1fK", thousands)
-            } else {
-                "0.0"
-            }
-        }
-
-    private fun reformatDate(dateStr: String): String {
-        return try {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.")
-            val date = LocalDate.parse(dateStr, formatter)
-            date.format(DateTimeFormatter.ofPattern("MMMM yyyy", Locale.getDefault()))
-        } catch(e: DateTimeParseException) {
-            getString(R.string.undefined_date)
-        }
-    }
-
     private fun initMoviePosterImage(movie: MovieDetails) {
-        binding.moviePoster.load(movie.movieDetailsPoster?.url){
+        binding.moviePoster.load(movie.movieDetailsPoster?.url) {
             crossfade(true)
             placeholder(com.test.application.core.R.drawable.default_placeholder)
         }
@@ -158,7 +142,7 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
             updateMoviePosterBlockLayout(true)
             binding.backgroundImage.load(backdropUrl) {
                 crossfade(true)
-                listener(onError = {_,_ ->
+                listener(onError = { _, _ ->
                     binding.backgroundImage.visibility = View.GONE
                     updateMoviePosterBlockLayout(false)
                 })
@@ -190,11 +174,32 @@ class MovieDetailsFragmentNew: BaseFragmentWithAppState<AppState, MovieDetails, 
                 0
             )
         }
-
         binding.moviePosterBlock.layoutParams = layoutParams
     }
 
     private fun saveMovie(movie: MovieDetails, date: Long) {
         viewModel.saveMovieToDB(movie, date)
+    }
+
+    override fun onTrailerClicked(videoUrl: String) {
+        val youTubePlayerView = binding.videoContainer.youtubePlayerView
+        lifecycle.addObserver(youTubePlayerView)
+
+        binding.videoContainer.root.visibility = View.VISIBLE
+
+        val videoId = extractVideoIdFromUrl(videoUrl)
+        var currentYouTubePlayer: YouTubePlayer? = null
+
+        youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+            override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                currentYouTubePlayer = youTubePlayer
+                youTubePlayer.loadVideo(videoId, 0f)
+            }
+        })
+
+        binding.videoContainer.closeButton.setOnClickListener {
+            currentYouTubePlayer?.pause()
+            binding.videoContainer.root.visibility = View.GONE
+        }
     }
 }

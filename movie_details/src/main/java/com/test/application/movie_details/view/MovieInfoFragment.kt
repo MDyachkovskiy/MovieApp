@@ -1,5 +1,6 @@
 package com.test.application.movie_details.view
 
+import android.content.Context
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
@@ -10,9 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
-import com.test.application.core.domain.movieDetail.Budget
 import com.test.application.core.domain.movieDetail.Genre
 import com.test.application.core.domain.movieDetail.MovieDetails
 import com.test.application.core.domain.movieDetail.Person
@@ -26,21 +24,30 @@ import com.test.application.movie_details.R
 import com.test.application.movie_details.adapter.MovieStaffAdapter
 import com.test.application.movie_details.adapter.TrailerAdapter
 import com.test.application.movie_details.databinding.FragmentMovieInfoBinding
+import com.test.application.movie_details.navigation.TrailerPlayListener
 import com.test.application.movie_details.utils.MILLISECONDS_PER_INCH
+import com.test.application.movie_details.utils.reformatBudget
+import com.test.application.movie_details.utils.reformatPremiereDate
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.NumberFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
-import java.util.Locale
 
 @AndroidEntryPoint
 class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieInfoBinding>(
     FragmentMovieInfoBinding::inflate
 ) {
 
+    private var trailerPlayListener: TrailerPlayListener? = null
+
     private val viewModel: MovieDetailsViewModel by viewModels({requireParentFragment()})
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        trailerPlayListener = parentFragment as? TrailerPlayListener
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        trailerPlayListener = null
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
@@ -65,31 +72,12 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
             adapter = trailerAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
-        val youTubePlayerView = binding.videoContainer.youtubePlayerView
-        lifecycle.addObserver(youTubePlayerView)
 
         trailerAdapter.listener = { videoUrl ->
-            if(videoUrl != null) {
-                binding.videoContainer.root.visibility = View.VISIBLE
-                val videoId = extractVideoIdFromUrl(videoUrl)
-                youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
-                    override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                        youTubePlayer.loadVideo(videoId, 0f)
-                    }
-                })
-            }
-        }
-
-        binding.videoContainer.closeButton.setOnClickListener {
-            binding.videoContainer.root.visibility = View.GONE
+            videoUrl?.let {trailerPlayListener?.onTrailerClicked(it)}
         }
     }
 
-    private fun extractVideoIdFromUrl(videoUrl: String): String {
-        val regex = Regex("/embed/(\\S+)")
-        val match = regex.find(videoUrl)
-        return match?.groups?.get(1)?.value ?: ""
-    }
 
     private fun initMovieStaffList(persons: List<Person>) {
         val movieStaff = persons.filter {
@@ -151,7 +139,8 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
 
             tvMovieDescription.text = movie.description
 
-            tvMovieReleaseDate.text = reformatPremiereDate(movie.premiere?.world.toString())
+            tvMovieReleaseDate.text = reformatPremiereDate(
+                requireContext(), movie.premiere?.world.toString())
 
             tvMovieLength.text = if(movie.movieLength?.let { it > 0 } == true) {
                 getString(R.string.format_movie_length, movie.movieLength.toString())
@@ -159,25 +148,7 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
 
             tvMovieCountry.text = movie.countries?.convert { country -> country.name }
 
-            tvMovieBudget.text = reformatBudget(movie.budget)
+            tvMovieBudget.text = reformatBudget(requireContext(), movie.budget)
         }
-    }
-
-    private fun reformatPremiereDate(dateStr: String): String {
-        return try {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.")
-            val date = LocalDate.parse(dateStr, formatter)
-            date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.getDefault()))
-        } catch(e: DateTimeParseException) {
-            getString(R.string.undefined_date)
-        }
-    }
-
-    private fun reformatBudget(budget: Budget?): String {
-        return if(budget != null && budget.value > 0) {
-            val formattedValue = NumberFormat
-                .getNumberInstance(Locale.getDefault()).format(budget.value)
-            "$formattedValue ${budget.currency}"
-        } else getString(R.string.undefined_budget)
     }
 }
