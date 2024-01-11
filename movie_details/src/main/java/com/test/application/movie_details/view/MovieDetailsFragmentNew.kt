@@ -135,22 +135,27 @@ class MovieDetailsFragmentNew :
             crossfade(true)
             placeholder(com.test.application.core.R.drawable.default_placeholder)
         }
+        updateBackgroundImage(movie.backdrop?.url)
+    }
 
-        val backdropUrl = movie.backdrop?.url
-        if (backdropUrl != null) {
-            binding.backgroundImage.visibility = View.VISIBLE
-            updateMoviePosterBlockLayout(true)
-            binding.backgroundImage.load(backdropUrl) {
+    private fun updateBackgroundImage(url: String?) {
+        val isVisible = url != null
+        updateBackgroundVisibility(isVisible)
+
+        if (isVisible) {
+            binding.backgroundImage.load(url) {
                 crossfade(true)
                 listener(onError = { _, _ ->
-                    binding.backgroundImage.visibility = View.GONE
-                    updateMoviePosterBlockLayout(false)
+                    updateBackgroundVisibility(false)
                 })
             }
-        } else {
-            binding.backgroundImage.visibility = View.GONE
-            updateMoviePosterBlockLayout(false)
         }
+    }
+
+    private fun updateBackgroundVisibility(isVisible: Boolean) {
+        binding.backgroundImage.visibility = if (isVisible) View.VISIBLE else View.GONE
+        binding.gradientView.visibility = binding.backgroundImage.visibility
+        updateMoviePosterBlockLayout(isVisible)
     }
 
     private fun updateMoviePosterBlockLayout(isBackgroundVisible: Boolean) {

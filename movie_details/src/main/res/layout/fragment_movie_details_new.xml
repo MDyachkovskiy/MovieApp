@@ -19,17 +19,31 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/background_image"
+            
+            <FrameLayout
+                android:id="@+id/background_image_block"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/movie_images_height"
-                android:scaleType="fitXY"
-                android:src="@drawable/default_placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="contentDescription" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/background_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/default_placeholder"
+                    tools:ignore="contentDescription" />
+
+                <View
+                    android:id="@+id/gradient_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/gradient_overlay" />
+
+            </FrameLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/movie_poster_block"
@@ -62,7 +76,7 @@
                 android:text="@string/movie_title_mock"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/movie_poster_block"
-                app:layout_constraintTop_toBottomOf="@id/background_image" />
+                app:layout_constraintTop_toBottomOf="@id/background_image_block" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_release_date"

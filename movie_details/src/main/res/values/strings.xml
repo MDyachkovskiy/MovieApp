@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- MovieDetailsFragment -->
     <string name="movie_title">Название фильма</string>
     <string name="movie_description">Описание фильма</string>
-
 
     <string name="genre">Жанр:</string>
     <string name="movie_kp_rating">Оценка Кинопоиска:</string>
@@ -13,6 +11,7 @@
     <string name="user_note_title">Добавьте свой комментарий</string>
     <string name="user_comment_hint">Оставьте здесь свой комментарий по фильму</string>
 
+    <!-- TextView Titles string -->
     <string name="genres_title">Жанры</string>
     <string name="release_date">Год выхода</string>
     <string name="production_staff_title">Съемочная группа</string>
@@ -22,6 +21,7 @@
     <string name="movie_country">Страна производства </string>
     <string name="movie_budget">Бюджет фильма</string>
 
+    <!-- Mock string -->
     <string name="movie_title_mock">Длинное название фильма</string>
     <string name="movie_release_date_mock">ноябрь 2024</string>
     <string name="movie_duration_mock">143 мин</string>
@@ -37,9 +37,12 @@
     <string name="actor_name_mock">Имя Актера</string>
     <string name="movie_character_name_mock">Имя персонажа</string>
 
+    <!-- Format string -->
     <string name="format_movie_budget"> %1$s %2$s</string>
     <string name="format_movie_length"> %1$s мин</string>
+    <string name="youtube_thumbnail_url">https://img.youtube.com/vi/%1$s/0.jpg</string>
 
+    <!-- Error string -->
     <string name="incorrect_movie_id"> Ошибка в получении id фильма</string>
     <string name="error_back_pressed_handler"> Ошибка: Контекст должен реализовать интерфейс BackPressedHandler </string>
     <string name="undefined_date"> Дата неизвестна</string>
