@@ -4,12 +4,15 @@ import android.content.Context
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.ChangeBounds
+import androidx.transition.TransitionManager
 import com.google.android.material.chip.Chip
 import com.test.application.core.domain.movieDetail.Genre
 import com.test.application.core.domain.movieDetail.MovieDetails
@@ -64,6 +67,26 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
         initGenresChip(data.genres)
         initMovieStaffList(data.persons)
         initTrailersList(data.trailers)
+        setupExpandButton()
+    }
+
+    private fun setupExpandButton() {
+        val tvDescription = binding.tvMovieDescription
+        val btnExpandCollapse = binding.btnExpandCollapse
+
+        btnExpandCollapse.setOnClickListener {
+            val isExpanded = tvDescription.maxLines == Integer.MAX_VALUE
+            val newMaxLines = if(isExpanded) 3 else Integer.MAX_VALUE
+            val buttonText = if(isExpanded) getString(R.string.btn_expand)
+            else getString(R.string.btn_collapse)
+
+            TransitionManager.beginDelayedTransition(binding.root as ViewGroup, ChangeBounds().apply {
+                duration = 200
+            })
+
+            tvDescription.maxLines = newMaxLines
+            btnExpandCollapse.text = buttonText
+        }
     }
 
     private fun initTrailersList(trailers: List<Trailer>) {
@@ -126,7 +149,7 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
                 setTextColor(ContextCompat.getColor(requireContext(), com.test.application.core.R.color.white))
                 chipStrokeWidth = resources.getDimension(R.dimen.chip_stroke_width)
                 chipStrokeColor = ContextCompat
-                    .getColorStateList(requireContext(),com.test.application.core.R.color.white)
+                    .getColorStateList(requireContext(),R.color.chip_stroke_color)
             }
             binding.genresChips.addView(chip)
         }

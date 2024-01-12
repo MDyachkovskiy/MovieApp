@@ -63,4 +63,5 @@ dependencies {
     //Design
     implementation (Design.material)
     implementation (Coil.coil_kt)
+    implementation ("androidx.transition:transition-ktx:1.4.1")
 }

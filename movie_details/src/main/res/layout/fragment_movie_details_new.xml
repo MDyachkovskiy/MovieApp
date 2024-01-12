@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/black">
 
     <androidx.core.widget.NestedScrollView
@@ -28,11 +29,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
+                <com.test.application.movie_details.custom_view.TopCropImageView
                     android:id="@+id/background_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY"
                     android:src="@drawable/default_placeholder"
                     tools:ignore="contentDescription" />
 

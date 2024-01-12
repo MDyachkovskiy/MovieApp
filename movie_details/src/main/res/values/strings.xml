@@ -20,6 +20,8 @@
     <string name="movie_length">Продолжительность:</string>
     <string name="movie_country">Страна производства </string>
     <string name="movie_budget">Бюджет фильма</string>
+    <string name="btn_expand">Подробнее</string>
+    <string name="btn_collapse">Скрыть</string>
 
     <!-- Mock string -->
     <string name="movie_title_mock">Длинное название фильма</string>

@@ -34,10 +34,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16dp_medium"
                 android:layout_marginTop="@dimen/margin_8dp_small"
+                android:maxLines="3"
                 android:text="@string/movie_description_mock"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_movie_slogan" />
+            
+            <TextView
+                android:id="@+id/btn_expand_collapse"
+                style="@style/expand_button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_expand"
+                android:layout_marginStart="@dimen/margin_16dp_medium"
+                app:layout_constraintTop_toBottomOf="@id/tv_movie_description"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/genres_chip_title"
@@ -49,7 +60,7 @@
                 android:text="@string/genres_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_movie_description" />
+                app:layout_constraintTop_toBottomOf="@id/btn_expand_collapse" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/genres_chips"
