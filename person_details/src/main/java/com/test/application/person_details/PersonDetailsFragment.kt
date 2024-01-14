@@ -1,12 +1,15 @@
 package com.test.application.person_details
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import coil.load
 import com.test.application.core.domain.personDetail.Person
 import com.test.application.core.domain.personDetail.PersonDetails
+import com.test.application.core.navigation.OnBackPressInPersonDetails
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.utils.KEY_BUNDLE_PERSON
 import com.test.application.core.utils.convert
@@ -20,19 +23,54 @@ import java.time.format.DateTimeFormatter
 @AndroidEntryPoint
 class PersonDetailsFragment :
     BaseFragmentWithAppState<AppState, PersonDetails, FragmentPersonBinding>(
-    FragmentPersonBinding::inflate
-) {
+        FragmentPersonBinding::inflate
+    ) {
+
+    private var backButtonListener: OnBackPressInPersonDetails? = null
+    private var backPressedCallback: OnBackPressedCallback? = null
 
     private val personId: Int by lazy {
-        arguments?.getInt(KEY_BUNDLE_PERSON) ?:
-        throw IllegalArgumentException(getString(R.string.incorrect_person_id))
+        arguments?.getInt(KEY_BUNDLE_PERSON)
+            ?: throw IllegalArgumentException(getString(R.string.incorrect_person_id))
     }
 
     private val viewModel: PersonDetailsViewModel by viewModels()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnBackPressInPersonDetails) {
+            backButtonListener = context
+        } else {
+            throw RuntimeException("$context must implement OnBackButtonListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        backButtonListener = null
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
+        initBackButton()
+    }
+
+    private fun initBackButton() {
+        val backButton = binding.backButton
+        backButton.setOnClickListener {
+            backButtonListener?.onBackButtonPressedInPersonDetails()
+        }
+
+        backPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                backButtonListener?.onBackButtonPressedInPersonDetails()
+            }
+
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            backPressedCallback as OnBackPressedCallback
+        )
     }
 
     private fun initViewModel() {
@@ -46,7 +84,7 @@ class PersonDetailsFragment :
         viewModel.getPersonDetailsFromRemoteSource(personId)
     }
 
-    private fun convertDate (date : String?) : String {
+    private fun convertDate(date: String?): String {
         return if (date != null) {
             val formatter = DateTimeFormatter.ISO_DATE_TIME
             val dateTime = LocalDateTime.parse(date, formatter)
@@ -87,23 +125,26 @@ class PersonDetailsFragment :
         with(binding) {
             tvPersonName.text = person.name
 
-            tvPersonProfession.text = person.profession.convert {
-                    profession -> profession.value}
+            tvPersonProfession.text = person.profession.convert { profession -> profession.value }
 
             tvPersonAge.text = person.age.toString()
 
             tvPersonDateOfBirth.text = convertDate(person.birthday)
 
-            val birthLocation = person.birthPlace.convert{
-                    birthPlace ->  birthPlace.value }
+            val birthLocation = person.birthPlace.convert { birthPlace -> birthPlace.value }
             tvPersonPlaceOfBirth.text = birthLocation
         }
     }
 
     private fun displayPersonImage(person: Person) {
-        binding.personPhoto.load(person.photo){
+        binding.personPhoto.load(person.photo) {
             crossfade(true)
             placeholder(com.test.application.core.R.drawable.person_placeholder)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        backPressedCallback?.remove()
     }
 }

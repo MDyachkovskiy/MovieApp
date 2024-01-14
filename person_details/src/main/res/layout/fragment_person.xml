@@ -9,45 +9,66 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black">
+        android:background="@color/black"
+        tools:ignore="UselessParent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/person_photo"
                 android:layout_width="@dimen/persons_image_width"
                 android:layout_height="@dimen/persons_image_height"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
+                android:layout_margin="@dimen/margin_16dp_medium"
                 android:src="@drawable/person_placeholder"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/person_name_block"
                 tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/tv_person_name"
-                style="@style/movie_title_style"
+            <LinearLayout
+                android:id="@+id/person_name_block"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/margin_12dp_medium"
-                android:ellipsize="end"
-                android:lines="2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/person_photo"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <ImageView
+                    android:id="@+id/back_button"
+                    android:layout_width="@dimen/toolbar_icon_size"
+                    android:layout_height="@dimen/toolbar_icon_size"
+                    android:layout_margin="@dimen/margin_16dp_medium"
+                    android:src="@drawable/ic_arrow_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white"
+                    tools:ignore="contentDescription"/>
+
+                <TextView
+                    android:id="@+id/tv_person_name"
+                    style="@style/movie_title_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@string/person_name_mock" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/profession"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="@dimen/margin_16dp_medium"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/tv_person_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_person_name">
+                app:layout_constraintStart_toEndOf="@id/person_photo"
+                app:layout_constraintTop_toTopOf="@id/person_photo">
 
                 <TextView
                     style="@style/movie_details_title_style"
@@ -72,10 +93,11 @@
                 android:id="@+id/age"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16dp_medium"
                 android:layout_marginTop="@dimen/margin_8dp_small"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/tv_person_name"
+                app:layout_constraintStart_toEndOf="@id/person_photo"
                 app:layout_constraintTop_toBottomOf="@id/profession">
 
                 <TextView
@@ -103,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_8dp_small"
                 android:orientation="vertical"
+                android:layout_marginHorizontal="@dimen/margin_16dp_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/person_photo">
@@ -130,6 +153,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_8dp_small"
+                android:layout_marginHorizontal="@dimen/margin_16dp_medium"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -158,6 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/place_of_birth_map_height"
                 android:layout_marginTop="@dimen/margin_8dp_small"
+                android:layout_marginHorizontal="@dimen/margin_16dp_medium"
                 android:padding="@dimen/margin_10dp_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

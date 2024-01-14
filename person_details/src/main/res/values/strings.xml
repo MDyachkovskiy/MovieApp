@@ -10,4 +10,7 @@
     <string name="incorrect_person_id"> Ошибка в получении id персоны</string>
     <string name="no_data_for_actor_error"> Данные по актеру не получены</string>
     <string name="no_data_for_birth_place"> Нет данных по месту рождения</string>
+
+    <!-- PersonDetails Mock -->
+    <string name="person_name_mock">ФИО Актера</string>
 </resources>
