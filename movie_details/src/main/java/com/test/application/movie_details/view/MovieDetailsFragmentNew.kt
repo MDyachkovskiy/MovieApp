@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
@@ -145,9 +144,6 @@ class MovieDetailsFragmentNew :
         if (isVisible) {
             binding.backgroundImage.load(url) {
                 crossfade(true)
-                listener(onError = { _, _ ->
-                    updateBackgroundVisibility(false)
-                })
             }
         }
     }
@@ -155,31 +151,6 @@ class MovieDetailsFragmentNew :
     private fun updateBackgroundVisibility(isVisible: Boolean) {
         binding.backgroundImage.visibility = if (isVisible) View.VISIBLE else View.GONE
         binding.gradientView.visibility = binding.backgroundImage.visibility
-        updateMoviePosterBlockLayout(isVisible)
-    }
-
-    private fun updateMoviePosterBlockLayout(isBackgroundVisible: Boolean) {
-        val layoutParams = binding.moviePosterBlock.layoutParams as ConstraintLayout.LayoutParams
-
-        if (isBackgroundVisible) {
-            layoutParams.topToTop = ConstraintLayout.LayoutParams.UNSET
-            layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-            layoutParams.bottomToBottom = binding.chipReleaseDate.id
-            layoutParams.marginStart = resources
-                .getDimensionPixelSize(com.test.application.core.R.dimen.margin_24dp_medium)
-        } else {
-            layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-            layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
-            layoutParams.setMargins(
-                resources
-                    .getDimensionPixelSize(com.test.application.core.R.dimen.margin_24dp_medium),
-                resources
-                    .getDimensionPixelSize(com.test.application.core.R.dimen.margin_16dp_medium),
-                0,
-                0
-            )
-        }
-        binding.moviePosterBlock.layoutParams = layoutParams
     }
 
     private fun saveMovie(movie: MovieDetails, date: Long) {

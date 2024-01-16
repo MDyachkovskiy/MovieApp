@@ -16,6 +16,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/person_name_block"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black">
+
+                    <ImageView
+                        android:id="@+id/back_button"
+                        android:layout_width="@dimen/toolbar_icon_size"
+                        android:layout_height="@dimen/toolbar_icon_size"
+                        android:layout_margin="@dimen/margin_16dp_medium"
+                        android:src="@drawable/ic_arrow_back"
+                        app:tint="@color/white"
+                        tools:ignore="contentDescription"/>
+
+                    <TextView
+                        android:id="@+id/tv_person_name"
+                        style="@style/movie_title_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@string/person_name_mock" />
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
             <ImageView
                 android:id="@+id/person_photo"
                 android:layout_width="@dimen/persons_image_width"
@@ -26,38 +62,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/person_name_block"
                 tools:ignore="ContentDescription" />
-
-            <LinearLayout
-                android:id="@+id/person_name_block"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" >
-
-                <ImageView
-                    android:id="@+id/back_button"
-                    android:layout_width="@dimen/toolbar_icon_size"
-                    android:layout_height="@dimen/toolbar_icon_size"
-                    android:layout_margin="@dimen/margin_16dp_medium"
-                    android:src="@drawable/ic_arrow_back"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/white"
-                    tools:ignore="contentDescription"/>
-
-                <TextView
-                    android:id="@+id/tv_person_name"
-                    style="@style/movie_title_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="@string/person_name_mock" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/profession"

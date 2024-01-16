@@ -45,7 +45,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    flavorDimensions("version")
+    flavorDimensions += listOf("version")
     productFlavors {
         create("free") {
             dimension = "version"

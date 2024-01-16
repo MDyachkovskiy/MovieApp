@@ -16,7 +16,6 @@ object Versions {
 
     //Retrofit
     const val retrofit_main = "2.9.0"
-    const val gson = "2.9.0"
     const val retrofit_gson_converter = "2.9.0"
     const val logging_interceptor = "4.11.0"
     const val retrofit2_coroutines_adapter = "0.9.2"
