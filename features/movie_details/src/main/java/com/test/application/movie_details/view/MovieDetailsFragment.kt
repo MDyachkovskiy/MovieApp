@@ -2,49 +2,53 @@ package com.test.application.movie_details.view
 
 import android.content.Context
 import android.os.Bundle
-import android.text.InputType
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
+import com.google.android.material.tabs.TabLayoutMediator
 import com.test.application.core.domain.movieDetail.MovieDetails
-import com.test.application.core.domain.movieDetail.Person
 import com.test.application.core.navigation.BackPressedHandler
-import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.AppState.AppState
 import com.test.application.core.utils.KEY_BUNDLE_MOVIE
-import com.test.application.core.utils.KEY_BUNDLE_PERSON
-import com.test.application.core.utils.convert
-import com.test.application.core.utils.init
 import com.test.application.core.view.BaseFragmentWithAppState
 import com.test.application.movie_details.R
-import com.test.application.movie_details.adapter.PersonsAdapter
-import com.test.application.movie_details.databinding.FragmentMovieDetailBinding
+import com.test.application.movie_details.adapter.ViewPagerAdapter
+import com.test.application.movie_details.databinding.FragmentMovieDetailsBinding
+import com.test.application.movie_details.navigation.TrailerPlayListener
+import com.test.application.movie_details.utils.FavoriteManager
+import com.test.application.movie_details.utils.TrailerPlayerManager
+import com.test.application.movie_details.utils.disableSwipe
+import com.test.application.movie_details.utils.reformatDate
+import com.test.application.movie_details.utils.reformatVotes
 import dagger.hilt.android.AndroidEntryPoint
-
+import java.math.BigDecimal
+import java.math.RoundingMode
+import kotlin.math.abs
 
 @AndroidEntryPoint
-class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieDetailBinding>(
-    FragmentMovieDetailBinding::inflate
-) {
+class MovieDetailsFragment :
+    BaseFragmentWithAppState<AppState, MovieDetails, FragmentMovieDetailsBinding>(
+        FragmentMovieDetailsBinding::inflate
+    ), TrailerPlayListener {
+
     private val movieId: Int by lazy {
-        arguments?.getInt(KEY_BUNDLE_MOVIE) ?:
-        throw IllegalArgumentException(getString(R.string.incorrect_movie_id))
+        arguments?.getInt(KEY_BUNDLE_MOVIE)
+            ?: throw IllegalArgumentException(getString(R.string.incorrect_movie_id))
     }
     private lateinit var movie: MovieDetails
 
     private val viewModel: MovieDetailsViewModel by viewModels()
 
     private var backPressedHandler: BackPressedHandler? = null
+    private var trailerPlayerManager: TrailerPlayerManager? = null
+    private var tabLayoutMediator: TabLayoutMediator? = null
+    private var favoriteManager: FavoriteManager? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is BackPressedHandler) {
+        if (context is BackPressedHandler) {
             backPressedHandler = context
         } else {
             throw RuntimeException(context.getString(R.string.error_back_pressed_handler))
@@ -56,25 +60,67 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
         backPressedHandler = null
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        handleBackPress()
+    private fun setupCollapsedToolbar() {
+        val appBarLayout = binding.abbBarLayout
+        val toolbar = binding.toolbar
+
+        appBarLayout.addOnOffsetChangedListener { _, verticalOffset ->
+            if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
+                toolbar.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        com.test.application.core.R.color.black
+                    )
+                )
+            } else {
+                toolbar.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        android.R.color.transparent
+                    )
+                )
+            }
+        }
     }
 
     private fun handleBackPress() {
-        val callback = object : OnBackPressedCallback(true){
+        val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 backPressedHandler?.onBackButtonPressedInMovieDetails()
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+        binding.backButton.setOnClickListener {
+            backPressedHandler?.onBackButtonPressedInMovieDetails()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        handleBackPress()
         initViewModel()
-        initCommentsEditTextButton()
-        initFavoritesCheckBox(movieId)
+        setupCollapsedToolbar()
+        setFavoriteIcon()
+    }
+
+    private fun setFavoriteIcon() {
+        favoriteManager = FavoriteManager(
+            binding.ivFavourite,
+            onFavouriteToggle = {isFavourite ->  
+                if(isFavourite) {
+                    viewModel.saveFavoriteMovieToDB(movie, System.currentTimeMillis())
+                } else {
+                    viewModel.deleteFavoriteMovieFromDB(movie)
+                }
+            },
+            onCheckFavourite = { callback ->  
+                viewModel.isFavorite.observe(viewLifecycleOwner) { isFav ->
+                    callback(isFav)
+                }
+                viewModel.checkFavoriteMovie(movieId)
+            }
+        )
+        favoriteManager?.checkFavourite()
     }
 
     private fun initViewModel() {
@@ -82,38 +128,6 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
             renderData(it)
         }
         requestMovieDetail(movieId)
-    }
-
-    private fun initCommentsEditTextButton() {
-        binding.etUserNote.apply {
-            setRawInputType(
-                InputType.TYPE_CLASS_TEXT or
-                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD or
-                        InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-            )
-            imeOptions = EditorInfo.IME_ACTION_DONE
-
-            setOnEditorActionListener { textView, actionId, event ->
-                if (event == null && actionId == EditorInfo.IME_ACTION_DONE) {
-                    textView.clearFocus()
-                    val imm = context
-                        .getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    imm?.hideSoftInputFromWindow(windowToken, 0)
-                    val comment = textView.text.toString()
-                    addCommentToMovie(movie, comment)
-                }
-                false
-            }
-        }
-    }
-
-    private fun initFavoritesCheckBox(movieId: Int) {
-        viewModel.checkFavoriteMovie(movieId)
-        viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
-            binding.favorite.setOnCheckedChangeListener(null)
-            binding.favorite.isChecked = isFavorite
-            setFavoriteCheckBoxListener()
-        }
     }
 
     private fun requestMovieDetail(movieId: Int) {
@@ -130,104 +144,94 @@ class MovieDetailsFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
         saveMovie(movie, date)
         initMoviePosterImage(movie)
         initTextData(movie)
-        initPersonsRecyclerView(movie.persons)
+        setupViewPagerAndTabs()
+    }
+
+    private fun setupViewPagerAndTabs() {
+        val pagerAdapter = ViewPagerAdapter(this)
+        binding.movieInfoViewPager.adapter = pagerAdapter
+        binding.movieInfoViewPager.disableSwipe()
+
+        tabLayoutMediator = TabLayoutMediator(binding.tabLayout, binding.movieInfoViewPager) { tab, position ->
+            tab.text = pagerAdapter.tabTitles[position]
+        }.also { it.attach() }
     }
 
     private fun initTextData(movie: MovieDetails) {
         with(binding) {
-            tvMovieDescription.text = movie.description
             tvMovieTitle.text = movie.name
-            tvMovieReleaseDate.text = movie.year.toString()
 
-            tvMovieLength.text = getString(
-                R.string.format_movie_length, movie.movieLength.toString())
+            chipMovieDuration.text = if (movie.movieLength?.let { it > 0 } == true) {
+                getString(R.string.format_movie_length, movie.movieLength.toString())
+            } else {
+                ""
+            }
 
-            tvMovieBudget.text = getString(
-                R.string.format_movie_budget,
-                movie.budget?.value?.toString(), movie.budget?.currency
-            )
-            tvMovieKpRating.text = movie.rating?.kp.toString()
-            tvMovieImdbRating.text = movie.rating?.imdb.toString()
+            chipReleaseDate.text = movie.premiere?.world?.let { reformatDate(requireContext(), it) }
 
-            tvMovieGenres.text = movie.genres?.convert { genre -> genre.name }
+            tvKpRating.text = movie.rating?.kp?.let { rating ->
+                BigDecimal(rating).setScale(1, RoundingMode.HALF_UP).toString()
+            }
+            tvTmdbRating.text = movie.rating?.imdb.toString()
 
-            tvMovieCountry.text = movie.countries?.convert { country -> country.name }
+            tvKpVotesCount.text = reformatVotes(movie.votes?.kp)
+            tvTmdbVotesCount.text = reformatVotes(movie.votes?.imdb)
         }
     }
 
     private fun initMoviePosterImage(movie: MovieDetails) {
-        binding.moviePoster.load(movie.movieDetailsPoster?.url){
+        binding.moviePoster.load(movie.movieDetailsPoster?.url) {
             crossfade(true)
             placeholder(com.test.application.core.R.drawable.default_placeholder)
         }
+        updateBackgroundImage(movie.backdrop?.url)
     }
 
-    private fun initPersonsRecyclerView(persons: List<Person>) {
-        initActorsRV(persons)
-        initMovieStaff(persons)
+    private fun updateBackgroundImage(url: String?) {
+        val isVisible = url != null
+        updateBackgroundVisibility(isVisible)
+
+        if (isVisible) {
+            binding.backgroundImage.load(url) {
+                crossfade(true)
+            }
+        }
     }
 
-    private fun initMovieStaff(persons: List<Person>) {
-        val movieStaff = persons.filter {
-            it.enProfession != "actor"
-        }
-        val movieStaffAdapter = PersonsAdapter(movieStaff)
-        movieStaffAdapter.listener = {personId ->
-            val bundle = bundleOf(KEY_BUNDLE_PERSON to personId)
-            (activity as Navigator).navigateToPersonDetailsFragment(bundle)
-        }
-        binding.rvMovieStaff.init(PersonsAdapter(movieStaff), LinearLayoutManager.HORIZONTAL)
-    }
-
-    private fun initActorsRV(persons: List<Person>) {
-        val actors = persons.filter {
-            it.enProfession == "actor"
-        }
-        val actorsAdapter = PersonsAdapter(actors)
-        actorsAdapter.listener = { personId ->
-            val bundle = bundleOf(KEY_BUNDLE_PERSON to personId)
-            (activity as Navigator).navigateToPersonDetailsFragment(bundle)
-        }
-        binding.rvActors.init(actorsAdapter, LinearLayoutManager.HORIZONTAL)
+    private fun updateBackgroundVisibility(isVisible: Boolean) {
+        binding.backgroundImage.visibility = if (isVisible) View.VISIBLE else View.GONE
+        binding.gradientView.visibility = binding.backgroundImage.visibility
     }
 
     private fun saveMovie(movie: MovieDetails, date: Long) {
         viewModel.saveMovieToDB(movie, date)
     }
 
-    private fun saveFavoriteMovie(movie: MovieDetails) {
-        val date = System.currentTimeMillis()
-        viewModel.saveFavoriteMovieToDB(movie, date)
-    }
+    override fun onTrailerClicked(videoUrl: String) {
+        if(trailerPlayerManager != null) {
+            trailerPlayerManager = TrailerPlayerManager(
+                lifecycle = viewLifecycleOwner.lifecycle,
+                youTubePlayerView = binding.videoContainer.youtubePlayerView
+            )
+        }
 
-    private fun deleteFavoriteMovie(movie: MovieDetails) {
-        viewModel.deleteFavoriteMovieFromDB(movie)
-    }
+        trailerPlayerManager?.playTrailer(videoUrl){
+            binding.videoContainer.root.visibility = View.VISIBLE
+        }
 
-    private fun addCommentToMovie(movie: MovieDetails, comment: String) {
-        viewModel.addCommentToMovie(movie, comment)
-    }
-
-    private fun setFavoriteCheckBoxListener() {
-        binding.favorite.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                saveFavoriteMovie(movie)
-                val comment = getCommentFromEditText()
-                addCommentToMovie(movie, comment)
-                binding.movieDetail
-                    .showToast(getString(com.test.application.core.R.string.add_movie_to_favorite))
-            } else {
-                deleteFavoriteMovie(movie)
-                binding.movieDetail
-                    .showToast(getString(com.test.application.core.R.string.delete_movie_from_favorite))
-            }
+        binding.videoContainer.closeButton.setOnClickListener {
+            trailerPlayerManager?.cleanup()
+            binding.videoContainer.root.visibility = View.GONE
         }
     }
-    private fun View.showToast(text: String) {
-        Toast.makeText(this.context, text, Toast.LENGTH_SHORT).show()
-    }
 
-    private fun getCommentFromEditText() : String {
-        return binding.etUserNote.text.toString()
+    override fun onDestroyView() {
+        binding.videoContainer.youtubePlayerView.release()
+        tabLayoutMediator?.detach()
+        tabLayoutMediator = null
+        binding.movieInfoViewPager.adapter = null
+        trailerPlayerManager?.cleanup()
+        trailerPlayerManager = null
+        super.onDestroyView()
     }
 }

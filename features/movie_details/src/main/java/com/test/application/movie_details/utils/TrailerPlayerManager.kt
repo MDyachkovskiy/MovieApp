@@ -30,7 +30,6 @@ class TrailerPlayerManager(
     fun cleanup() {
         currentYouTubePlayer?.pause()
         currentYouTubePlayer = null
-        youTubePlayerView?.release()
         youTubePlayerView = null
     }
 }

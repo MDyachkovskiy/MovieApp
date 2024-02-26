@@ -72,21 +72,8 @@ class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolde
 
                 tvUserNote.text = movie.userNote
 
-                handleFavoriteCheckBox(movie.kinopoiskId, movie.isFavorite)
-
                 root.setOnClickListener {
                     listener?.invoke(movie.kinopoiskId)
-                }
-            }
-        }
-
-        private fun handleFavoriteCheckBox(movieId: Int, isFavorite: Boolean) {
-            binding.favoriteCheckBox.setOnCheckedChangeListener(null)
-            binding.favoriteCheckBox.isChecked = isFavorite
-
-            binding.favoriteCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                if (!isChecked) {
-                    onFavoriteChanged?.invoke(movieId, false)
                 }
             }
         }

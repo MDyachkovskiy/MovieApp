@@ -13,7 +13,7 @@ import com.test.application.core.navigation.Navigator
 import com.test.application.core.navigation.OnBackPressInPersonDetails
 import com.test.application.core.utils.MOVIE_DETAILS_TAG
 import com.test.application.core.utils.PERSON_DETAILS_TAG
-import com.test.application.movie_details.view.MovieDetailsFragmentNew
+import com.test.application.movie_details.view.MovieDetailsFragment
 import com.test.application.person_details.PersonDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), Navigator, BackPressedHandler, OnBackP
     }
 
     override fun navigateToMovieDetailsFragment(bundle: Bundle) {
-        val movieDetailsFragment = MovieDetailsFragmentNew().apply {
+        val movieDetailsFragment = MovieDetailsFragment().apply {
             arguments = bundle
         }
 
