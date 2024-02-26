@@ -17,6 +17,7 @@ import com.test.application.movie_details.R
 import com.test.application.movie_details.adapter.ViewPagerAdapter
 import com.test.application.movie_details.databinding.FragmentMovieDetailsNewBinding
 import com.test.application.movie_details.navigation.TrailerPlayListener
+import com.test.application.movie_details.utils.FavoriteManager
 import com.test.application.movie_details.utils.TrailerPlayerManager
 import com.test.application.movie_details.utils.disableSwipe
 import com.test.application.movie_details.utils.reformatDate
@@ -36,12 +37,14 @@ class MovieDetailsFragmentNew :
         arguments?.getInt(KEY_BUNDLE_MOVIE)
             ?: throw IllegalArgumentException(getString(R.string.incorrect_movie_id))
     }
+    private lateinit var movie: MovieDetails
 
     private val viewModel: MovieDetailsViewModel by viewModels()
 
     private var backPressedHandler: BackPressedHandler? = null
     private var trailerPlayerManager: TrailerPlayerManager? = null
     private var tabLayoutMediator: TabLayoutMediator? = null
+    private var favoriteManager: FavoriteManager? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -101,6 +104,27 @@ class MovieDetailsFragmentNew :
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         setupCollapsedToolbar()
+        setFavoriteIcon()
+    }
+
+    private fun setFavoriteIcon() {
+        favoriteManager = FavoriteManager(
+            binding.ivFavourite,
+            onFavouriteToggle = {isFavourite ->  
+                if(isFavourite) {
+                    viewModel.saveFavoriteMovieToDB(movie, System.currentTimeMillis())
+                } else {
+                    viewModel.deleteFavoriteMovieFromDB(movie)
+                }
+            },
+            onCheckFavourite = { callback ->  
+                viewModel.isFavorite.observe(viewLifecycleOwner) { isFav ->
+                    callback(isFav)
+                }
+                viewModel.checkFavoriteMovie(movieId)
+            }
+        )
+        favoriteManager?.checkFavourite()
     }
 
     private fun initViewModel() {
@@ -115,6 +139,7 @@ class MovieDetailsFragmentNew :
     }
 
     override fun setupData(data: MovieDetails) {
+        movie = data
         displayMovie(data)
     }
 
@@ -187,12 +212,16 @@ class MovieDetailsFragmentNew :
     }
 
     override fun onTrailerClicked(videoUrl: String) {
-        trailerPlayerManager = TrailerPlayerManager(
-            lifecycle = viewLifecycleOwner.lifecycle,
-            youTubePlayerView = binding.videoContainer.youtubePlayerView,
-            videoContainerView = binding.videoContainer.root,
-        )
-        trailerPlayerManager?.playTrailer(videoUrl)
+        if(trailerPlayerManager != null) {
+            trailerPlayerManager = TrailerPlayerManager(
+                lifecycle = viewLifecycleOwner.lifecycle,
+                youTubePlayerView = binding.videoContainer.youtubePlayerView
+            )
+        }
+
+        trailerPlayerManager?.playTrailer(videoUrl){
+            binding.videoContainer.root.visibility = View.VISIBLE
+        }
 
         binding.videoContainer.closeButton.setOnClickListener {
             trailerPlayerManager?.cleanup()
