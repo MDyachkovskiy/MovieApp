@@ -38,4 +38,9 @@ class MovieCommentsFragment : BaseFragmentWithAppState<AppState, MovieDetails, F
         val commentsAdapter = CommentsAdapter(facts)
         binding.rvMovieComments.init(commentsAdapter, LinearLayoutManager.VERTICAL)
     }
+
+    override fun onDestroyView() {
+        binding.rvMovieComments.adapter = null
+        super.onDestroyView()
+    }
 }

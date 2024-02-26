@@ -10,7 +10,7 @@ import com.test.application.movie_details.databinding.ItemMovieStaffBinding
 
 class MovieStaffAdapter(
     private var personsData: List<Person>
-    ) : RecyclerView.Adapter<MovieStaffAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MovieStaffAdapter.ViewHolder>() {
 
     var listener: ((personId: Int) -> Unit)? = null
 

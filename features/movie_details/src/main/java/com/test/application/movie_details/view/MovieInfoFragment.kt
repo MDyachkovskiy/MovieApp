@@ -2,15 +2,12 @@ package com.test.application.movie_details.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
-import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import com.google.android.material.chip.Chip
@@ -28,7 +25,6 @@ import com.test.application.movie_details.adapter.MovieStaffAdapter
 import com.test.application.movie_details.adapter.TrailerAdapter
 import com.test.application.movie_details.databinding.FragmentMovieInfoBinding
 import com.test.application.movie_details.navigation.TrailerPlayListener
-import com.test.application.movie_details.utils.MILLISECONDS_PER_INCH
 import com.test.application.movie_details.utils.reformatBudget
 import com.test.application.movie_details.utils.reformatPremiereDate
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +35,8 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
 ) {
 
     private var trailerPlayListener: TrailerPlayListener? = null
+    private var trailerAdapter: TrailerAdapter? = null
+    private var movieStaffAdapter: MovieStaffAdapter? = null
 
     private val viewModel: MovieDetailsViewModel by viewModels({requireParentFragment()})
 
@@ -90,13 +88,13 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
     }
 
     private fun initTrailersList(trailers: List<Trailer>) {
-        val trailerAdapter = TrailerAdapter(trailers)
+        trailerAdapter = TrailerAdapter(trailers)
         binding.rvTrailers.apply {
             adapter = trailerAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        trailerAdapter.listener = { videoUrl ->
+        trailerAdapter?.listener = { videoUrl ->
             videoUrl?.let {trailerPlayListener?.onTrailerClicked(it)}
         }
     }
@@ -106,36 +104,15 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
         val movieStaff = persons.filter {
             it.enProfession != "actor"
         }
-        val movieStaffAdapter = MovieStaffAdapter(movieStaff)
-        movieStaffAdapter.listener = {personId ->
+        movieStaffAdapter = MovieStaffAdapter(movieStaff)
+        movieStaffAdapter?.listener = {personId ->
             val bundle = bundleOf(KEY_BUNDLE_PERSON to personId)
             (activity as Navigator).navigateToPersonDetailsFragment(bundle)
         }
         binding.rvProductionStaff.apply {
             adapter = movieStaffAdapter
-            layoutManager = getCustomLayoutManager()
-        }
-    }
-
-    private fun getCustomLayoutManager(): LinearLayoutManager {
-        return object : LinearLayoutManager(requireContext(), HORIZONTAL, false) {
-            override fun smoothScrollToPosition(recyclerView: RecyclerView?, state: RecyclerView.State?, position: Int) {
-                val smoothScroller = object : LinearSmoothScroller(requireContext()) {
-                    override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float {
-                        return MILLISECONDS_PER_INCH / displayMetrics.densityDpi
-                    }
-
-                    override fun getVerticalSnapPreference(): Int {
-                        return SNAP_TO_START
-                    }
-
-                    override fun getHorizontalSnapPreference(): Int {
-                        return SNAP_TO_START
-                    }
-                }
-                smoothScroller.targetPosition = position
-                startSmoothScroll(smoothScroller)
-            }
+            layoutManager = LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
@@ -173,5 +150,13 @@ class MovieInfoFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
 
             tvMovieBudget.text = reformatBudget(requireContext(), movie.budget)
         }
+    }
+
+    override fun onDestroyView() {
+        trailerAdapter?.listener = null
+        movieStaffAdapter?.listener = null
+        binding.rvProductionStaff.adapter = null
+        binding.rvTrailers.adapter = null
+        super.onDestroyView()
     }
 }

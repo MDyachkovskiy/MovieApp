@@ -17,6 +17,7 @@
     <dimen name="margin_10dp_small">10dp</dimen>
     <dimen name="margin_12dp_medium">12dp</dimen>
     <dimen name="margin_16dp_medium">16dp</dimen>
+    <dimen name="margin_20dp_medium">20dp</dimen>
     <dimen name="margin_24dp_medium">24dp</dimen>
     <dimen name="margin_36dp_large">36dp</dimen>
     <dimen name="margin_48dp_large">48dp</dimen>

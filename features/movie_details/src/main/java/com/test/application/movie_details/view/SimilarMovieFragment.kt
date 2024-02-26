@@ -21,6 +21,7 @@ class SimilarMovieFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
     FragmentSimilarMovieBinding::inflate
 ) {
     private val viewModel: MovieDetailsViewModel by viewModels({requireParentFragment()})
+    private var movieAdapter: SimilarMovieAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,11 +39,19 @@ class SimilarMovieFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fr
     }
 
     private fun initSimilarMovieRecyclerView(similarMovy: List<SimilarMovy>) {
-        val movieAdapter = SimilarMovieAdapter(similarMovy)
-        movieAdapter.listener = { movieId ->
+        movieAdapter = SimilarMovieAdapter(similarMovy)
+        movieAdapter?.listener = { movieId ->
             val bundle = bundleOf(KEY_BUNDLE_MOVIE to movieId)
             (activity as Navigator).navigateToMovieDetailsFragment(bundle)
         }
-        binding.rvSimilarMovie.init(movieAdapter, LinearLayoutManager.VERTICAL)
+        movieAdapter?.let {
+            binding.rvSimilarMovie.init(it, LinearLayoutManager.VERTICAL)
+        }
+    }
+
+    override fun onDestroyView() {
+        movieAdapter?.listener = null
+        binding.rvSimilarMovie.adapter = null
+        super.onDestroyView()
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
@@ -23,6 +24,7 @@ import com.test.application.movie_details.utils.reformatVotes
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
 import java.math.RoundingMode
+import kotlin.math.abs
 
 @AndroidEntryPoint
 class MovieDetailsFragmentNew :
@@ -39,6 +41,7 @@ class MovieDetailsFragmentNew :
 
     private var backPressedHandler: BackPressedHandler? = null
     private var trailerPlayerManager: TrailerPlayerManager? = null
+    private var tabLayoutMediator: TabLayoutMediator? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,6 +62,29 @@ class MovieDetailsFragmentNew :
         handleBackPress()
     }
 
+    private fun setupCollapsedToolbar() {
+        val appBarLayout = binding.abbBarLayout
+        val toolbar = binding.toolbar
+
+        appBarLayout.addOnOffsetChangedListener { _, verticalOffset ->
+            if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
+                toolbar.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        com.test.application.core.R.color.black
+                    )
+                )
+            } else {
+                toolbar.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        android.R.color.transparent
+                    )
+                )
+            }
+        }
+    }
+
     private fun handleBackPress() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -71,6 +97,7 @@ class MovieDetailsFragmentNew :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
+        setupCollapsedToolbar()
     }
 
     private fun initViewModel() {
@@ -101,9 +128,9 @@ class MovieDetailsFragmentNew :
         binding.movieInfoViewPager.adapter = pagerAdapter
         binding.movieInfoViewPager.disableSwipe()
 
-        TabLayoutMediator(binding.tabLayout, binding.movieInfoViewPager) { tab, position ->
+        tabLayoutMediator = TabLayoutMediator(binding.tabLayout, binding.movieInfoViewPager) { tab, position ->
             tab.text = pagerAdapter.tabTitles[position]
-        }.attach()
+        }.also { it.attach() }
     }
 
     private fun initTextData(movie: MovieDetails) {
@@ -171,8 +198,11 @@ class MovieDetailsFragmentNew :
     }
 
     override fun onDestroyView() {
+        tabLayoutMediator?.detach()
+        tabLayoutMediator = null
         binding.movieInfoViewPager.adapter = null
         trailerPlayerManager?.cleanup()
+        trailerPlayerManager = null
         super.onDestroyView()
     }
 }

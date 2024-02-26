@@ -21,6 +21,7 @@ class MovieCastFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
     FragmentMovieCastBinding::inflate
 ) {
     private val viewModel: MovieDetailsViewModel by viewModels({requireParentFragment()})
+    private var actorsAdapter: ActorsAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,11 +42,18 @@ class MovieCastFragment : BaseFragmentWithAppState<AppState, MovieDetails, Fragm
         val actors = persons.filter {
             it.enProfession == "actor"
         }
-        val actorsAdapter = ActorsAdapter(actors)
-        actorsAdapter.listener = { personId ->
+        actorsAdapter = ActorsAdapter(actors)
+        actorsAdapter?.listener = { personId ->
             val bundle = bundleOf(KEY_BUNDLE_PERSON to personId)
             (activity as Navigator).navigateToPersonDetailsFragment(bundle)
         }
-        binding.rvActors.init(actorsAdapter, LinearLayoutManager.VERTICAL)
+        actorsAdapter?.let {
+            binding.rvActors.init(it, LinearLayoutManager.VERTICAL)
+        }
+    }
+    override fun onDestroyView() {
+        actorsAdapter?.listener = null
+        binding.rvActors.adapter = null
+        super.onDestroyView()
     }
 }

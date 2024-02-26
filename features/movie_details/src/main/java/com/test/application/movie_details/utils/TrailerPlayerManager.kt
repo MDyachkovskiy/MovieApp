@@ -32,8 +32,8 @@ class TrailerPlayerManager(
 
     fun cleanup() {
         videoContainerView?.visibility = View.GONE
-        currentYouTubePlayer?.pause()
-        youTubePlayerView?.let { lifecycle.removeObserver(it) }
+        currentYouTubePlayer = null
+        youTubePlayerView?.release()
         videoContainerView = null
         youTubePlayerView = null
     }
