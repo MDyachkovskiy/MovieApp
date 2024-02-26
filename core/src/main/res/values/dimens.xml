@@ -25,4 +25,8 @@
     //CornerRadius
     <dimen name="corner_radius_10dp">10dp</dimen>
 
+    //Common Size
+    <dimen name="toolbar_height">46dp</dimen>
+    <dimen name="toolbar_icon_size">32dp</dimen>
+
 </resources>

@@ -43,9 +43,9 @@
                     app:cardCornerRadius="@dimen/corner_radius_10dp"
                     app:layout_anchor="@id/background_image_block"
                     app:layout_anchorGravity="bottom|start"
+                    app:layout_constraintBottom_toBottomOf="@id/background_image_block"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/background_image_block"
-                    app:layout_constraintBottom_toBottomOf="@id/background_image_block">
+                    app:layout_constraintTop_toBottomOf="@id/background_image_block">
 
                     <ImageView
                         android:id="@+id/movie_poster"
@@ -220,7 +220,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/toolbar_height"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways">
 
@@ -228,25 +228,18 @@
                     android:id="@+id/back_button"
                     android:layout_width="@dimen/toolbar_icon_size"
                     android:layout_height="@dimen/toolbar_icon_size"
+                    android:layout_gravity="center_vertical"
                     android:layout_margin="@dimen/margin_16dp_medium"
                     android:src="@drawable/ic_arrow_back"
-                    app:tint="@color/white"
-                     />
+                    app:tint="@color/white" />
 
-                <FrameLayout
-                    android:id="@+id/favorite_background"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <CheckBox
-                        android:id="@+id/favorite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|end"
-                        android:layout_marginEnd="@dimen/margin_8dp_small"
-                        android:button="@drawable/selector_favorite_item" />
-
-                </FrameLayout>
+                <ImageView
+                    android:id="@+id/iv_favourite"
+                    android:layout_width="@dimen/toolbar_icon_size"
+                    android:layout_height="@dimen/toolbar_icon_size"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_margin="@dimen/margin_16dp_medium"
+                    android:src="@drawable/ic_favorite_border" />
 
             </androidx.appcompat.widget.Toolbar>
 

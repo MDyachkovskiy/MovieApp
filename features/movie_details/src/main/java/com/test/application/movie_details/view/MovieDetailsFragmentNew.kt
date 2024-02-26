@@ -92,6 +92,9 @@ class MovieDetailsFragmentNew :
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+        binding.backButton.setOnClickListener {
+            backPressedHandler?.onBackButtonPressedInMovieDetails()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
