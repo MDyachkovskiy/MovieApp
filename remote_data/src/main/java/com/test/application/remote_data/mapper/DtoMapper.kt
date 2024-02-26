@@ -180,13 +180,13 @@ fun MovieDetailsPosterDTO.toDomain() : MovieDetailsPoster {
     )
 }
 
+
 fun RatingDTO.toDomain(): Rating {
     return Rating(
         imdb = this.imdb,
         kp = this.kp
     )
 }
-
 fun SimilarMovyDTO.toDomain(): SimilarMovy {
     return SimilarMovy(
         alternativeName = this.alternativeName,

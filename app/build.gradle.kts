@@ -73,13 +73,13 @@ android {
 dependencies {
 
     implementation(project(":core"))
-    implementation(project(":home"))
-    implementation(project(":favorites"))
-    implementation(project(":search"))
-    implementation(project(":contacts"))
-    implementation(project(":settings"))
-    implementation(project(":movie_details"))
-    implementation(project(":person_details"))
+    implementation(project(":features:home"))
+    implementation(project(":features:favorites"))
+    implementation(project(":features:search"))
+    implementation(project(":features:contacts"))
+    implementation(project(":features:settings"))
+    implementation(project(":features:movie_details"))
+    implementation(project(":features:person_details"))
     implementation(project(":remote_data"))
     implementation(project(":local_data"))
 
@@ -111,4 +111,6 @@ dependencies {
     implementation(Dagger.main)
     implementation("com.google.dagger:dagger-android-support:2.49")
     kapt(Dagger.compiler)
+
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:3.0-alpha-1")
 }
